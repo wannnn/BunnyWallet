@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "BunnyWallet"
-include ':app'
+include(":app")
