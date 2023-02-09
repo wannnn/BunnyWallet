@@ -18,6 +18,9 @@ androidxActivity = "1.6.1"
 # Lifecycle
 androidxLifecycle = "2.5.1"
 
+# Navigation
+androidxNavigation = "2.5.3"
+
 # Android Core
 androidxCore = "1.9.0"
 
@@ -40,6 +43,9 @@ activity-compose = { group = "androidx.activity", name = "activity-compose", ver
 
 # Lifecycle
 lifecycle-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
+
+# Navigation
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
 
 # Core KTX
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }

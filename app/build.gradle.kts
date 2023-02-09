@@ -58,6 +58,9 @@ dependencies {
     // Lifecycle
     implementation(libs.lifecycle.ktx)
 
+    // Navigation
+    implementation(libs.navigation.compose)
+
     // Core KTX
     implementation(libs.core.ktx)
 
