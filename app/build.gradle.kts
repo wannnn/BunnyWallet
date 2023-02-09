@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("io.gitlab.arturbosch.detekt")
 }
 
 android {
@@ -48,6 +49,12 @@ android {
         resources {
             excludes.add("/META-INF/{AL2.0,LGPL2.1}")
         }
+    }
+
+    detekt {
+        toolVersion = libs.versions.detekt.get()
+        config = files("config/detekt/detekt.yml")
+        buildUponDefaultConfig = true
     }
 }
 

@@ -27,6 +27,9 @@ androidxComposeUi = "1.3.3"
 androidxComposeFoundation = "1.3.1"
 androidxComposeMaterial3 = "1.0.1"
 
+# Detekt
+detekt = "1.22.0"
+
 # Testing
 junit4 = "4.13.2"
 androidxTestExt = "1.1.5"
@@ -83,3 +86,4 @@ androidx-compose-foundation = [
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
