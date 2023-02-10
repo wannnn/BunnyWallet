@@ -2,6 +2,9 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("io.gitlab.arturbosch.detekt")
+    id("com.google.dagger.hilt.android")
+
+    kotlin("kapt")
 }
 
 android {
@@ -80,6 +83,9 @@ dependencies {
     // Material 3
     implementation(libs.compose.material3)
 
+    // Hilt
+    implementation(libs.bundles.hilt)
+    kapt(libs.hilt.android.compiler)
 
     /** Testing Start */
     testImplementation(libs.junit4)
