@@ -1,5 +1,5 @@
 [versions]
-#App
+# App
 compileSdk = "33"
 minSdk = "29"
 targetSdk = "33"
@@ -33,9 +33,12 @@ androidxComposeMaterial3 = "1.0.1"
 # Detekt
 detekt = "1.22.0"
 
-#Hilt
+# Hilt
 hilt = "2.44"
 hiltNavigationCompose = "1.0.0"
+
+# Coroutines
+coroutines = "1.6.4"
 
 # Testing
 junit4 = "4.13.2"
@@ -74,6 +77,11 @@ compose-material3 = { group = "androidx.compose.material3", name = "material3", 
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+
+# Coroutines
+coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+
 
 # Test
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }

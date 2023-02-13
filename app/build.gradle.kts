@@ -87,6 +87,9 @@ dependencies {
     implementation(libs.bundles.hilt)
     kapt(libs.hilt.android.compiler)
 
+    // Coroutines
+    implementation(libs.coroutines.android)
+
     /** Testing Start */
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext)
@@ -95,5 +98,8 @@ dependencies {
     // Compose UI
     debugImplementation(libs.compose.ui.tooling)
     androidTestImplementation(libs.compose.ui.test)
+
+    // Coroutines
+    testImplementation(libs.coroutines.test)
     /** Testing End */
 }
