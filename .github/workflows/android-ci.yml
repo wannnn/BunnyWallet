@@ -1,0 +1,54 @@
+name: Android CI
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    name: Android Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code into workspace directory
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/env-setup
+      - name: Run Android lint
+        run: ./gradlew lint
+
+  detekt:
+    name: Android Detekt
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code into workspace directory
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/env-setup
+      - name: Run Kotlin detekt
+        run: ./gradlew detekt
+
+  unit-test:
+    name: Android Unit Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code into workspace directory
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/env-setup
+      - name: Run Android test
+        run: ./gradlew test
+
+#  build:
+#    name: Android Build
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code into workspace directory
+#        uses: actions/checkout@v3
+#        with:
+#          fetch-depth: 0
+#      - uses: ./.github/actions/env-setup
+#      - name: Build with Gradle
+#        run: ./gradlew build
