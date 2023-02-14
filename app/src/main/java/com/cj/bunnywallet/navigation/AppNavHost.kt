@@ -24,10 +24,10 @@ fun AppNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = MainRoute.ScreenA.route,
+        startDestination = MainRoute.Entrance.route,
         modifier = modifier,
     ) {
-        mainGraph(navTo = appNavigator::navigateTo)
+        mainGraph()
     }
 }
 

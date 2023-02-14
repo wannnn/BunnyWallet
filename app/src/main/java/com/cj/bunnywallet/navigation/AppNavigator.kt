@@ -4,17 +4,38 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavBackStackEntry
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AppNavigator {
+interface AppNavigator {
+
+    val destinationFlow: SharedFlow<NavEvent>
+
+    fun setCurrentEntry(entry: NavBackStackEntry)
+
+    fun navigateTo(navEvent: NavEvent)
+}
+
+@Singleton
+class AppNavigatorImpl @Inject constructor() : AppNavigator {
     private val _destinationFlow = MutableSharedFlow<NavEvent>(
         extraBufferCapacity = BUFFER_CAPACITY,
         onBufferOverflow = BufferOverflow.SUSPEND,
     )
-    val destinationFlow = _destinationFlow.asSharedFlow()
+    override val destinationFlow = _destinationFlow.asSharedFlow()
 
-    fun navigateTo(entry: NavBackStackEntry, navEvent: NavEvent) {
-        if (entry.lifecycle.currentState == Lifecycle.State.RESUMED) {
+    private var currentEntry: NavBackStackEntry? = null
+
+    override fun setCurrentEntry(entry: NavBackStackEntry) {
+        if (currentEntry == entry) return
+        currentEntry = entry
+        println("currentEntry: $currentEntry")
+    }
+
+    override fun navigateTo(navEvent: NavEvent) {
+        if (currentEntry?.lifecycle?.currentState == Lifecycle.State.RESUMED) {
             val isSuccessNav = _destinationFlow.tryEmit(navEvent)
             println("Is success navigate: $isSuccessNav")
         }
