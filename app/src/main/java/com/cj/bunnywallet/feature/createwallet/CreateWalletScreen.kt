@@ -1,4 +1,4 @@
-package com.cj.bunnywallet.screen
+package com.cj.bunnywallet.feature.createwallet
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,24 +7,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavBackStackEntry
 
 @Composable
-fun ScreenB() {
-    ContentB()
+fun CreateWalletRoute() {
+    CreateWalletScreen()
 }
 
 @Composable
-fun ContentB() {
+fun CreateWalletScreen() {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        Text(text = "Screen B")
+        Text(text = "CreateWalletScreen")
     }
 }
 
 @Preview
 @Composable
-fun PreviewContentB() {
-    ContentB()
+fun PreviewCreateWalletScreen() {
+    CreateWalletScreen()
 }

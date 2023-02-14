@@ -2,11 +2,11 @@ package com.cj.bunnywallet.navigation.route
 
 sealed interface MainRoute : Routes {
 
-    object ScreenA : MainRoute {
-        override val route: String = "screen_a"
+    object Entrance : MainRoute {
+        override val route: String = "entrance_route"
     }
 
-    object ScreenB : MainRoute {
-        override val route: String = "screen_b"
+    object CreateWallet : MainRoute {
+        override val route: String = "create_wallet_route"
     }
 }

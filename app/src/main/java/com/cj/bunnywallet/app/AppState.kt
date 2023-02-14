@@ -10,7 +10,7 @@ import com.cj.bunnywallet.navigation.AppNavigator
 @Composable
 fun rememberAppState(
     navController: NavHostController = rememberNavController(),
-    appNavigator: AppNavigator = AppNavigator(),
+    appNavigator: AppNavigator,
 ) = remember(navController, appNavigator) {
     AppState(navController, appNavigator)
 }
