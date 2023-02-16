@@ -90,6 +90,9 @@ dependencies {
     // Coroutines
     implementation(libs.coroutines.android)
 
+    // Web3j
+    implementation(libs.web3j.android)
+
     /** Testing Start */
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext)
