@@ -40,6 +40,9 @@ hiltNavigationCompose = "1.0.0"
 # Coroutines
 coroutines = "1.6.4"
 
+# Web3j
+web3j = "4.8.7-android"
+
 # Testing
 junit4 = "4.13.2"
 androidxTestExt = "1.1.5"
@@ -82,6 +85,8 @@ hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-com
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 
+# Web3j
+web3j-android = { group = "org.web3j", name = "core", version.ref = "web3j" }
 
 # Test
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
