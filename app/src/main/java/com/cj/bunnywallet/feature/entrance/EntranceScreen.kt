@@ -33,6 +33,10 @@ fun EntranceScreen(navEvent: (NavEvent) -> Unit) {
         Button(onClick = { navEvent(NavEvent.NavTo(MainRoute.CreateWallet.route)) }) {
             Text(text = "To Create Wallet Screen")
         }
+
+        Button(onClick = { navEvent(NavEvent.NavTo(MainRoute.ImportWallet.route)) }) {
+            Text(text = "To Import Wallet Screen")
+        }
     }
 }
 

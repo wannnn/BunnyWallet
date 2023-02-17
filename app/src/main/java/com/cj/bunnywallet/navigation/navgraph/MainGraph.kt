@@ -4,11 +4,13 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.cj.bunnywallet.feature.createwallet.CreateWalletRoute
 import com.cj.bunnywallet.feature.entrance.EntranceRoute
+import com.cj.bunnywallet.feature.importwallet.ImportWalletRoute
 import com.cj.bunnywallet.navigation.route.MainRoute
 
 fun NavGraphBuilder.mainGraph() {
     addEntrance()
     addCreateWallet()
+    addImportWallet()
 }
 
 private fun NavGraphBuilder.addEntrance() {
@@ -17,4 +19,8 @@ private fun NavGraphBuilder.addEntrance() {
 
 private fun NavGraphBuilder.addCreateWallet() {
     composable(MainRoute.CreateWallet.route) { CreateWalletRoute() }
+}
+
+private fun NavGraphBuilder.addImportWallet() {
+    composable(MainRoute.ImportWallet.route) { ImportWalletRoute() }
 }

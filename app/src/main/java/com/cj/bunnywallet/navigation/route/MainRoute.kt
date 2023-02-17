@@ -9,4 +9,8 @@ sealed interface MainRoute : Routes {
     object CreateWallet : MainRoute {
         override val route: String = "create_wallet_route"
     }
+
+    object ImportWallet : MainRoute {
+        override val route: String = "import_wallet_route"
+    }
 }
