@@ -12,7 +12,7 @@ fun NavGraphBuilder.mainGraph() {
 }
 
 private fun NavGraphBuilder.addEntrance() {
-    composable(MainRoute.Entrance.route) { EntranceRoute(it) }
+    composable(MainRoute.Entrance.route) { EntranceRoute() }
 }
 
 private fun NavGraphBuilder.addCreateWallet() {

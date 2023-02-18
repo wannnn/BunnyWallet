@@ -15,11 +15,7 @@ import com.cj.bunnywallet.navigation.NavEvent
 import com.cj.bunnywallet.navigation.route.MainRoute
 
 @Composable
-fun EntranceRoute(
-    navBackStackEntry: NavBackStackEntry,
-    viewModel: EntranceViewModel = hiltViewModel(),
-) {
-    viewModel.setCurrentEntry(navBackStackEntry)
+fun EntranceRoute(viewModel: EntranceViewModel = hiltViewModel()) {
     EntranceScreen(viewModel::navigateTo)
 }
 
