@@ -1,14 +1,13 @@
 package com.cj.bunnywallet.feature.createwallet
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavBackStackEntry
+import com.cj.bunnywallet.feature.common.AppTopBar
+import com.cj.bunnywallet.feature.createwallet.component.progress.CreateWalletProgress
 
 @Composable
 fun CreateWalletRoute() {
@@ -17,15 +16,16 @@ fun CreateWalletRoute() {
 
 @Composable
 fun CreateWalletScreen() {
-    Box(
+    Column(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = "CreateWalletScreen")
+        AppTopBar()
+        CreateWalletProgress()
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun PreviewCreateWalletScreen() {
     CreateWalletScreen()
