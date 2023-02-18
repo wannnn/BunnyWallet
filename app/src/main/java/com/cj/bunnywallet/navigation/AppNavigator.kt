@@ -13,8 +13,6 @@ interface AppNavigator {
 
     val destinationFlow: SharedFlow<NavEvent>
 
-    fun setCurrentEntry(entry: NavBackStackEntry)
-
     fun navigateTo(navEvent: NavEvent)
 }
 
@@ -26,19 +24,8 @@ class AppNavigatorImpl @Inject constructor() : AppNavigator {
     )
     override val destinationFlow = _destinationFlow.asSharedFlow()
 
-    private var currentEntry: NavBackStackEntry? = null
-
-    override fun setCurrentEntry(entry: NavBackStackEntry) {
-        if (currentEntry == entry) return
-        currentEntry = entry
-        println("currentEntry: $currentEntry")
-    }
-
     override fun navigateTo(navEvent: NavEvent) {
-        if (currentEntry?.lifecycle?.currentState == Lifecycle.State.RESUMED) {
-            val isSuccessNav = _destinationFlow.tryEmit(navEvent)
-            println("Is success navigate: $isSuccessNav")
-        }
+        _destinationFlow.tryEmit(navEvent)
     }
 
     private companion object {
