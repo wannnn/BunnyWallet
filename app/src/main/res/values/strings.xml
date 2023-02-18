@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BunnyWallet</string>
+
+    <!-- Create Wallet   -->
+    <string name="create_password">Create password</string>
+    <string name="secure_wallet">Secure wallet</string>
+    <string name="confirm_mnemonics">Confirm secret\n recovery phrase</string>
 </resources>
