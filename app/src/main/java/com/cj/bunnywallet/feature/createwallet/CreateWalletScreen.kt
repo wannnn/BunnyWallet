@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.cj.bunnywallet.feature.common.AppTopBar
 import com.cj.bunnywallet.feature.createwallet.component.progress.CreateWalletProgress
+import com.cj.bunnywallet.feature.createwallet.component.title.CreatePwdTitle
 
 @Composable
 fun CreateWalletRoute() {
@@ -22,6 +23,7 @@ fun CreateWalletScreen() {
     ) {
         AppTopBar()
         CreateWalletProgress()
+        CreatePwdTitle()
     }
 }
 
