@@ -19,7 +19,7 @@ import com.cj.bunnywallet.R
 fun CreatePwdTitle() {
     Column(
         modifier = Modifier
-            .fillMaxWidth(fraction = 0.75f)
+            .fillMaxWidth(fraction = 0.8f)
             .padding(vertical = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
