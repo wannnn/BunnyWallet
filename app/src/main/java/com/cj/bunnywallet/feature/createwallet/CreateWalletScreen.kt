@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.cj.bunnywallet.feature.common.AppTopBar
+import com.cj.bunnywallet.feature.createwallet.component.declaration.CreatePwdDeclaration
 import com.cj.bunnywallet.feature.createwallet.component.progress.CreateWalletProgress
 import com.cj.bunnywallet.feature.createwallet.component.title.CreatePwdTitle
 
@@ -24,6 +25,7 @@ fun CreateWalletScreen() {
         AppTopBar()
         CreateWalletProgress()
         CreatePwdTitle()
+        CreatePwdDeclaration()
     }
 }
 
