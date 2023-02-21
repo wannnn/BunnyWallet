@@ -13,11 +13,11 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun PasswordTextField(
-    modifier: Modifier = Modifier,
     passwordState: String,
     passwordStateUpdate: (String) -> Unit,
-    showPassword: Boolean = true,
+    modifier: Modifier = Modifier,
     label: String = "",
+    showPassword: Boolean = true,
     imeAction: ImeAction = ImeAction.Next,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     errorMsg: String? = null,
