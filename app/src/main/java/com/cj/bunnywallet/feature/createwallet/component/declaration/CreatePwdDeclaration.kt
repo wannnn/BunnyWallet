@@ -14,13 +14,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cj.bunnywallet.R
+import com.cj.bunnywallet.ui.theme.NoRippleInteractionSource
 
 @Composable
 fun CreatePwdDeclaration() {
     Row(
         modifier = Modifier
-            .fillMaxWidth(fraction = 0.8f)
-            .padding(horizontal = 8.dp, vertical = 12.dp),
+            .fillMaxWidth(),
         verticalAlignment = Alignment.Top,
     ) {
         Checkbox(
@@ -29,8 +29,9 @@ fun CreatePwdDeclaration() {
                 .size(12.dp)
                 .padding(start = 8.dp, top = 12.dp),
             onCheckedChange = {
-                // TODO
+                /* TODO */
             },
+            interactionSource = NoRippleInteractionSource()
         )
 
         Text(

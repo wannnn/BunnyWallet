@@ -13,7 +13,7 @@ fun CreateWalletButton() {
     CmnButton(
         text = stringResource(id = R.string.create_password),
         onClick = {},
-        modifier = Modifier.fillMaxWidth(fraction = 0.8f),
+        modifier = Modifier.fillMaxWidth(),
         enabled = true,
     )
 }
