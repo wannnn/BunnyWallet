@@ -27,7 +27,7 @@ fun CreatePwdDeclaration() {
             checked = false,
             modifier = Modifier
                 .size(12.dp)
-                .padding(start = 8.dp, top = 10.dp),
+                .padding(start = 8.dp, top = 12.dp),
             onCheckedChange = {
                 // TODO
             },
