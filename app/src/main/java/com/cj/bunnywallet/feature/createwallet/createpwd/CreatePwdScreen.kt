@@ -7,17 +7,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.AppTopBar
-import com.cj.bunnywallet.feature.createwallet.component.CreateWalletButton
+import com.cj.bunnywallet.feature.common.CmnButton
 import com.cj.bunnywallet.feature.createwallet.component.progress.CreateWalletProgress
-import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreateWalletBioSwitch
 import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreatePwdDeclaration
 import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreatePwdField
 import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreatePwdTitle
+import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreateWalletBioSwitch
 import com.cj.bunnywallet.navigation.NavEvent
+import com.cj.bunnywallet.navigation.route.CreateWalletRoute
 
 @Composable
 fun CreatePwdRoute(viewModel: CreatePwdViewModel = hiltViewModel()) {
@@ -42,7 +45,11 @@ fun CreatePwdScreen(navEvent: (NavEvent) -> Unit) {
             CreatePwdField()
             CreateWalletBioSwitch()
             CreatePwdDeclaration()
-            CreateWalletButton(navEvent)
+            CmnButton(
+                text = stringResource(id = R.string.create_password),
+                onClick = { navEvent(NavEvent.NavTo(CreateWalletRoute.SecureWallet.route)) },
+                modifier = Modifier.fillMaxWidth(),
+            )
         }
     }
 }

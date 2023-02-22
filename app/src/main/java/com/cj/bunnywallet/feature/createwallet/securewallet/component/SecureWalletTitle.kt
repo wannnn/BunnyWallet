@@ -1,0 +1,108 @@
+package com.cj.bunnywallet.feature.createwallet.securewallet.component
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.cj.bunnywallet.R
+import com.cj.bunnywallet.ui.theme.Purple40
+
+@Composable
+fun SecureWalletTitle() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            text = stringResource(id = R.string.secure_wallet),
+            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.titleLarge,
+        )
+        RecoveryPhrase()
+        WhyIsImportant()
+    }
+}
+
+@Composable
+private fun ColumnScope.RecoveryPhrase() {
+    val recoveryPhrase = stringResource(id = R.string.secret_recovery_phrase)
+    val annoRecoveryPhrase = buildAnnotatedString {
+        append(stringResource(id = R.string.secure_your_wallets).plus(" "))
+        withStyle(style = SpanStyle(color = Purple40)) {
+            pushStringAnnotation(tag = recoveryPhrase, annotation = recoveryPhrase)
+            append(recoveryPhrase)
+        }
+    }
+
+    ClickableText(
+        text = annoRecoveryPhrase,
+        modifier = Modifier.align(Alignment.CenterHorizontally),
+        style = MaterialTheme.typography.bodyMedium
+            .merge(
+                TextStyle(
+                    fontSize = 15.sp,
+                    textAlign = TextAlign.Center,
+                ),
+            ),
+        onClick = { offset ->
+            annoRecoveryPhrase.getStringAnnotations(offset, offset)
+                .firstOrNull()
+                ?.let { span -> println("Clicked on ${span.item}") }
+        },
+    )
+}
+
+@Composable
+private fun WhyIsImportant() {
+    val annoImportantInfo = buildAnnotatedString {
+        withStyle(style = SpanStyle(color = Purple40)) {
+            append(stringResource(id = R.string.why_is_it_important))
+        }
+    }
+
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_info),
+            contentDescription = null,
+            modifier = Modifier.size(16.dp),
+            tint = Purple40,
+        )
+
+        ClickableText(
+            text = annoImportantInfo,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            style = MaterialTheme.typography.bodyLarge,
+            onClick = { /*TODO*/ },
+        )
+    }
+}
+
+@Preview(showBackground = true, widthDp = 400)
+@Composable
+fun PreviewSecureWalletTitle() {
+    SecureWalletTitle()
+}
