@@ -4,6 +4,7 @@
     <!-- Common   -->
     <string name="new_password">New password</string>
     <string name="confirm_password">Confirm password</string>
+    <string name="secret_recovery_phrase">Secret Recovery Phrase</string>
 
     <!-- Create Wallet   -->
     <string name="create_password">Create password</string>
@@ -13,10 +14,20 @@
     <string name="password_condition_hint">Must be at least 8 characters</string>
     <string name="check_unlock_with_biometrics">Unlock with Biometrics ?</string>
     <string name="create_password_declaration">I understand that BunnyWallet cannot recover this password for me.</string>
+    <string name="secure_your_wallets">Secure your wallet\'s</string>
+    <string name="why_is_it_important">Why is it important?</string>
+    <string name="write_down_title">Write it down on paper:</string>
+    <string name="write_down_content">Write your mnemonic passphrase on a piece of paper and keep it in a secure location such as a safe or a locked drawer.</string>
+    <string name="store_digitally_title">Store it digitally:</string>
+    <string name="store_digitally_content">You can also store your mnemonic passphrase digitally using a password manager or encrypted file.</string>
+    <string name="split_title">Split it up:</string>
+    <string name="split_content">Consider splitting your mnemonic passphrase into multiple parts and storing each part in a different location or with different people you trust.</string>
+    <string name="memorize_title">Memorize it:</string>
+    <string name="memorize_content">If you have a good memory, you could memorize your mnemonic passphrase.</string>
+    <string name="start">Start</string>
 
     <!-- Import Wallet   -->
     <string name="import_from_seed">Import from seed</string>
-    <string name="secret_recovery_phrase">Secret Recovery Phrase</string>
     <string name="set_up_pwd">Set Up Password</string>
     <string name="btn_import">IMPORT</string>
     <string name="twelve_words">I have a 12-words phrase</string>
