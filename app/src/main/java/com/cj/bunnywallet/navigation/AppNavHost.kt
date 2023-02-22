@@ -8,6 +8,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.cj.bunnywallet.navigation.navgraph.createWalletGraph
 import com.cj.bunnywallet.navigation.navgraph.mainGraph
 import com.cj.bunnywallet.navigation.route.MainRoute
 import kotlinx.coroutines.flow.launchIn
@@ -37,6 +38,7 @@ fun AppNavHost(
         modifier = modifier,
     ) {
         mainGraph()
+        createWalletGraph()
     }
 }
 

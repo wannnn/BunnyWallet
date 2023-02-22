@@ -7,7 +7,7 @@ sealed class NavEvent {
     object NavBack : NavEvent()
 
     data class NavTo(
-        val route: String = "",
+        val route: String,
         val navOptions: NavOptions? = null,
     ) : NavEvent()
 }
