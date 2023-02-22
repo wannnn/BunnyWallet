@@ -1,4 +1,4 @@
-package com.cj.bunnywallet.feature.createwallet.component.pwdfield
+package com.cj.bunnywallet.feature.createwallet.createpwd.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

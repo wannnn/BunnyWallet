@@ -1,4 +1,4 @@
-package com.cj.bunnywallet.feature.createwallet.component.bioswitch
+package com.cj.bunnywallet.feature.createwallet.createpwd.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

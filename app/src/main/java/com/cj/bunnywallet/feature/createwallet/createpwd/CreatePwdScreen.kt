@@ -1,4 +1,4 @@
-package com.cj.bunnywallet.feature.createwallet
+package com.cj.bunnywallet.feature.createwallet.createpwd
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,21 +9,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.cj.bunnywallet.feature.common.AppTopBar
-import com.cj.bunnywallet.feature.createwallet.component.bioswitch.CreateWalletBioSwitch
-import com.cj.bunnywallet.feature.createwallet.component.createbtn.CreateWalletButton
-import com.cj.bunnywallet.feature.createwallet.component.declaration.CreatePwdDeclaration
+import com.cj.bunnywallet.feature.createwallet.component.CreateWalletButton
 import com.cj.bunnywallet.feature.createwallet.component.progress.CreateWalletProgress
-import com.cj.bunnywallet.feature.createwallet.component.pwdfield.CreatePwdField
-import com.cj.bunnywallet.feature.createwallet.component.title.CreatePwdTitle
+import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreateWalletBioSwitch
+import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreatePwdDeclaration
+import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreatePwdField
+import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreatePwdTitle
+import com.cj.bunnywallet.navigation.NavEvent
 
 @Composable
-fun CreateWalletRoute() {
-    CreateWalletScreen()
+fun CreatePwdRoute(viewModel: CreatePwdViewModel = hiltViewModel()) {
+    CreatePwdScreen(viewModel::navigateTo)
 }
 
 @Composable
-fun CreateWalletScreen() {
+fun CreatePwdScreen(navEvent: (NavEvent) -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -40,13 +42,13 @@ fun CreateWalletScreen() {
             CreatePwdField()
             CreateWalletBioSwitch()
             CreatePwdDeclaration()
-            CreateWalletButton()
+            CreateWalletButton(navEvent)
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewCreateWalletScreen() {
-    CreateWalletScreen()
+fun PreviewCreatePwdScreen() {
+    CreatePwdScreen {}
 }
