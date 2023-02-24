@@ -29,7 +29,7 @@ import com.cj.bunnywallet.R
 import com.cj.bunnywallet.ui.theme.Purple40
 
 @Composable
-fun SecureWalletTitle() {
+fun SecureWalletTitle(onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -42,13 +42,13 @@ fun SecureWalletTitle() {
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.titleLarge,
         )
-        RecoveryPhrase()
+        RecoveryPhrase(onClick)
         WhyIsImportant()
     }
 }
 
 @Composable
-private fun ColumnScope.RecoveryPhrase() {
+private fun ColumnScope.RecoveryPhrase(onClick: () -> Unit) {
     val recoveryPhrase = stringResource(id = R.string.secret_recovery_phrase)
     val annoRecoveryPhrase = buildAnnotatedString {
         append(stringResource(id = R.string.secure_your_wallets).plus(" "))
@@ -71,7 +71,7 @@ private fun ColumnScope.RecoveryPhrase() {
         onClick = { offset ->
             annoRecoveryPhrase.getStringAnnotations(offset, offset)
                 .firstOrNull()
-                ?.let { span -> println("Clicked on ${span.item}") }
+                ?.let { onClick() }
         },
     )
 }
@@ -104,5 +104,5 @@ private fun WhyIsImportant() {
 @Preview(showBackground = true, widthDp = 400)
 @Composable
 fun PreviewSecureWalletTitle() {
-    SecureWalletTitle()
+    SecureWalletTitle {}
 }

@@ -7,6 +7,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -16,6 +20,7 @@ import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.AppTopBar
 import com.cj.bunnywallet.feature.common.CmnButton
 import com.cj.bunnywallet.feature.createwallet.component.progress.CreateWalletProgress
+import com.cj.bunnywallet.feature.createwallet.securewallet.component.SRPDialog
 import com.cj.bunnywallet.feature.createwallet.securewallet.component.SecureSuggestions
 import com.cj.bunnywallet.feature.createwallet.securewallet.component.SecureWalletTitle
 
@@ -26,6 +31,9 @@ fun SecureWalletRoute() {
 
 @Composable
 fun SecureWalletScreen() {
+
+    var showDialog by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -40,13 +48,17 @@ fun SecureWalletScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             CreateWalletProgress()
-            SecureWalletTitle()
+            SecureWalletTitle { showDialog = true }
             SecureSuggestions()
             CmnButton(
                 text = stringResource(id = R.string.start),
                 onClick = { /*TODO*/ },
                 modifier = Modifier.fillMaxWidth(),
             )
+        }
+
+        if (showDialog) {
+            SRPDialog { showDialog = false }
         }
     }
 }

@@ -25,6 +25,14 @@
     <string name="memorize_title">Memorize it:</string>
     <string name="memorize_content">If you have a good memory, you could memorize your mnemonic passphrase.</string>
     <string name="start">Start</string>
+    <string name="close">Close</string>
+    <string name="what_is">What is</string>
+    <string name="mnemonics_explanation_1">Secret Recovery Phrase is a set of twelve words contains all the information about your wallet, including your funds. It\'s like a secret code used to access your entire wallet.</string>
+    <string name="mnemonics_explanation_2">You must keep your Secret Recovery Phrase secret and safe. If someone gets your Secret Recovery Phrase, they\'ll gain control over your accounts.</string>
+    <string name="mnemonics_explanation_3">Save it in a place where you can only access it. If you lost it, not even BunnyWallet can help you recover it.</string>
+    <string name="protect_your_wallet">Protect your wallet</string>
+    <string name="protect_your_wallet_info_1">Don\'t risk losing your funds. Protect your wallet by saving your Secret Recovery Phrase in a place you trust.</string>
+    <string name="protect_your_wallet_info_2">It\'s the only way to recover your wallet if you get locked out of the app or get a new device.</string>
 
     <!-- Import Wallet   -->
     <string name="import_from_seed">Import from seed</string>
