@@ -15,7 +15,7 @@ import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.AppTopBar
 import com.cj.bunnywallet.feature.common.CmnButton
 import com.cj.bunnywallet.feature.createwallet.component.progress.CreateWalletProgress
-import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreatePwdDeclaration
+import com.cj.bunnywallet.feature.createwallet.component.Declaration
 import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreatePwdField
 import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreatePwdTitle
 import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreateWalletBioSwitch
@@ -44,7 +44,7 @@ fun CreatePwdScreen(navEvent: (NavEvent) -> Unit) {
             CreatePwdTitle()
             CreatePwdField()
             CreateWalletBioSwitch()
-            CreatePwdDeclaration()
+            Declaration(R.string.create_password_declaration)
             CmnButton(
                 text = stringResource(id = R.string.create_password),
                 onClick = { navEvent(NavEvent.NavTo(CreateWalletRoute.SecureWallet.route)) },

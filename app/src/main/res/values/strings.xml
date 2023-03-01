@@ -33,6 +33,8 @@
     <string name="protect_your_wallet">Protect your wallet</string>
     <string name="protect_your_wallet_info_1">Don\'t risk losing your funds. Protect your wallet by saving your Secret Recovery Phrase in a place you trust.</string>
     <string name="protect_your_wallet_info_2">It\'s the only way to recover your wallet if you get locked out of the app or get a new device.</string>
+    <string name="skip_account_security">Skip account security ?</string>
+    <string name="skip_warning_declaration">I understand that if I lose my Secret Recovery Phrase I will not be able to access my wallet.</string>
 
     <!-- Import Wallet   -->
     <string name="import_from_seed">Import from seed</string>
