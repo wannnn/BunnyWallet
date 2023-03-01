@@ -1,4 +1,4 @@
-package com.cj.bunnywallet.feature.createwallet.securewallet.component
+package com.cj.bunnywallet.feature.createwallet.securewallet.dialog
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
