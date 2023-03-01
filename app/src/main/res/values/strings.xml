@@ -35,6 +35,9 @@
     <string name="protect_your_wallet_info_2">It\'s the only way to recover your wallet if you get locked out of the app or get a new device.</string>
     <string name="skip_account_security">Skip account security ?</string>
     <string name="skip_warning_declaration">I understand that if I lose my Secret Recovery Phrase I will not be able to access my wallet.</string>
+    <string name="confirm_your_password">Confirm your password</string>
+    <string name="confirm_your_hint">Before continuing we need you to confirm your password.</string>
+    <string name="confirm">Confirm</string>
 
     <!-- Import Wallet   -->
     <string name="import_from_seed">Import from seed</string>

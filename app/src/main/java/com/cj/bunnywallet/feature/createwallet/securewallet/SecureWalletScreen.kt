@@ -20,6 +20,7 @@ import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.AppTopBar
 import com.cj.bunnywallet.feature.common.CmnButton
 import com.cj.bunnywallet.feature.createwallet.component.progress.CreateWalletProgress
+import com.cj.bunnywallet.feature.createwallet.securewallet.component.ConfirmPwd
 import com.cj.bunnywallet.feature.createwallet.securewallet.dialog.SRPDialog
 import com.cj.bunnywallet.feature.createwallet.securewallet.component.SecureSuggestions
 import com.cj.bunnywallet.feature.createwallet.securewallet.component.SecureWalletTitle
@@ -55,7 +56,11 @@ fun SecureWalletScreen() {
                 onClick = { /*TODO*/ },
                 modifier = Modifier.fillMaxWidth(),
             )
+
+            // ConfirmPwd()
         }
+
+
 
         if (showDialog) {
             SRPDialog { showDialog = false }
