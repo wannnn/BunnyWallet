@@ -38,6 +38,12 @@
     <string name="confirm_your_password">Confirm your password</string>
     <string name="confirm_your_hint">Before continuing we need you to confirm your password.</string>
     <string name="confirm">Confirm</string>
+    <string name="_continue">Continue</string>
+    <string name="write_down_srp_title">Write down your Secret Recovery Phrase</string>
+    <string name="write_down_srp_hint">This is your Secret Recovery Phrase. Write it down on a paper and keep it in a safe place. You\'ll be asked to re-enter this phrase (in order) on the next step.</string>
+    <string name="tap_to_reveal_srp_1">Tap to reveal your Secret Recovery Phrase</string>
+    <string name="tap_to_reveal_srp_2">Make sure no one is watching your screen</string>
+    <string name="view">View</string>
 
     <!-- Import Wallet   -->
     <string name="import_from_seed">Import from seed</string>

@@ -21,7 +21,8 @@ import com.cj.bunnywallet.feature.common.PasswordTextField
 @Composable
 fun ConfirmPwd() {
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(vertical = 4.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -60,6 +61,7 @@ fun PwdField() {
         )
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
