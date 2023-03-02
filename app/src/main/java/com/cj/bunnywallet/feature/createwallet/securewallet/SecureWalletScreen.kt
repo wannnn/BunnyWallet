@@ -13,17 +13,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.AppTopBar
-import com.cj.bunnywallet.feature.common.CmnButton
 import com.cj.bunnywallet.feature.createwallet.component.progress.CreateWalletProgress
-import com.cj.bunnywallet.feature.createwallet.securewallet.component.ConfirmPwd
+import com.cj.bunnywallet.feature.createwallet.securewallet.component.SecureInfoView
 import com.cj.bunnywallet.feature.createwallet.securewallet.dialog.SRPDialog
-import com.cj.bunnywallet.feature.createwallet.securewallet.component.SecureSuggestions
-import com.cj.bunnywallet.feature.createwallet.securewallet.component.SecureWalletTitle
 
 @Composable
 fun SecureWalletRoute() {
@@ -49,18 +44,13 @@ fun SecureWalletScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             CreateWalletProgress()
-            SecureWalletTitle { showDialog = true }
-            SecureSuggestions()
-            CmnButton(
-                text = stringResource(id = R.string.start),
-                onClick = { /*TODO*/ },
-                modifier = Modifier.fillMaxWidth(),
-            )
+
+            SecureInfoView { showDialog = true }
 
             // ConfirmPwd()
+
+            // RevealSRPView()
         }
-
-
 
         if (showDialog) {
             SRPDialog { showDialog = false }
