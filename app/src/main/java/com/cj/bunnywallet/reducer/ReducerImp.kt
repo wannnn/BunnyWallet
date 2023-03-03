@@ -11,10 +11,9 @@ class ReducerImp<S: UiState>(initState: S): Reducer<S> {
 
     override val uiState: StateFlow<S> = _uiState.asStateFlow()
 
+    override val curState: S get() = _uiState.value
+
     override fun setState(newState: S) {
         _uiState.updateAndGet { newState }
     }
-
-    override fun getState(): S = _uiState.value
-
 }
