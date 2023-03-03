@@ -27,7 +27,7 @@ import com.cj.bunnywallet.ui.theme.Purple80
 fun ProgressGraph() {
     Row(
         modifier = Modifier
-            .fillMaxWidth(fraction = 0.8f)
+            .fillMaxWidth(fraction = 0.85f)
             .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,

@@ -44,6 +44,18 @@
     <string name="tap_to_reveal_srp_1">Tap to reveal your Secret Recovery Phrase</string>
     <string name="tap_to_reveal_srp_2">Make sure no one is watching your screen</string>
     <string name="view">View</string>
+    <string name="confirm_srp">Confirm your \n Secret Recovery Phrase</string>
+    <string name="confirm_srp_hint">Select each word in the order it was presented to you.</string>
+    <string name="complete_backup">Complete Backup</string>
+    <string name="congratulations">Congratulations</string>
+    <string name="complete_msg_1">You\'ve successfully protected your wallet. Remember to keep your Secret Recovery Phrase safe. It\'s your responsibility!</string>
+    <string name="complete_msg_2">BunnyWallet cannot recover your wallet when you lose it. You can find your Secret Recovery Phrase in Settings > Security &amp; privacy.</string>
+    <string name="leave_yourself_a_hint">Leave yourself a hint ?</string>
+    <string name="done">Done</string>
+    <string name="recovery_hint">Recovery Hint</string>
+    <string name="recovery_hint_msg_1">Leave yourself a hint. Write the location where you saved it to remind yourself how you can access it. This information does not leave your device.</string>
+    <string name="recovery_hint_msg_2">Do not use this to write your Secret Recovery Phrase!!!</string>
+    <string name="save">Save</string>
 
     <!-- Import Wallet   -->
     <string name="import_from_seed">Import from seed</string>

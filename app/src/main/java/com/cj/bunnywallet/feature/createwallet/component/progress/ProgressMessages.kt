@@ -17,8 +17,7 @@ import com.cj.bunnywallet.ui.theme.Purple40
 @Composable
 fun ProgressMessages() {
     Row(
-        modifier = Modifier
-            .fillMaxWidth(fraction = 0.92f),
+        modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
