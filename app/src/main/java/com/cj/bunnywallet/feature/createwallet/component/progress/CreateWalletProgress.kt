@@ -19,7 +19,7 @@ fun CreateWalletProgress() {
     }
 }
 
-@Preview(showBackground = true, device = PIXEL_4_XL)
+@Preview(showBackground = true)
 @Composable
 fun PreviewCreateWalletProgress() {
     CreateWalletProgress()

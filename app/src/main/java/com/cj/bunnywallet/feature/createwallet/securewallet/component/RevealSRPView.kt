@@ -1,14 +1,10 @@
 package com.cj.bunnywallet.feature.createwallet.securewallet.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -28,10 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
 import com.cj.bunnywallet.feature.common.CmnOutlineButton
-import com.cj.bunnywallet.feature.common.VerticalGrid
-import com.cj.bunnywallet.ui.theme.Purple40
-import com.cj.bunnywallet.ui.theme.Purple80
-import com.cj.bunnywallet.ui.theme.PurpleGrey80
+import com.cj.bunnywallet.feature.createwallet.component.SRPBox
 
 @Composable
 fun RevealSRPView() {
@@ -51,23 +44,9 @@ fun RevealSRPView() {
             style = MaterialTheme.typography.bodyMedium,
         )
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(height = 340.dp),
-            contentAlignment = Alignment.Center,
-        ) {
-            //SRPSectionHide()
-
-            SRPSectionReveal(
-                listOf(
-                    "summer", "summer", "summer", "summer",
-                    "whale", "whale", "whale", "whale",
-                    "thank", "thank", "thank", "thank",
-                )
-            )
+        SRPBox {
+            SRPSectionHide()
         }
-
 
         CmnButton(
             text = stringResource(id = R.string._continue),
@@ -84,7 +63,8 @@ fun SRPSectionHide() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black, RoundedCornerShape(size = 10.dp)),
+            .background(Color.Black, RoundedCornerShape(size = 10.dp))
+            .padding(8.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -121,48 +101,6 @@ fun SRPSectionHide() {
     }
 }
 
-@Composable
-fun SRPSectionReveal(mnemonics: List<String>) {
-    VerticalGrid(
-        modifier = Modifier
-            .border(
-                width = 1.dp,
-                color = PurpleGrey80,
-                shape = RoundedCornerShape(size = 10.dp),
-            )
-            .padding(all = 16.dp),
-        columns = 2
-    ) {
-        mnemonics.forEachIndexed { i, phrase ->
-            Row(
-                modifier = Modifier.padding(all = 4.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = "${i + 1}.",
-                    modifier = Modifier
-                        .weight(weight = 1f)
-                        .padding(end = 4.dp),
-                    textAlign = TextAlign.Center,
-                )
-                Text(
-                    text = phrase,
-                    modifier = Modifier
-                        .weight(weight = 4f)
-                        .border(
-                            width = 1.dp,
-                            color = Purple80,
-                            shape = RoundedCornerShape(20.dp),
-                        )
-                        .padding(vertical = 12.dp),
-                    textAlign = TextAlign.Center,
-                )
-            }
-
-        }
-    }
-}
-
 
 @Preview(showBackground = true)
 @Composable
@@ -174,16 +112,4 @@ fun PreviewRevealSRPView() {
 @Composable
 fun PreviewSRPSectionHide() {
     SRPSectionHide()
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewSRPSectionReveal() {
-    SRPSectionReveal(
-        listOf(
-            "summer", "summer", "summer", "summer",
-            "whale", "whale", "whale", "whale",
-            "thank", "thank", "thank", "thank",
-        )
-    )
 }
