@@ -13,23 +13,6 @@ import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.spec.IvParameterSpec
 
-/**
- *  Example
- *  val msg = "test message"
- *
- *  // to encrypt msg and return a byteArray
- *  val encryptByteArray = encrypt(msg.encodeToByteArray())
- *
- *  // preserve encryptByteArray to string then store into DataStore
- *  val encryptString = encryptByteArray.toPreservedString
- *
- *  // preserve encryptString to ByteArray then ready to decrypt
- *  val decryptByteArray = encryptString.toPreservedByteArray
- *
- *  // decrypt ByteArray and decodeToString then get our sensitive message("test message")
- *  val decryptString = decrypt(decryptByteArray).decodeToString()
- */
-
 class CryptoManager {
 
     private val keyStore = KeyStore.getInstance(KEY_STORE_TYPE).apply { load(null) }
@@ -54,22 +37,33 @@ class CryptoManager {
             }
             .generateKey()
 
-    fun encrypt(ba: ByteArray): ByteArray? =
+    /**
+     *  @param sensitiveData the data want to encrypt
+     *  @return encrypted data as String
+     */
+    fun encrypt(sensitiveData: String): String? =
         runCatching {
             Cipher.getInstance(TRANSFORMATION)
                 .apply { init(Cipher.ENCRYPT_MODE, getKey()) }
-                .run { iv + doFinal(ba) }
+                .run { iv + doFinal(sensitiveData.encodeToByteArray()) }
+                .let { String(it, Charsets.ISO_8859_1) }
         }
             .onFailure { Log.d("CryptoManager", "Encrypt fail: $it") }
             .getOrNull()
 
-    fun decrypt(ba: ByteArray): ByteArray? =
+    /**
+     *  @param encryptedData the encrypted data want to decrypt
+     *  @return decrypted data as String
+     */
+    fun decrypt(encryptedData: String): String? =
         runCatching {
+            val ba = encryptedData.toByteArray(Charsets.ISO_8859_1)
             val iv = ba.copyOfRange(0, IV_BLOCK_SIZE)
             val decryptData = ba.copyOfRange(IV_BLOCK_SIZE, ba.size)
             Cipher.getInstance(TRANSFORMATION)
                 .apply { init(Cipher.DECRYPT_MODE, getKey(), IvParameterSpec(iv)) }
                 .run { doFinal(decryptData) }
+                .decodeToString()
         }
             .onFailure { Log.d("CryptoManager", "Decrypt fail: $it") }
             .getOrNull()

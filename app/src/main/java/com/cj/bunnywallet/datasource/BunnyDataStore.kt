@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.take
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@Suppress("TooManyFunctions")
 @Singleton
 class BunnyDataStore @Inject constructor(private val dataStore: DataStore<Preferences>) {
 
