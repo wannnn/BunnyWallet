@@ -93,6 +93,9 @@ dependencies {
     // Web3j
     implementation(libs.web3j.android)
 
+    // DataStore
+    implementation(libs.datastore.preferences)
+
     /** Testing Start */
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext)

@@ -43,6 +43,9 @@ coroutines = "1.6.4"
 # Web3j
 web3j = "4.8.7-android"
 
+# DataStore
+dataStore = "1.0.0"
+
 # Testing
 junit4 = "4.13.2"
 androidxTestExt = "1.1.5"
@@ -87,6 +90,9 @@ coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-
 
 # Web3j
 web3j-android = { group = "org.web3j", name = "core", version.ref = "web3j" }
+
+# DataStore
+datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStore" }
 
 # Test
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }

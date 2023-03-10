@@ -1,4 +1,4 @@
-package com.cj.bunnywallet
+package com.cj.bunnywallet.utils
 
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties.BLOCK_MODE_CBC
@@ -12,6 +12,23 @@ import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.spec.IvParameterSpec
+
+/**
+ *  Example
+ *  val msg = "test message"
+ *
+ *  // to encrypt msg and return a byteArray
+ *  val encryptByteArray = encrypt(msg.encodeToByteArray())
+ *
+ *  // preserve encryptByteArray to string then store into DataStore
+ *  val encryptString = encryptByteArray.toPreservedString
+ *
+ *  // preserve encryptString to ByteArray then ready to decrypt
+ *  val decryptByteArray = encryptString.toPreservedByteArray
+ *
+ *  // decrypt ByteArray and decodeToString then get our sensitive message("test message")
+ *  val decryptString = decrypt(decryptByteArray).decodeToString()
+ */
 
 class CryptoManager {
 
@@ -65,6 +82,5 @@ class CryptoManager {
 
         const val IV_BLOCK_SIZE = 16
     }
-
 
 }
