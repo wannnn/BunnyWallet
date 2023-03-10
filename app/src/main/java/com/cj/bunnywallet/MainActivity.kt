@@ -25,6 +25,10 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var appNavigator: AppNavigator
 
+    val cm = CryptoManager()
+    val msg = "test crypto message"
+    val msg2 = "test crypto message 2"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -45,6 +49,24 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             }
+        }
+
+        println("raw: $msg")
+        val ENBA = cm.encrypt(msg.encodeToByteArray())
+        println("ENBA: $ENBA")
+        ENBA?.let {
+            val DEBA = cm.decrypt(ENBA)
+            println("DEBA: $DEBA")
+            println("DEBA to String: ${DEBA?.decodeToString()}")
+        }
+
+        println("raw 2: $msg2")
+        val ENBA2 = cm.encrypt(msg2.encodeToByteArray())
+        println("ENBA2: $ENBA2")
+        ENBA2?.let {
+            val DEBA2 = cm.decrypt(ENBA2)
+            println("DEBA2: $DEBA2")
+            println("DEBA2 to String: ${DEBA2?.decodeToString()}")
         }
     }
 }
