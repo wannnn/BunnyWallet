@@ -37,7 +37,8 @@ fun VisibilityControlView(
             }
             Icon(
                 painter = painterResource(id = icon),
-                contentDescription = null
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.secondary
             )
         }
     }
