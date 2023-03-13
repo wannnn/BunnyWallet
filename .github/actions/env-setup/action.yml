@@ -1,5 +1,12 @@
 name: Environment Setup
 description: 'Set up Android environment'
+inputs:
+  STG_ETH_KEY:
+    description: 'Eth Key for stg'
+    required: true
+  PROD_ETH_KEY:
+    description: 'Eth Key for prod'
+    required: true
 runs:
   using: 'composite'
   steps:
@@ -13,3 +20,12 @@ runs:
     - name: Grant execute permission for gradlew
       shell: bash
       run: chmod +x gradlew
+
+    - name: Write keystore data to keystore.properties
+      shell: bash
+      env:
+        KEYSTORE: ./keystore.properties
+      run: |
+        echo "stgEthKey=${{ inputs.STG_ETH_KEY }}" >> $KEYSTORE
+        echo "prodEthKey=${{ inputs.PROD_ETH_KEY }}" >> $KEYSTORE
+        cat $KEYSTORE

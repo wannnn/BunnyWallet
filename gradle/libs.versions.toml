@@ -41,7 +41,7 @@ hiltNavigationCompose = "1.0.0"
 coroutines = "1.6.4"
 
 # Web3j
-web3j = "4.8.7-android"
+web3j = "4.9.7"
 
 # DataStore
 dataStore = "1.0.0"

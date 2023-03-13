@@ -15,6 +15,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuBoxScope
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,8 +31,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cj.bunnywallet.feature.importwallet.type.PhraseAmountType
-import com.cj.bunnywallet.ui.theme.Lavender100
-import com.cj.bunnywallet.ui.theme.PurpleGrey80
 
 private const val Rotate180 = 180f
 private const val Rotate360 = 360f
@@ -68,7 +67,11 @@ fun PhraseAmountSelector(
                     .background(Color.White)
             ) {
                 PhraseAmountType.values().forEach { type ->
-                    val bgColor = if (currentPhraseAmount == type) PurpleGrey80 else Color.Transparent
+                    val bgColor = if (currentPhraseAmount == type) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.background
+                    }
                     DropdownMenuItem(
                         text = { Text(text = stringResource(id = type.txtId)) },
                         onClick = {
@@ -93,8 +96,8 @@ private fun ExposedDropdownMenuBoxScope.AmountView(
         modifier = Modifier
             .wrapContentWidth()
             .menuAnchor()
-            .border(width = 1.dp, color = PurpleGrey80, shape = RoundedCornerShape(8.dp))
-            .background(color = Lavender100, shape = RoundedCornerShape(8.dp))
+            .border(width = 1.dp, color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(8.dp))
+            .background(color = MaterialTheme.colorScheme.background, shape = RoundedCornerShape(8.dp))
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

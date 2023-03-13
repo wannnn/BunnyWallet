@@ -60,6 +60,8 @@
     <!-- Import Wallet   -->
     <string name="import_from_seed">Import from seed</string>
     <string name="set_up_pwd">Set Up Password</string>
+    <string name="eight_characters">Must be at least 8 characters</string>
+    <string name="pwd_not_match">Passwords don\'t match</string>
     <string name="btn_import">IMPORT</string>
     <string name="twelve_words">I have a 12-words phrase</string>
     <string name="fifteen_words">I have a 15-words phrase</string>

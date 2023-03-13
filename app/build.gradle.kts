@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -5,6 +8,12 @@ plugins {
     id("com.google.dagger.hilt.android")
 
     kotlin("kapt")
+}
+
+// Load keystore properties
+val keystorePropsFile = rootProject.file("keystore.properties")
+val keystoreProps = Properties().apply {
+    load(FileInputStream(keystorePropsFile))
 }
 
 android {
@@ -28,6 +37,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+            buildConfigField(type = "String", name = "ETH_DOMAIN", value = "\"eth-mainnet\"")
+            buildConfigField(type = "String", name = "ETH_KEY", value = "\"${keystoreProps["prodEthKey"]}\"")
+        }
+        getByName("debug") {
+            buildConfigField(type = "String", name = "ETH_DOMAIN", value = "\"eth-goerli\"")
+            buildConfigField(type = "String", name = "ETH_KEY", value = "\"${keystoreProps["stgEthKey"]}\"")
         }
     }
 
