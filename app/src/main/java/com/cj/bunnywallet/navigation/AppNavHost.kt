@@ -38,7 +38,7 @@ fun AppNavHost(
         modifier = modifier,
     ) {
         mainGraph()
-        createWalletGraph(navController)
+        createWalletGraph()
     }
 }
 

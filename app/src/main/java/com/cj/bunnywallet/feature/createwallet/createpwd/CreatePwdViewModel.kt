@@ -78,9 +78,12 @@ class CreatePwdViewModel @Inject constructor(appNavigator: AppNavigator) :
                 )
             }
 
-            CreatePwdEvent.CreatePwd -> {
-                navigateTo(NavEvent.NavTo(CreateWalletRoute.SecureWallet.route))
-            }
+            CreatePwdEvent.CreatePwd ->
+                navigateTo(
+                    NavEvent.NavTo(
+                        CreateWalletRoute.SecureWallet.genRoute(curState.pwd),
+                    ),
+                )
         }
     }
 
