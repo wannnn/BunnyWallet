@@ -32,8 +32,8 @@ fun ProgressGraph() {
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        ProgressBall("1", true)
-        ProgressLine(true)
+        ProgressBall("1", false)
+        ProgressLine(false)
         ProgressBall("2", false)
         ProgressLine(false)
         ProgressBall("3", false)

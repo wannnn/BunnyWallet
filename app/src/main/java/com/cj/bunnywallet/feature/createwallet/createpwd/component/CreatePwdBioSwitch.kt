@@ -15,9 +15,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.R
+import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdEvent
 
 @Composable
-fun CreateWalletBioSwitch() {
+fun CreateWalletBioSwitch(
+    bioEnabled: Boolean,
+    uiEvent: (CreatePwdEvent) -> Unit,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -31,8 +35,8 @@ fun CreateWalletBioSwitch() {
         )
 
         Switch(
-            checked = true,
-            onCheckedChange = {},
+            checked = bioEnabled,
+            onCheckedChange = { uiEvent(CreatePwdEvent.SetBiometrics(it)) },
             modifier = Modifier.scale(scale = 0.8f),
         )
     }
@@ -41,5 +45,5 @@ fun CreateWalletBioSwitch() {
 @Preview(showBackground = true, widthDp = 400)
 @Composable
 fun PreviewCreateWalletBioSwitch() {
-    CreateWalletBioSwitch()
+    CreateWalletBioSwitch(true) {}
 }

@@ -1,13 +1,13 @@
 package com.cj.bunnywallet.feature.createwallet.createpwd.component
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,44 +17,58 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.PasswordTextField
-import com.cj.bunnywallet.ui.theme.Purple40
+import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdEvent
+import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdState
 
 @Composable
-fun CreatePwdField() {
+fun CreatePwdField(
+    uiState: CreatePwdState,
+    uiEvent: (CreatePwdEvent) -> Unit,
+) {
     Column(
         modifier = Modifier.fillMaxWidth(),
     ) {
-        IconButton(
-            onClick = { /*TODO*/ },
-            modifier = Modifier
-                .size(32.dp)
-                .padding(4.dp)
-                .align(Alignment.End),
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_visibility),
-                contentDescription = null,
-                tint = Purple40,
-            )
-        }
+        PwdVisibilityIcon(uiState.pwdVisibility, uiEvent)
 
         PasswordTextField(
-            passwordState = "",
-            passwordStateUpdate = { /*TODO*/ },
+            passwordState = uiState.pwd,
+            passwordStateUpdate = { uiEvent(CreatePwdEvent.SetPwd(it)) },
             modifier = Modifier.padding(bottom = 16.dp),
             label = stringResource(id = R.string.new_password),
+            showPassword = uiState.pwdVisibility,
+            errorMsg = uiState.pwdErrMsgRes?.let { stringResource(id = it) }
         )
 
         PasswordTextField(
-            passwordState = "",
-            passwordStateUpdate = { /*TODO*/ },
+            passwordState = uiState.confirmPwd,
+            passwordStateUpdate = { uiEvent(CreatePwdEvent.SetConfirmPwd(it)) },
             label = stringResource(id = R.string.confirm_password),
+            showPassword = uiState.pwdVisibility,
+            errorMsg = uiState.confirmPwdErrMsgRes?.let { stringResource(id = it) }
         )
+    }
+}
 
-        Text(
-            text = stringResource(id = R.string.password_condition_hint),
-            modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
-            style = MaterialTheme.typography.labelMedium,
+@Composable
+private fun ColumnScope.PwdVisibilityIcon(
+    pwdVisibility: Boolean,
+    uiEvent: (CreatePwdEvent) -> Unit,
+) {
+    IconButton(
+        onClick = { uiEvent(CreatePwdEvent.SetPwdVisibility(!pwdVisibility)) },
+        modifier = Modifier
+            .size(32.dp)
+            .padding(4.dp)
+            .align(Alignment.End),
+    ) {
+        Icon(
+            painter = if (pwdVisibility) {
+                painterResource(id = R.drawable.ic_visibility)
+            } else {
+                painterResource(id = R.drawable.ic_visibility_off)
+            },
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.secondary,
         )
     }
 }
@@ -62,5 +76,5 @@ fun CreatePwdField() {
 @Preview(showBackground = true, widthDp = 400)
 @Composable
 fun PreviewCreatePwdField() {
-    CreatePwdField()
+    CreatePwdField(CreatePwdState()) {}
 }

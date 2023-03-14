@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.feature.common.AppTopBar
 import com.cj.bunnywallet.feature.createwallet.component.progress.CreateWalletProgress
 import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwd
+import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdState
 
 @Composable
 fun CreateWalletContainer(content: @Composable ColumnScope.() -> Unit) {
@@ -40,6 +41,6 @@ fun CreateWalletContainer(content: @Composable ColumnScope.() -> Unit) {
 @Composable
 fun PreviewCreateWalletContainer() {
     CreateWalletContainer {
-        CreatePwd {}
+        CreatePwd(CreatePwdState()) {}
     }
 }

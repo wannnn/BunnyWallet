@@ -51,8 +51,7 @@ fun WarnSkipDialog(onDismiss: () -> Unit) {
                     style = MaterialTheme.typography.titleLarge,
                 )
 
-                Declaration(R.string.skip_warning_declaration)
-
+                Declaration(R.string.skip_warning_declaration, false) {}
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
