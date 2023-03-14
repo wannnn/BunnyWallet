@@ -8,6 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
+import com.cj.bunnywallet.feature.createwallet.CreateWalletViewModel
 import com.cj.bunnywallet.feature.createwallet.component.CreateWalletContainer
 import com.cj.bunnywallet.feature.createwallet.component.Declaration
 import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreatePwdField
@@ -17,7 +18,10 @@ import com.cj.bunnywallet.navigation.NavEvent
 import com.cj.bunnywallet.navigation.route.CreateWalletRoute
 
 @Composable
-fun CreatePwdRoute(viewModel: CreatePwdViewModel = hiltViewModel()) {
+fun CreatePwdRoute(
+    parentViewModel: CreateWalletViewModel,
+    viewModel: CreatePwdViewModel = hiltViewModel(),
+) {
     CreatePwdScreen(viewModel::navigateTo)
 }
 
