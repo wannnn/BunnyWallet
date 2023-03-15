@@ -7,6 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.cj.bunnywallet.feature.createwallet.CreateWalletStep
 import com.cj.bunnywallet.feature.createwallet.component.CreateWalletContainer
 import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdViewModel
 import com.cj.bunnywallet.feature.createwallet.securewallet.component.RevealSRPView
@@ -21,7 +22,7 @@ fun SecureWalletRoute(viewModel: CreatePwdViewModel = hiltViewModel()) {
 
 @Composable
 fun SecureWalletScreen(navEvent: (NavEvent) -> Unit) {
-    CreateWalletContainer {
+    CreateWalletContainer(CreateWalletStep.SECURE_WALLET, {}) {
         SecureWallet(navEvent)
     }
 }

@@ -28,6 +28,7 @@ fun NavGraphBuilder.createWalletGraph() {
             CreatePwdScreen(
                 uiState = uiState,
                 uiEvent = viewModel::handleEvent,
+                navEvent = viewModel::navigateTo,
             )
         }
 

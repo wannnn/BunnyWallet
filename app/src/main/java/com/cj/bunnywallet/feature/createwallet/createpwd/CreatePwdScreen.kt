@@ -7,18 +7,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
+import com.cj.bunnywallet.feature.createwallet.CreateWalletStep
 import com.cj.bunnywallet.feature.createwallet.component.CreateWalletContainer
 import com.cj.bunnywallet.feature.createwallet.component.Declaration
 import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreatePwdField
 import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreatePwdTitle
 import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreateWalletBioSwitch
+import com.cj.bunnywallet.navigation.NavEvent
 
 @Composable
 fun CreatePwdScreen(
     uiState: CreatePwdState,
     uiEvent: (CreatePwdEvent) -> Unit,
+    navEvent: (NavEvent) -> Unit,
 ) {
-    CreateWalletContainer {
+    CreateWalletContainer(CreateWalletStep.CREATE_PWD, navEvent) {
         CreatePwd(uiState, uiEvent)
     }
 }
@@ -47,7 +50,7 @@ fun CreatePwd(
 @Preview(showBackground = true)
 @Composable
 fun PreviewCreatePwdScreen() {
-    CreatePwdScreen(CreatePwdState()) {}
+    CreatePwdScreen(CreatePwdState(), {}, {})
 }
 
 @Preview(showBackground = true)

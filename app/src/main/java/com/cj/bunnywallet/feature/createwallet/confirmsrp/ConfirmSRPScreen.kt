@@ -20,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
 import com.cj.bunnywallet.feature.common.VerticalGrid
+import com.cj.bunnywallet.feature.createwallet.CreateWalletStep
 import com.cj.bunnywallet.feature.createwallet.component.CreateWalletContainer
 import com.cj.bunnywallet.feature.createwallet.component.SRPBox
 import com.cj.bunnywallet.feature.createwallet.component.SRPContent
@@ -35,7 +36,7 @@ fun ConfirmSRPRoute(viewModel: ConfirmSRPViewModel = hiltViewModel()) {
 
 @Composable
 fun ConfirmSRPScreen(navEvent: (NavEvent) -> Unit) {
-    CreateWalletContainer {
+    CreateWalletContainer(CreateWalletStep.CONFIRM_SRP, {}) {
         ConfirmSRP(navEvent)
     }
 }

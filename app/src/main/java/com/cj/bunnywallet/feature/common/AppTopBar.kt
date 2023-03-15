@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.R
 
 @Composable
-fun AppTopBar() {
+fun AppTopBar(onBackClicked: () -> Unit) {
 
     Box(
         modifier = Modifier
@@ -28,7 +28,7 @@ fun AppTopBar() {
     ) {
 
         IconButton(
-            onClick = { /*TODO*/ },
+            onClick = onBackClicked,
             modifier = Modifier
                 .padding(start = 8.dp)
                 .align(Alignment.CenterStart)
@@ -52,5 +52,5 @@ fun AppTopBar() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewAppTopBar() {
-    AppTopBar()
+    AppTopBar {}
 }

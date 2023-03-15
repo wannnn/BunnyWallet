@@ -7,14 +7,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_4_XL
 import androidx.compose.ui.tooling.preview.Preview
+import com.cj.bunnywallet.feature.createwallet.CreateWalletStep
 
 @Composable
-fun CreateWalletProgress() {
+fun CreateWalletProgress(step: CreateWalletStep) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        ProgressGraph()
+        ProgressGraph(step)
         ProgressMessages()
     }
 }
@@ -22,5 +23,5 @@ fun CreateWalletProgress() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewCreateWalletProgress() {
-    CreateWalletProgress()
+    CreateWalletProgress(CreateWalletStep.DONE)
 }

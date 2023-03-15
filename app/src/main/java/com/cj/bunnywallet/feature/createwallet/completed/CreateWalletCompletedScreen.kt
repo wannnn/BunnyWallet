@@ -27,6 +27,7 @@ import com.cj.bunnywallet.feature.createwallet.component.CreateWalletContainer
 import com.cj.bunnywallet.ui.theme.Purple40
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
+import com.cj.bunnywallet.feature.createwallet.CreateWalletStep
 
 @Composable
 fun CreateWalletCompletedRoute() {
@@ -35,7 +36,7 @@ fun CreateWalletCompletedRoute() {
 
 @Composable
 private fun CreateWalletCompletedScreen() {
-    CreateWalletContainer {
+    CreateWalletContainer(CreateWalletStep.DONE, {}) {
         Completed()
     }
 }
