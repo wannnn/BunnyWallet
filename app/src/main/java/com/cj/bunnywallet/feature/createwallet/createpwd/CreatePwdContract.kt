@@ -15,11 +15,15 @@ sealed class CreatePwdEvent {
 data class CreatePwdState(
     val pwd: String = "",
     @StringRes val pwdErrMsgRes: Int? = null,
+    private val pwdIsValid: Boolean = false,
     val confirmPwd: String = "",
     @StringRes val confirmPwdErrMsgRes: Int? = null,
+    private val confirmPwdIsValid: Boolean = false,
     val samePwd: Boolean = false,
     val pwdVisibility: Boolean = false,
     val bioEnabled: Boolean = true,
     val declarationChecked: Boolean = false,
-    val createPwdBtnEnabled: Boolean = false,
-) : UiState
+) : UiState {
+    val createPwdBtnEnabled: Boolean
+        get() = pwdIsValid && confirmPwdIsValid && declarationChecked
+}

@@ -15,7 +15,7 @@ fun CreateWalletProgress(step: CreateWalletStep) {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        ProgressGraph(step)
+        ProgressGraph(step = step)
         ProgressMessages()
     }
 }
@@ -23,5 +23,5 @@ fun CreateWalletProgress(step: CreateWalletStep) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewCreateWalletProgress() {
-    CreateWalletProgress(CreateWalletStep.DONE)
+    CreateWalletProgress(step = CreateWalletStep.DONE)
 }

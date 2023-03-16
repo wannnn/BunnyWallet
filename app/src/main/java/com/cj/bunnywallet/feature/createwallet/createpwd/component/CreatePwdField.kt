@@ -29,7 +29,10 @@ fun CreatePwdField(
     Column(
         modifier = Modifier.fillMaxWidth(),
     ) {
-        PwdVisibilityIcon(uiState.pwdVisibility, uiEvent)
+        PwdVisibilityIcon(
+            pwdVisibility = uiState.pwdVisibility,
+            uiEvent = uiEvent,
+        )
 
         PasswordTextField(
             passwordState = uiState.pwd,

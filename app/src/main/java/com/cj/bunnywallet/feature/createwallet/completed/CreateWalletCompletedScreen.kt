@@ -36,7 +36,10 @@ fun CreateWalletCompletedRoute() {
 
 @Composable
 private fun CreateWalletCompletedScreen() {
-    CreateWalletContainer(CreateWalletStep.DONE, {}) {
+    CreateWalletContainer(
+        step = CreateWalletStep.DONE,
+        navEvent = {},
+    ) {
         Completed()
     }
 }

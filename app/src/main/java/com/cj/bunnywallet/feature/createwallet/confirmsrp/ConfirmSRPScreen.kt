@@ -36,7 +36,10 @@ fun ConfirmSRPRoute(viewModel: ConfirmSRPViewModel = hiltViewModel()) {
 
 @Composable
 fun ConfirmSRPScreen(navEvent: (NavEvent) -> Unit) {
-    CreateWalletContainer(CreateWalletStep.CONFIRM_SRP, {}) {
+    CreateWalletContainer(
+        step = CreateWalletStep.CONFIRM_SRP,
+        navEvent = {},
+    ) {
         ConfirmSRP(navEvent)
     }
 }

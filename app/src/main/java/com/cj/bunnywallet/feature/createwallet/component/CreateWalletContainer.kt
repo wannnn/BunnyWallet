@@ -29,7 +29,7 @@ fun CreateWalletContainer(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AppTopBar { navEvent(NavEvent.NavBack) }
+        AppTopBar(onBackClicked = { navEvent(NavEvent.NavBack) })
         Column(
             modifier = Modifier
                 .fillMaxWidth(fraction = 0.8f)
@@ -37,7 +37,7 @@ fun CreateWalletContainer(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            CreateWalletProgress(step)
+            CreateWalletProgress(step = step)
             content()
         }
     }
@@ -47,8 +47,12 @@ fun CreateWalletContainer(
 @Composable
 fun PreviewCreateWalletContainer() {
     CreateWalletContainer(
-        CreateWalletStep.CREATE_PWD,
-        {},
-        { CreatePwd(CreatePwdState()) {} }
-    )
+        step = CreateWalletStep.CREATE_PWD,
+        navEvent = {},
+    ) {
+        CreatePwd(
+            uiState = CreatePwdState(),
+            uiEvent = {},
+        )
+    }
 }

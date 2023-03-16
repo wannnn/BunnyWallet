@@ -21,9 +21,9 @@ fun ProgressMessages() {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        ProgressMsg(R.string.create_password)
-        ProgressMsg(R.string.secure_wallet)
-        ProgressMsg(R.string.confirm_mnemonics)
+        ProgressMsg(msgRes = R.string.create_password)
+        ProgressMsg(msgRes = R.string.secure_wallet)
+        ProgressMsg(msgRes = R.string.confirm_mnemonics)
     }
 }
 

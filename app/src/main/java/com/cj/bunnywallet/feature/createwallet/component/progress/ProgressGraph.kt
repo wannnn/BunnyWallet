@@ -36,25 +36,25 @@ fun ProgressGraph(step: CreateWalletStep) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         ProgressBall(
-            CreateWalletStep.CREATE_PWD.stepNum,
-            Modifier.ballColor(step, CreateWalletStep.CREATE_PWD),
-            ballTextColor(step, CreateWalletStep.CREATE_PWD),
+            stepNum = CreateWalletStep.CREATE_PWD.stepNum,
+            modifier = Modifier.ballColor(step, CreateWalletStep.CREATE_PWD),
+            textColor = ballTextColor(step, CreateWalletStep.CREATE_PWD),
         )
 
-        ProgressLine(lineColor(step, CreateWalletStep.CREATE_PWD))
+        ProgressLine(color = lineColor(step, CreateWalletStep.CREATE_PWD))
 
         ProgressBall(
-            CreateWalletStep.SECURE_WALLET.stepNum,
-            Modifier.ballColor(step, CreateWalletStep.SECURE_WALLET),
-            ballTextColor(step, CreateWalletStep.SECURE_WALLET),
+            stepNum = CreateWalletStep.SECURE_WALLET.stepNum,
+            modifier = Modifier.ballColor(step, CreateWalletStep.SECURE_WALLET),
+            textColor = ballTextColor(step, CreateWalletStep.SECURE_WALLET),
         )
 
-        ProgressLine(lineColor(step, CreateWalletStep.SECURE_WALLET))
+        ProgressLine(color = lineColor(step, CreateWalletStep.SECURE_WALLET))
 
         ProgressBall(
-            CreateWalletStep.CONFIRM_SRP.stepNum,
-            Modifier.ballColor(step, CreateWalletStep.CONFIRM_SRP),
-            ballTextColor(step, CreateWalletStep.CONFIRM_SRP),
+            stepNum = CreateWalletStep.CONFIRM_SRP.stepNum,
+            modifier = Modifier.ballColor(step, CreateWalletStep.CONFIRM_SRP),
+            textColor = ballTextColor(step, CreateWalletStep.CONFIRM_SRP),
         )
     }
 }
@@ -82,16 +82,22 @@ private fun RowScope.ProgressLine(color: Color) {
 }
 
 private val doneBackground = Modifier.composed {
-    background(MaterialTheme.colorScheme.secondary, shape = CircleShape)
+    background(color = MaterialTheme.colorScheme.secondary, shape = CircleShape)
 }
 
 private val inProgressOutline = Modifier.composed {
-    clip(CircleShape).border(2.dp, MaterialTheme.colorScheme.secondary, CircleShape)
+    this
+        .clip(shape = CircleShape)
+        .border(
+            width = 2.dp,
+            color = MaterialTheme.colorScheme.secondary,
+            shape = CircleShape,
+        )
 }
 
 private val preparationOutline = Modifier
-    .clip(CircleShape)
-    .border(2.dp, Gray300, CircleShape)
+    .clip(shape = CircleShape)
+    .border(width = 2.dp, color = Gray300, shape = CircleShape)
 
 private fun Modifier.ballColor(step: CreateWalletStep, compareState: CreateWalletStep) = then(
     when {
@@ -101,28 +107,26 @@ private fun Modifier.ballColor(step: CreateWalletStep, compareState: CreateWalle
     }
 )
 
-private fun ballTextColor(step: CreateWalletStep, compareState: CreateWalletStep) =
-    when {
-        step == compareState -> Color.Black
-        step > compareState -> Color.White
-        else -> Gray300
-    }
+private fun ballTextColor(step: CreateWalletStep, compareState: CreateWalletStep) = when {
+    step == compareState -> Color.Black
+    step > compareState -> Color.White
+    else -> Gray300
+}
 
 @Composable
-private fun lineColor(step: CreateWalletStep, compareState: CreateWalletStep) =
-    when {
-        step > compareState -> MaterialTheme.colorScheme.secondary
-        else -> Gray300
-    }
+private fun lineColor(step: CreateWalletStep, compareState: CreateWalletStep) = when {
+    step > compareState -> MaterialTheme.colorScheme.secondary
+    else -> Gray300
+}
 
 
 @Preview(showBackground = true, widthDp = 400)
 @Composable
 fun PreviewProgressGraph() {
     Column {
-        ProgressGraph(CreateWalletStep.CREATE_PWD)
-        ProgressGraph(CreateWalletStep.SECURE_WALLET)
-        ProgressGraph(CreateWalletStep.CONFIRM_SRP)
-        ProgressGraph(CreateWalletStep.DONE)
+        ProgressGraph(step = CreateWalletStep.CREATE_PWD)
+        ProgressGraph(step = CreateWalletStep.SECURE_WALLET)
+        ProgressGraph(step = CreateWalletStep.CONFIRM_SRP)
+        ProgressGraph(step = CreateWalletStep.DONE)
     }
 }

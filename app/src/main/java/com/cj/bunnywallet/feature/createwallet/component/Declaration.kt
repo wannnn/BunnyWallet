@@ -48,5 +48,9 @@ fun Declaration(
 @Preview(showBackground = true)
 @Composable
 fun PreviewDeclaration() {
-    Declaration(R.string.create_password_declaration, false) {}
+    Declaration(
+        declaration = R.string.create_password_declaration,
+        checked = false,
+        onCheckedChange = {},
+    )
 }
