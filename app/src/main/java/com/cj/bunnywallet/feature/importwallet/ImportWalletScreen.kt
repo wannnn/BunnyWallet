@@ -42,7 +42,7 @@ fun ImportWalletScreen(
     uiEvent: (ImportWalletEvent) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
-        AppTopBar()
+        AppTopBar {}
 
         var phraseVisibility by remember { mutableStateOf(true) }
         var pwdVisibility by remember { mutableStateOf(true) }

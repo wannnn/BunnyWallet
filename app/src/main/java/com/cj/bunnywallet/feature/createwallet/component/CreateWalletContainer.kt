@@ -13,16 +13,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.feature.common.AppTopBar
+import com.cj.bunnywallet.feature.createwallet.CreateWalletStep
 import com.cj.bunnywallet.feature.createwallet.component.progress.CreateWalletProgress
 import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwd
+import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdState
+import com.cj.bunnywallet.navigation.NavEvent
 
 @Composable
-fun CreateWalletContainer(content: @Composable ColumnScope.() -> Unit) {
+fun CreateWalletContainer(
+    step: CreateWalletStep,
+    navEvent: (NavEvent) -> Unit,
+    content: @Composable ColumnScope.() -> Unit,
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AppTopBar()
+        AppTopBar(onBackClicked = { navEvent(NavEvent.NavBack) })
         Column(
             modifier = Modifier
                 .fillMaxWidth(fraction = 0.8f)
@@ -30,7 +37,7 @@ fun CreateWalletContainer(content: @Composable ColumnScope.() -> Unit) {
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            CreateWalletProgress()
+            CreateWalletProgress(step = step)
             content()
         }
     }
@@ -39,7 +46,13 @@ fun CreateWalletContainer(content: @Composable ColumnScope.() -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewCreateWalletContainer() {
-    CreateWalletContainer {
-        CreatePwd {}
+    CreateWalletContainer(
+        step = CreateWalletStep.CREATE_PWD,
+        navEvent = {},
+    ) {
+        CreatePwd(
+            uiState = CreatePwdState(),
+            uiEvent = {},
+        )
     }
 }

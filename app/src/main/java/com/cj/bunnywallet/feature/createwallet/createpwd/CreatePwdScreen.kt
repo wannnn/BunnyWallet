@@ -1,54 +1,74 @@
 package com.cj.bunnywallet.feature.createwallet.createpwd
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
+import com.cj.bunnywallet.feature.createwallet.CreateWalletStep
 import com.cj.bunnywallet.feature.createwallet.component.CreateWalletContainer
 import com.cj.bunnywallet.feature.createwallet.component.Declaration
 import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreatePwdField
 import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreatePwdTitle
 import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreateWalletBioSwitch
 import com.cj.bunnywallet.navigation.NavEvent
-import com.cj.bunnywallet.navigation.route.CreateWalletRoute
 
 @Composable
-fun CreatePwdRoute(viewModel: CreatePwdViewModel = hiltViewModel()) {
-    CreatePwdScreen(viewModel::navigateTo)
-}
-
-@Composable
-fun CreatePwdScreen(navEvent: (NavEvent) -> Unit) {
-    CreateWalletContainer {
-        CreatePwd(navEvent)
+fun CreatePwdScreen(
+    uiState: CreatePwdState,
+    uiEvent: (CreatePwdEvent) -> Unit,
+    navEvent: (NavEvent) -> Unit,
+) {
+    CreateWalletContainer(
+        step = CreateWalletStep.CREATE_PWD,
+        navEvent = navEvent,
+    ) {
+        CreatePwd(uiState, uiEvent)
     }
 }
 
 @Composable
-fun CreatePwd(navEvent: (NavEvent) -> Unit) {
+fun CreatePwd(
+    uiState: CreatePwdState,
+    uiEvent: (CreatePwdEvent) -> Unit,
+) {
     CreatePwdTitle()
-    CreatePwdField()
-    CreateWalletBioSwitch()
-    Declaration(R.string.create_password_declaration)
+    CreatePwdField(uiState = uiState, uiEvent = uiEvent)
+    CreateWalletBioSwitch(bioEnabled = uiState.bioEnabled, uiEvent = uiEvent)
+    Declaration(
+        declaration = R.string.create_password_declaration,
+        checked = uiState.declarationChecked,
+        onCheckedChange = { uiEvent(CreatePwdEvent.SetCheckDeclaration(it)) }
+    )
     CmnButton(
         text = stringResource(id = R.string.create_password),
-        onClick = { navEvent(NavEvent.NavTo(CreateWalletRoute.SecureWallet.route)) },
+        onClick = { uiEvent(CreatePwdEvent.CreatePwd) },
         modifier = Modifier.fillMaxWidth(),
+        enabled = uiState.createPwdBtnEnabled,
     )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewCreatePwdScreen() {
-    CreatePwdScreen {}
+    CreatePwdScreen(
+        uiState = CreatePwdState(),
+        uiEvent = {},
+        navEvent = {},
+    )
 }
 
-@Preview(showBackground = true, widthDp = 360)
+@Preview(showBackground = true)
 @Composable
 fun PreviewCreatePwd() {
-    CreatePwd {}
+    Column {
+        CreatePwd(
+            uiState = CreatePwdState(),
+            uiEvent = {},
+        )
+    }
 }

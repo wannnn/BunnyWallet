@@ -20,16 +20,18 @@ import com.cj.bunnywallet.ui.theme.NoRippleInteractionSource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Declaration(declaration: Int) {
+fun Declaration(
+    declaration: Int,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
     ) {
         CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
             Checkbox(
-                checked = false,
-                onCheckedChange = {
-                    /* TODO */
-                },
+                checked = checked,
+                onCheckedChange = onCheckedChange,
                 modifier = Modifier.scale(scale = 0.9f),
                 interactionSource = NoRippleInteractionSource()
             )
@@ -46,5 +48,9 @@ fun Declaration(declaration: Int) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewDeclaration() {
-    Declaration(R.string.create_password_declaration)
+    Declaration(
+        declaration = R.string.create_password_declaration,
+        checked = false,
+        onCheckedChange = {},
+    )
 }
