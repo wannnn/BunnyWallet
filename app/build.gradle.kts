@@ -39,10 +39,12 @@ android {
             )
             buildConfigField(type = "String", name = "ETH_DOMAIN", value = "\"eth-mainnet\"")
             buildConfigField(type = "String", name = "ETH_KEY", value = "\"${keystoreProps["prodEthKey"]}\"")
+            buildConfigField(type = "String", name = "DEBUG_MNEMONIC", value = "\"\"")
         }
         getByName("debug") {
             buildConfigField(type = "String", name = "ETH_DOMAIN", value = "\"eth-goerli\"")
             buildConfigField(type = "String", name = "ETH_KEY", value = "\"${keystoreProps["stgEthKey"]}\"")
+            buildConfigField(type = "String", name = "DEBUG_MNEMONIC", value = "\"${keystoreProps["debugMnemonic"]}\"")
         }
     }
 

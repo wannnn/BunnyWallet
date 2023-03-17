@@ -1,5 +1,6 @@
 package com.cj.bunnywallet.feature.importwallet
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -27,22 +30,17 @@ import com.cj.bunnywallet.feature.importwallet.components.ImportFromSeedTitle
 import com.cj.bunnywallet.feature.importwallet.components.PhraseAmountSelector
 import com.cj.bunnywallet.feature.importwallet.components.PhraseTextField
 import com.cj.bunnywallet.feature.importwallet.components.VisibilityControlView
-
-@Composable
-fun ImportWalletRoute(
-    uiState: ImportWalletState,
-    uiEvent: (ImportWalletEvent) -> Unit
-) {
-    ImportWalletScreen(uiState, uiEvent)
-}
+import com.cj.bunnywallet.navigation.NavEvent
+import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 
 @Composable
 fun ImportWalletScreen(
     uiState: ImportWalletState,
-    uiEvent: (ImportWalletEvent) -> Unit
+    uiEvent: (ImportWalletEvent) -> Unit,
+    navEvent: (NavEvent) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
-        AppTopBar {}
+        AppTopBar(onBackClicked = { navEvent(NavEvent.NavBack) })
 
         var phraseVisibility by remember { mutableStateOf(true) }
         var pwdVisibility by remember { mutableStateOf(true) }
@@ -127,11 +125,17 @@ fun ImportWalletScreen(
     }
 }
 
-@Preview
+@Preview(name = "Light Mode", showBackground = true)
+@Preview(name = "Dark Mode", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 fun PreviewImportWalletScreen() {
-    ImportWalletScreen(
-        uiState = ImportWalletState(),
-        uiEvent = {}
-    )
+    BunnyWalletTheme {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            ImportWalletScreen(
+                uiState = ImportWalletState(),
+                uiEvent = {},
+                navEvent = {}
+            )
+        }
+    }
 }
