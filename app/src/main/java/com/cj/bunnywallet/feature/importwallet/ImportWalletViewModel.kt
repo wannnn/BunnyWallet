@@ -7,6 +7,7 @@ import com.cj.bunnywallet.reducer.Reducer
 import com.cj.bunnywallet.reducer.ReducerImp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.web3j.crypto.Bip44WalletUtils
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -56,6 +57,6 @@ class ImportWalletViewModel @Inject constructor() : ViewModel(),
 
         val credentials = Bip44WalletUtils.loadBip44Credentials("", mnemonic)
 
-        println(credentials.address)
+        Timber.d(message = "address: ${credentials.address}")
     }
 }

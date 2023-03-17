@@ -6,8 +6,8 @@ import android.security.keystore.KeyProperties.ENCRYPTION_PADDING_PKCS7
 import android.security.keystore.KeyProperties.KEY_ALGORITHM_AES
 import android.security.keystore.KeyProperties.PURPOSE_DECRYPT
 import android.security.keystore.KeyProperties.PURPOSE_ENCRYPT
-import android.util.Log
 import com.cj.bunnywallet.extensions.asType
+import timber.log.Timber
 import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
@@ -48,7 +48,7 @@ class CryptoManager {
                 .run { iv + doFinal(sensitiveData.encodeToByteArray()) }
                 .let { String(it, Charsets.ISO_8859_1) }
         }
-            .onFailure { Log.d("CryptoManager", "Encrypt fail: $it") }
+            .onFailure { Timber.d(message = "Encrypt fail: $it") }
             .getOrNull()
 
     /**
@@ -65,7 +65,7 @@ class CryptoManager {
                 .run { doFinal(decryptData) }
                 .decodeToString()
         }
-            .onFailure { Log.d("CryptoManager", "Decrypt fail: $it") }
+            .onFailure { Timber.d(message = "Decrypt fail: $it") }
             .getOrNull()
 
     private companion object {
