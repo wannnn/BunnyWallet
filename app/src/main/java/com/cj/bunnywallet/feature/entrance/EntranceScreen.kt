@@ -9,15 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavBackStackEntry
 import com.cj.bunnywallet.navigation.NavEvent
 import com.cj.bunnywallet.navigation.route.MainRoute
-
-@Composable
-fun EntranceRoute(viewModel: EntranceViewModel = hiltViewModel()) {
-    EntranceScreen(viewModel::navigateTo)
-}
 
 @Composable
 fun EntranceScreen(navEvent: (NavEvent) -> Unit) {
@@ -32,6 +25,10 @@ fun EntranceScreen(navEvent: (NavEvent) -> Unit) {
 
         Button(onClick = { navEvent(NavEvent.NavTo(MainRoute.ImportWallet.route)) }) {
             Text(text = "To Import Wallet Screen")
+        }
+
+        Button(onClick = { navEvent(NavEvent.NavTo(MainRoute.Home.route)) }) {
+            Text(text = "To Home Screen")
         }
     }
 }

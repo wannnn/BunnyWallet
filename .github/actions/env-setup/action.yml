@@ -7,6 +7,9 @@ inputs:
   PROD_ETH_KEY:
     description: 'Eth Key for prod'
     required: true
+  DEBUG_MNEMONIC:
+    description: 'mnemonic for debug'
+    required: false
 runs:
   using: 'composite'
   steps:
@@ -28,4 +31,5 @@ runs:
       run: |
         echo "stgEthKey=${{ inputs.STG_ETH_KEY }}" >> $KEYSTORE
         echo "prodEthKey=${{ inputs.PROD_ETH_KEY }}" >> $KEYSTORE
+        echo "debugMnemonic=${{ inputs.DEBUG_MNEMONIC }}" >> $KEYSTORE
         cat $KEYSTORE
