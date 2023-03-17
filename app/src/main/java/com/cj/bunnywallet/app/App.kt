@@ -2,15 +2,18 @@ package com.cj.bunnywallet.app
 
 import android.app.Application
 import com.cj.bunnywallet.BuildConfig
+import com.cj.bunnywallet.utils.CustomDebugTree
 import dagger.hilt.android.HiltAndroidApp
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.http.HttpService
+import timber.log.Timber
 
 @HiltAndroidApp
 class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        if (BuildConfig.DEBUG) Timber.plant(CustomDebugTree())
         initWeb3j()
     }
 
@@ -26,13 +29,13 @@ class App : Application() {
         }
             .onSuccess {
                 if (it.hasError()) {
-                    println("Connected to Ethereum Failed: ${it.error.message}")
+                    Timber.d(message = "Connected to Ethereum Failed: ${it.error.message}")
                 } else {
-                    println("Connected to Ethereum")
+                    Timber.d(message = "Connected to Ethereum")
                 }
             }
             .onFailure {
-                println("Connected to Ethereum Exception: ${it.message}")
+                Timber.d(message = "Connected to Ethereum Exception: ${it.message}")
             }
     }
 }

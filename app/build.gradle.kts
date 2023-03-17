@@ -111,6 +111,9 @@ dependencies {
     // DataStore
     implementation(libs.datastore.preferences)
 
+    // Timber
+    implementation(libs.timber)
+
     /** Testing Start */
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext)

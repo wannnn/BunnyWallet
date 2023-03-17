@@ -1,6 +1,5 @@
 package com.cj.bunnywallet.datasource
 
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -14,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.take
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,7 +28,7 @@ class BunnyDataStore @Inject constructor(private val dataStore: DataStore<Prefer
     ): Flow<T> = dataStore.data
         .map { it[key] ?: defaultValue }
         .take(if (observe) Int.MAX_VALUE else 1)
-        .catch { Log.d("BunnyDataStore", "get value failed: $it") }
+        .catch { Timber.d(message = "get value failed: $it") }
 
     suspend fun putString(key: String, value: String) {
         val preferencesKey = stringPreferencesKey(key)
