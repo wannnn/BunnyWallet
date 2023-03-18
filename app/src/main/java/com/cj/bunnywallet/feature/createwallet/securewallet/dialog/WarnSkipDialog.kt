@@ -28,7 +28,10 @@ import com.cj.bunnywallet.feature.createwallet.component.Declaration
 
 @Composable
 fun WarnSkipDialog(onDismiss: () -> Unit) {
-    Dialog(onDismissRequest = onDismiss) {
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = dismissLockProperties,
+    ) {
         Surface(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(size = 10.dp)

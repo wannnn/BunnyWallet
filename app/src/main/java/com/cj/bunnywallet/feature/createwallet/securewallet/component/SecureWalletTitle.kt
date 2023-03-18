@@ -26,10 +26,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cj.bunnywallet.R
-import com.cj.bunnywallet.ui.theme.Purple40
 
 @Composable
-fun SecureWalletTitle(onClick: () -> Unit) {
+fun SecureWalletTitle(
+    onSRPClick: () -> Unit,
+    onWhyImportantClick: () -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -42,8 +44,8 @@ fun SecureWalletTitle(onClick: () -> Unit) {
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.titleLarge,
         )
-        RecoveryPhrase(onClick)
-        WhyIsImportant()
+        RecoveryPhrase(onSRPClick)
+        WhyIsImportant(onWhyImportantClick)
     }
 }
 
@@ -52,7 +54,7 @@ private fun ColumnScope.RecoveryPhrase(onClick: () -> Unit) {
     val recoveryPhrase = stringResource(id = R.string.secret_recovery_phrase)
     val annoRecoveryPhrase = buildAnnotatedString {
         append(stringResource(id = R.string.secure_your_wallets).plus(" "))
-        withStyle(style = SpanStyle(color = Purple40)) {
+        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
             pushStringAnnotation(tag = recoveryPhrase, annotation = recoveryPhrase)
             append(recoveryPhrase)
         }
@@ -77,9 +79,9 @@ private fun ColumnScope.RecoveryPhrase(onClick: () -> Unit) {
 }
 
 @Composable
-private fun WhyIsImportant() {
+private fun WhyIsImportant(onClick: () -> Unit) {
     val annoImportantInfo = buildAnnotatedString {
-        withStyle(style = SpanStyle(color = Purple40)) {
+        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
             append(stringResource(id = R.string.why_is_it_important))
         }
     }
@@ -89,14 +91,14 @@ private fun WhyIsImportant() {
             painter = painterResource(id = R.drawable.ic_info),
             contentDescription = null,
             modifier = Modifier.size(16.dp),
-            tint = Purple40,
+            tint = MaterialTheme.colorScheme.primary,
         )
 
         ClickableText(
             text = annoImportantInfo,
             modifier = Modifier.padding(horizontal = 4.dp),
             style = MaterialTheme.typography.bodyLarge,
-            onClick = { /*TODO*/ },
+            onClick = { onClick() },
         )
     }
 }
@@ -104,5 +106,8 @@ private fun WhyIsImportant() {
 @Preview(showBackground = true, widthDp = 400)
 @Composable
 fun PreviewSecureWalletTitle() {
-    SecureWalletTitle {}
+    SecureWalletTitle(
+        onSRPClick = {},
+        onWhyImportantClick = {},
+    )
 }

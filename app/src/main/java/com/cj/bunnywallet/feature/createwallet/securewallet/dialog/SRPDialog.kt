@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
 import com.cj.bunnywallet.ui.theme.Purple40
@@ -30,7 +31,7 @@ fun SRPDialog(onDismiss: () -> Unit) {
         append(stringResource(id = R.string.what_is).plus(" "))
         withStyle(
             style = SpanStyle(
-                color = Purple40,
+                color = MaterialTheme.colorScheme.primary,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
             ),
@@ -39,11 +40,12 @@ fun SRPDialog(onDismiss: () -> Unit) {
         }
     }
 
-    Dialog(onDismissRequest = onDismiss) {
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = dismissLockProperties,
+    ) {
         Surface(
-            modifier = Modifier
-                .fillMaxWidth(),
-            shape = RoundedCornerShape(size = 10.dp)
+            modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(size = 10.dp)
         ) {
             Column(
                 modifier = Modifier.padding(all = 28.dp),
@@ -81,8 +83,8 @@ fun SRPDialog(onDismiss: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true, widthDp = 400)
+@Preview(showBackground = true)
 @Composable
 fun PreviewSRPDialog() {
-    SRPDialog {}
+    SRPDialog(onDismiss = {})
 }

@@ -34,7 +34,7 @@ import com.cj.bunnywallet.feature.common.CmnOutlineButton
 private const val MAX_LENGTH = 100
 
 @Composable
-fun WarnSkipDialog(onDismiss: () -> Unit) {
+fun RecoveryHintDialog(onDismiss: () -> Unit) {
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(size = 10.dp)
@@ -112,5 +112,5 @@ fun HintField() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewWarnSkipDialog() {
-    WarnSkipDialog {}
+    RecoveryHintDialog(onDismiss = {})
 }

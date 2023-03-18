@@ -11,24 +11,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
+import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletEvent
 import com.cj.bunnywallet.navigation.NavEvent
 import com.cj.bunnywallet.navigation.route.CreateWalletRoute
 
 @Composable
-fun SecureInfoView(
-    onClick: () -> Unit,
-    navEvent: (NavEvent) -> Unit,
-) {
+fun SecureInfoView(uiEvent: (SecureWalletEvent) -> Unit) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        SecureWalletTitle(onClick)
+        SecureWalletTitle(
+            onSRPClick = { uiEvent(SecureWalletEvent.OpenSRPDialog) },
+            onWhyImportantClick = { uiEvent(SecureWalletEvent.OpenProtectWalletInfoDialog) },
+        )
         SecureSuggestions()
         CmnButton(
             text = stringResource(id = R.string.start),
-            onClick = { navEvent(NavEvent.NavTo(CreateWalletRoute.ConfirmSRP.route)) },
+            onClick = {
+                // TODO to next step
+            },
             modifier = Modifier.fillMaxWidth(),
         )
     }
@@ -38,5 +41,5 @@ fun SecureInfoView(
 @Preview(showBackground = true)
 @Composable
 fun PreviewSecureInfoView() {
-    SecureInfoView({}, {})
+    SecureInfoView(uiEvent = {})
 }
