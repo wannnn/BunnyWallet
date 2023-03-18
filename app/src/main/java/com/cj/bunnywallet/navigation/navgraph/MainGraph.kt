@@ -32,7 +32,7 @@ private fun NavGraphBuilder.importWallet() {
 
         val viewModel: ImportWalletViewModel = hiltViewModel()
 
-        val uiState by viewModel.uiState.collectAsState()
+        val uiState by viewModel.uiStateFlow.collectAsState()
 
         ImportWalletScreen(
             uiState = uiState,

@@ -22,40 +22,36 @@ class CreatePwdViewModel @Inject constructor(appNavigator: AppNavigator) :
             is CreatePwdEvent.SetPwd -> {
                 val isValidPwd = e.pwd.isPasswordValid()
                 val pwdErrMsgRes = if (isValidPwd) null else R.string.password_condition_hint
-                setState(
-                    curState.copy(
-                        pwd = e.pwd,
-                        pwdErrMsgRes = pwdErrMsgRes,
-                        pwdIsValid = isValidPwd,
-                    ),
+                uiState = uiState.copy(
+                    pwd = e.pwd,
+                    pwdErrMsgRes = pwdErrMsgRes,
+                    pwdIsValid = isValidPwd,
                 )
             }
 
             is CreatePwdEvent.SetConfirmPwd -> {
-                val isValidConfirmPwd = e.confirmPwd == curState.pwd
+                val isValidConfirmPwd = e.confirmPwd == uiState.pwd
                 val pwdErrMsgRes = if (isValidConfirmPwd) null else R.string.pwd_not_match
-                setState(
-                    curState.copy(
-                        confirmPwd = e.confirmPwd,
-                        confirmPwdErrMsgRes = pwdErrMsgRes,
-                        confirmPwdIsValid = isValidConfirmPwd,
-                    ),
+                uiState = uiState.copy(
+                    confirmPwd = e.confirmPwd,
+                    confirmPwdErrMsgRes = pwdErrMsgRes,
+                    confirmPwdIsValid = isValidConfirmPwd,
                 )
             }
 
             is CreatePwdEvent.SetPwdVisibility ->
-                setState(curState.copy(pwdVisibility = e.isVisible))
+                uiState = uiState.copy(pwdVisibility = e.isVisible)
 
             is CreatePwdEvent.SetBiometrics ->
-                setState(curState.copy(bioEnabled = e.isEnable))
+                uiState = uiState.copy(bioEnabled = e.isEnable)
 
             is CreatePwdEvent.SetCheckDeclaration ->
-                setState(curState.copy(declarationChecked = e.isCheck))
+                uiState = uiState.copy(declarationChecked = e.isCheck)
 
             CreatePwdEvent.CreatePwd ->
                 navigateTo(
                     NavEvent.NavTo(
-                        CreateWalletRoute.SecureWallet.genRoute(curState.pwd),
+                        CreateWalletRoute.SecureWallet.genRoute(uiState.pwd),
                     ),
                 )
         }
