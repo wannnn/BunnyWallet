@@ -1,19 +1,18 @@
 package com.cj.bunnywallet.reducer
 
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.cj.bunnywallet.helper.StateFlowDelegate
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.updateAndGet
 
-class ReducerImp<S: UiState>(initState: S): Reducer<S> {
+class ReducerImp<S : UiState>(initState: S) : Reducer<S> {
 
-    private val _uiState: MutableStateFlow<S> = MutableStateFlow(initState)
+    private val delegate = StateFlowDelegate(initState)
+    private var state by delegate
 
-    override val uiState: StateFlow<S> = _uiState.asStateFlow()
+    override val uiStateFlow: StateFlow<S> = delegate.stateFlow
 
-    override val curState: S get() = _uiState.value
-
-    override fun setState(newState: S) {
-        _uiState.updateAndGet { newState }
-    }
+    override var uiState: S
+        get() = state
+        set(value) {
+            state = value
+        }
 }

@@ -23,7 +23,7 @@ fun NavGraphBuilder.createWalletGraph() {
     ) {
         composable(CreateWalletRoute.CreatePassword.route) {
             val viewModel = hiltViewModel<CreatePwdViewModel>()
-            val uiState by viewModel.uiState.collectAsState()
+            val uiState by viewModel.uiStateFlow.collectAsState()
 
             CreatePwdScreen(
                 uiState = uiState,

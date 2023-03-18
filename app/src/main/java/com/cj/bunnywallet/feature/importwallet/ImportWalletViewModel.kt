@@ -34,30 +34,27 @@ class ImportWalletViewModel @Inject constructor(
     fun handleEvent(event: ImportWalletEvent) {
         when (event) {
             is ImportWalletEvent.SetPhraseAmountType -> {
-                setState(curState.copy(phraseAmount = event.phraseAmount))
+                uiState = uiState.copy(phraseAmount = event.phraseAmount)
                 phraseList = MutableList(size = event.phraseAmount.amount) { "" }
             }
             is ImportWalletEvent.SetPassword -> {
-                setState(
-                    curState.copy(
-                        password = event.pwd,
-                        passwordValid = event.pwd.isPasswordValid()
-                    )
+                uiState = uiState.copy(
+                    password = event.pwd,
+                    passwordValid = event.pwd.isPasswordValid()
                 )
             }
             is ImportWalletEvent.SetConfirmPassword -> {
-                setState(
-                    curState.copy(
-                        confirmPassword = event.pwd,
-                        confirmPasswordValid = event.pwd.isNotBlank() && event.pwd == curState.password
-                    )
+                uiState = uiState.copy(
+                    confirmPassword = event.pwd,
+                    confirmPasswordValid = event.pwd.isNotBlank() && event.pwd == uiState.password
                 )
+
             }
             is ImportWalletEvent.UpdatePhrase -> {
                 phraseList[event.index] = event.phrase
             }
             is ImportWalletEvent.Import -> {
-                if (curState.passwordValid && curState.confirmPasswordValid) {
+                if (uiState.passwordValid && uiState.confirmPasswordValid) {
                     importWallet()
                 }
             }
@@ -78,7 +75,7 @@ class ImportWalletViewModel @Inject constructor(
 
         Timber.d(message = "address: ${credentials.address}")
 
-        manager.encrypt(curState.password)?.let {
+        manager.encrypt(uiState.password)?.let {
             viewModelScope.launch {
                 dataStore.putString(KEY_PWD, it)
                 navigateTo(
