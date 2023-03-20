@@ -17,7 +17,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cj.bunnywallet.R
-import com.cj.bunnywallet.ui.theme.Purple40
 
 @Composable
 fun SecureSuggestions() {
@@ -57,7 +56,7 @@ private fun Suggestion(icon: Int, title: Int, content: Int) {
         Icon(
             painter = painterResource(id = icon),
             contentDescription = null,
-            tint = Purple40,
+            tint = MaterialTheme.colorScheme.primary,
         )
 
         Column(
@@ -81,13 +80,13 @@ private fun Suggestion(icon: Int, title: Int, content: Int) {
 }
 
 
-@Preview(showBackground = true, widthDp = 400)
+@Preview(showBackground = true)
 @Composable
 fun PreviewSecureSuggestions() {
     SecureSuggestions()
 }
 
-@Preview(showBackground = true, widthDp = 400)
+@Preview(showBackground = true)
 @Composable
 fun PreviewSuggestion() {
     Suggestion(

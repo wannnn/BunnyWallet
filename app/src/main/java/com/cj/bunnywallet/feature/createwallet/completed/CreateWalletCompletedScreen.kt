@@ -38,7 +38,7 @@ fun CreateWalletCompletedRoute() {
 private fun CreateWalletCompletedScreen() {
     CreateWalletContainer(
         step = CreateWalletStep.DONE,
-        navEvent = {},
+        topBarBackClick = {},
     ) {
         Completed()
     }

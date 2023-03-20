@@ -7,19 +7,30 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
 import com.cj.bunnywallet.feature.common.PasswordTextField
+import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletEvent
+import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletStep
 
 @Composable
-fun ConfirmPwd() {
+fun ConfirmPwd(
+    confirmErrMsgRes: Int?,
+    confirmBtnEnable: Boolean,
+    uiEvent: (SecureWalletEvent) -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -33,21 +44,23 @@ fun ConfirmPwd() {
             style = MaterialTheme.typography.titleLarge,
         )
 
-        PwdField()
+        PwdField(confirmErrMsgRes = confirmErrMsgRes, uiEvent = uiEvent)
 
         CmnButton(
             text = stringResource(id = R.string.confirm),
-            onClick = {},
+            onClick = { uiEvent(SecureWalletEvent.UpdateStep(SecureWalletStep.GEN_SRP)) },
             modifier = Modifier.fillMaxWidth(),
+            enabled = confirmBtnEnable,
         )
     }
 }
 
 @Composable
-fun PwdField() {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-    ) {
+fun PwdField(
+    confirmErrMsgRes: Int? = null,
+    uiEvent: (SecureWalletEvent) -> Unit,
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
         Text(
             text = stringResource(id = R.string.confirm_your_hint),
             modifier = Modifier.padding(bottom = 4.dp),
@@ -55,9 +68,17 @@ fun PwdField() {
             style = MaterialTheme.typography.bodyLarge,
         )
 
+        var confirmPwd by remember { mutableStateOf("") }
+
         PasswordTextField(
-            passwordState = "",
-            passwordStateUpdate = {},
+            passwordState = confirmPwd,
+            passwordStateUpdate = {
+                confirmPwd = it.trim()
+                uiEvent(SecureWalletEvent.UpdateConfirmPwd(confirmPwd))
+            },
+            label = stringResource(id = R.string.confirm_password),
+            imeAction = ImeAction.Done,
+            errorMsg = confirmErrMsgRes?.let { stringResource(id = it) },
         )
     }
 }
@@ -66,11 +87,18 @@ fun PwdField() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewConfirmPwd() {
-    ConfirmPwd()
+    ConfirmPwd(
+        confirmErrMsgRes = R.string.pwd_not_match,
+        confirmBtnEnable = true,
+        uiEvent = {},
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewPwdField() {
-    PwdField()
+    PwdField(
+        confirmErrMsgRes = R.string.pwd_not_match,
+        uiEvent = {},
+    )
 }

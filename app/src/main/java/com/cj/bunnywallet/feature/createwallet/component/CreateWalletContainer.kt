@@ -22,14 +22,14 @@ import com.cj.bunnywallet.navigation.NavEvent
 @Composable
 fun CreateWalletContainer(
     step: CreateWalletStep,
-    navEvent: (NavEvent) -> Unit,
+    topBarBackClick: () -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AppTopBar(onBackClicked = { navEvent(NavEvent.NavBack) })
+        AppTopBar(onBackClicked = topBarBackClick)
         Column(
             modifier = Modifier
                 .fillMaxWidth(fraction = 0.8f)
@@ -48,7 +48,7 @@ fun CreateWalletContainer(
 fun PreviewCreateWalletContainer() {
     CreateWalletContainer(
         step = CreateWalletStep.CREATE_PWD,
-        navEvent = {},
+        topBarBackClick = {},
     ) {
         CreatePwd(
             uiState = CreatePwdState(),

@@ -12,9 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
 import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletEvent
-import com.cj.bunnywallet.feature.createwallet.securewallet.dialog.SecureWalletDialogType
-import com.cj.bunnywallet.navigation.NavEvent
-import com.cj.bunnywallet.navigation.route.CreateWalletRoute
+import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletStep
 
 @Composable
 fun SecureInfoView(uiEvent: (SecureWalletEvent) -> Unit) {
@@ -27,9 +25,7 @@ fun SecureInfoView(uiEvent: (SecureWalletEvent) -> Unit) {
         SecureSuggestions()
         CmnButton(
             text = stringResource(id = R.string.start),
-            onClick = {
-                // TODO to next step
-            },
+            onClick = { uiEvent(SecureWalletEvent.UpdateStep(SecureWalletStep.CONFIRM_PWD)) },
             modifier = Modifier.fillMaxWidth(),
         )
     }
