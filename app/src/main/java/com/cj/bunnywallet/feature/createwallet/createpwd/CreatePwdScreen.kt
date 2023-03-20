@@ -24,7 +24,7 @@ fun CreatePwdScreen(
 ) {
     CreateWalletContainer(
         step = CreateWalletStep.CREATE_PWD,
-        navEvent = navEvent,
+        topBarBackClick = { navEvent(NavEvent.NavBack) },
     ) {
         CreatePwd(uiState, uiEvent)
     }

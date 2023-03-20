@@ -42,7 +42,11 @@ fun NavGraphBuilder.createWalletGraph() {
             val viewModel = hiltViewModel<SecureWalletViewModel>()
             val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
-            SecureWalletScreen(uiState = uiState, uiEvent = viewModel::handleEvent)
+            SecureWalletScreen(
+                uiState = uiState,
+                uiEvent = viewModel::handleEvent,
+                navEvent = viewModel::navigateTo,
+            )
         }
 
         composable(CreateWalletRoute.ConfirmSRP.route) { ConfirmSRPRoute() }

@@ -1,23 +1,44 @@
 package com.cj.bunnywallet.feature.createwallet.securewallet
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.cj.bunnywallet.feature.createwallet.CreateWalletStep
 import com.cj.bunnywallet.feature.createwallet.component.CreateWalletContainer
+import com.cj.bunnywallet.feature.createwallet.securewallet.component.ConfirmPwd
+import com.cj.bunnywallet.feature.createwallet.securewallet.component.RevealSRPView
 import com.cj.bunnywallet.feature.createwallet.securewallet.component.SecureInfoView
 import com.cj.bunnywallet.feature.createwallet.securewallet.dialog.ProtectWalletInfoDialog
 import com.cj.bunnywallet.feature.createwallet.securewallet.dialog.SRPDialog
 import com.cj.bunnywallet.feature.createwallet.securewallet.dialog.SecureWalletDialogType
 import com.cj.bunnywallet.feature.createwallet.securewallet.dialog.WarnSkipDialog
+import com.cj.bunnywallet.navigation.NavEvent
 
 @Composable
 fun SecureWalletScreen(
     uiState: SecureWalletState,
     uiEvent: (SecureWalletEvent) -> Unit,
+    navEvent: (NavEvent) -> Unit,
 ) {
+    val backAction: () -> Unit = when (uiState.step) {
+        SecureWalletStep.READ_SECURE_INFO -> {
+            { navEvent(NavEvent.NavBack) }
+        }
+
+        SecureWalletStep.CONFIRM_PWD -> {
+            { uiEvent(SecureWalletEvent.UpdateStep(SecureWalletStep.READ_SECURE_INFO)) }
+        }
+
+        SecureWalletStep.GEN_SRP -> {
+            { uiEvent(SecureWalletEvent.HandleDialog(SecureWalletDialogType.WARN_SKIP)) }
+        }
+    }
+
+    BackHandler { backAction() }
+
     CreateWalletContainer(
         step = CreateWalletStep.SECURE_WALLET,
-        navEvent = { uiEvent(SecureWalletEvent.HandleDialog(SecureWalletDialogType.WARN_SKIP)) },
+        topBarBackClick = backAction,
     ) {
         SecureWallet(uiState = uiState, uiEvent = uiEvent)
     }
@@ -28,11 +49,17 @@ fun SecureWallet(
     uiState: SecureWalletState,
     uiEvent: (SecureWalletEvent) -> Unit,
 ) {
-    SecureInfoView(uiEvent)
+    when (uiState.step) {
+        SecureWalletStep.READ_SECURE_INFO -> SecureInfoView(uiEvent = uiEvent)
 
-    // ConfirmPwd()
+        SecureWalletStep.CONFIRM_PWD -> ConfirmPwd(
+            confirmErrMsgRes = uiState.confirmErrMsgRes,
+            confirmBtnEnable = uiState.confirmBtnEnable,
+            uiEvent = uiEvent,
+        )
 
-    // RevealSRPView()
+        SecureWalletStep.GEN_SRP -> RevealSRPView()
+    }
 
     when (uiState.dialogType) {
         SecureWalletDialogType.SRP -> SRPDialog(onDismiss = { dismiss(uiEvent) })
@@ -55,7 +82,7 @@ private fun dismiss(uiEvent: (SecureWalletEvent) -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewSecureWalletScreen() {
-    SecureWalletScreen(uiState = SecureWalletState(), uiEvent = {})
+    SecureWalletScreen(uiState = SecureWalletState(), uiEvent = {}, navEvent = {})
 }
 
 @Preview(showBackground = true)
