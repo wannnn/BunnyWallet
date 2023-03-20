@@ -26,12 +26,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cj.bunnywallet.R
+import com.cj.bunnywallet.feature.createwallet.securewallet.dialog.SecureWalletDialogType
 
 @Composable
-fun SecureWalletTitle(
-    onSRPClick: () -> Unit,
-    onWhyImportantClick: () -> Unit,
-) {
+fun SecureWalletTitle(onDialogClick: (SecureWalletDialogType) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -44,8 +42,8 @@ fun SecureWalletTitle(
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.titleLarge,
         )
-        RecoveryPhrase(onSRPClick)
-        WhyIsImportant(onWhyImportantClick)
+        RecoveryPhrase(onClick = { onDialogClick(SecureWalletDialogType.SRP) })
+        WhyIsImportant(onClick = { onDialogClick(SecureWalletDialogType.PROTECT_WALLET_INFO) })
     }
 }
 
@@ -106,8 +104,5 @@ private fun WhyIsImportant(onClick: () -> Unit) {
 @Preview(showBackground = true, widthDp = 400)
 @Composable
 fun PreviewSecureWalletTitle() {
-    SecureWalletTitle(
-        onSRPClick = {},
-        onWhyImportantClick = {},
-    )
+    SecureWalletTitle(onDialogClick = {})
 }

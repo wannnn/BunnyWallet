@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
 import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletEvent
+import com.cj.bunnywallet.feature.createwallet.securewallet.dialog.SecureWalletDialogType
 import com.cj.bunnywallet.navigation.NavEvent
 import com.cj.bunnywallet.navigation.route.CreateWalletRoute
 
@@ -22,10 +23,7 @@ fun SecureInfoView(uiEvent: (SecureWalletEvent) -> Unit) {
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        SecureWalletTitle(
-            onSRPClick = { uiEvent(SecureWalletEvent.OpenSRPDialog) },
-            onWhyImportantClick = { uiEvent(SecureWalletEvent.OpenProtectWalletInfoDialog) },
-        )
+        SecureWalletTitle(onDialogClick = { uiEvent(SecureWalletEvent.HandleDialog(it)) })
         SecureSuggestions()
         CmnButton(
             text = stringResource(id = R.string.start),

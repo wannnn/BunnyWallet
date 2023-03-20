@@ -17,7 +17,7 @@ fun SecureWalletScreen(
 ) {
     CreateWalletContainer(
         step = CreateWalletStep.SECURE_WALLET,
-        navEvent = { uiEvent(SecureWalletEvent.OpenWarnSkipDialog) },
+        navEvent = { uiEvent(SecureWalletEvent.HandleDialog(SecureWalletDialogType.WARN_SKIP)) },
     ) {
         SecureWallet(uiState = uiState, uiEvent = uiEvent)
     }
@@ -35,19 +35,21 @@ fun SecureWallet(
     // RevealSRPView()
 
     when (uiState.dialogType) {
-        SecureWalletDialogType.SRP ->
-            SRPDialog(onDismiss = { uiEvent(SecureWalletEvent.HideDialog) })
+        SecureWalletDialogType.SRP -> SRPDialog(onDismiss = { dismiss(uiEvent) })
 
         SecureWalletDialogType.PROTECT_WALLET_INFO ->
-            ProtectWalletInfoDialog(onDismiss = { uiEvent(SecureWalletEvent.HideDialog) })
+            ProtectWalletInfoDialog(onDismiss = { dismiss(uiEvent) })
 
-        SecureWalletDialogType.WARN_SKIP ->
-            WarnSkipDialog(onDismiss = { uiEvent(SecureWalletEvent.HideDialog) })
+        SecureWalletDialogType.WARN_SKIP -> WarnSkipDialog(onDismiss = { dismiss(uiEvent) })
 
         SecureWalletDialogType.HIDE -> {
             /** Hide Dialog **/
         }
     }
+}
+
+private fun dismiss(uiEvent: (SecureWalletEvent) -> Unit) {
+    uiEvent(SecureWalletEvent.HandleDialog(SecureWalletDialogType.HIDE))
 }
 
 @Preview(showBackground = true)

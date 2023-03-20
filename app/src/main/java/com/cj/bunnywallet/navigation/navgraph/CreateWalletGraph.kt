@@ -41,10 +41,7 @@ fun NavGraphBuilder.createWalletGraph() {
             ),
         ) {
             val viewModel = hiltViewModel<SecureWalletViewModel>()
-            val uiState by viewModel.uiState.collectAsState()
-            val pwd = it.arguments?.getString(CreateWalletRoute.SecureWallet.PWD).orEmpty()
-
-            viewModel.handleEvent(SecureWalletEvent.SetPwd(pwd))
+            val uiState by viewModel.uiStateFlow.collectAsState()
 
             SecureWalletScreen(uiState = uiState, uiEvent = viewModel::handleEvent)
         }
