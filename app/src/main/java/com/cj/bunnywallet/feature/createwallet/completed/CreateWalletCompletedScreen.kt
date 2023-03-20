@@ -102,7 +102,7 @@ private fun Completed() {
     }
 
     if (showDialog) {
-        WarnSkipDialog { showDialog = false }
+        RecoveryHintDialog { showDialog = false }
     }
 }
 

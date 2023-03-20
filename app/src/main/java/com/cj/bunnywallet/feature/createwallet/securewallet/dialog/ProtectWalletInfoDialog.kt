@@ -22,7 +22,7 @@ import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
 
 @Composable
-fun ProtectWalletInfoDialog() {
+fun ProtectWalletInfoDialog(onDismiss: () -> Unit) {
     val annoInfo = buildAnnotatedString {
         append(stringResource(id = R.string.protect_your_wallet_info_1).plus(" "))
         withStyle(style = SpanStyle(fontWeight = FontWeight.SemiBold)) {
@@ -30,7 +30,10 @@ fun ProtectWalletInfoDialog() {
         }
     }
 
-    Dialog(onDismissRequest = { /*TODO*/ }) {
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = dismissLockProperties,
+    ) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -54,7 +57,7 @@ fun ProtectWalletInfoDialog() {
                 CmnButton(
                     text = stringResource(id = R.string.close),
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = { /*TODO*/ },
+                    onClick = onDismiss,
                 )
             }
         }
@@ -64,5 +67,5 @@ fun ProtectWalletInfoDialog() {
 @Preview(showBackground = true, widthDp = 400)
 @Composable
 fun PreviewProtectWalletInfoDialog() {
-    ProtectWalletInfoDialog()
+    ProtectWalletInfoDialog(onDismiss = {})
 }

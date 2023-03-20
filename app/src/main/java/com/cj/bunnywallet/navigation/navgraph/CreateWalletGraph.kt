@@ -12,7 +12,9 @@ import com.cj.bunnywallet.feature.createwallet.completed.CreateWalletCompletedRo
 import com.cj.bunnywallet.feature.createwallet.confirmsrp.ConfirmSRPRoute
 import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdScreen
 import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdViewModel
-import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletRoute
+import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletEvent
+import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletScreen
+import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletViewModel
 import com.cj.bunnywallet.navigation.route.CreateWalletRoute
 import com.cj.bunnywallet.navigation.route.MainRoute
 
@@ -38,8 +40,10 @@ fun NavGraphBuilder.createWalletGraph() {
                 navArgument(CreateWalletRoute.SecureWallet.PWD) { type = NavType.StringType },
             ),
         ) {
-            // val pwd = it.arguments?.getString(CreateWalletRoute.SecureWallet.PWD)
-            SecureWalletRoute()
+            val viewModel = hiltViewModel<SecureWalletViewModel>()
+            val uiState by viewModel.uiStateFlow.collectAsState()
+
+            SecureWalletScreen(uiState = uiState, uiEvent = viewModel::handleEvent)
         }
 
         composable(CreateWalletRoute.ConfirmSRP.route) { ConfirmSRPRoute() }
