@@ -1,7 +1,5 @@
 package com.cj.bunnywallet.navigation
 
-import androidx.lifecycle.Lifecycle
-import androidx.navigation.NavBackStackEntry
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -14,6 +12,7 @@ interface AppNavigator {
     val destinationFlow: SharedFlow<NavEvent>
 
     fun navigateTo(navEvent: NavEvent)
+
 }
 
 @Singleton

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,9 +26,16 @@ import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
 import com.cj.bunnywallet.feature.common.CmnOutlineButton
 import com.cj.bunnywallet.feature.createwallet.component.SRPBox
+import com.cj.bunnywallet.feature.createwallet.component.SRPContent
+import com.cj.bunnywallet.feature.createwallet.component.srpSolidBorder
+import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletEvent
+import com.cj.bunnywallet.feature.importwallet.type.PhraseAmountType
 
 @Composable
-fun RevealSRPView() {
+fun RevealSRPView(
+    mnemonic: List<String>,
+    uiEvent: (SecureWalletEvent) -> Unit,
+) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -45,21 +53,29 @@ fun RevealSRPView() {
         )
 
         SRPBox {
-            SRPSectionHide()
+            if (mnemonic.isNotEmpty()) {
+                SRPContent(
+                    mnemonic = mnemonic,
+                    modifier = srpSolidBorder,
+                )
+            } else {
+                SRPSectionHide(onReveal = { uiEvent(SecureWalletEvent.RevealSRP) })
+            }
         }
 
         CmnButton(
             text = stringResource(id = R.string._continue),
-            onClick = {},
+            onClick = { uiEvent(SecureWalletEvent.NavToConfirmSRP) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
+            enabled = mnemonic.isNotEmpty(),
         )
     }
 }
 
 @Composable
-fun SRPSectionHide() {
+fun SRPSectionHide(onReveal: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -92,11 +108,14 @@ fun SRPSectionHide() {
         )
 
         CmnOutlineButton(
-            text = stringResource(id = R.string.view),
-            onClick = {},
+            text = stringResource(id = R.string.reveal),
+            onClick = onReveal,
             modifier = Modifier
                 .fillMaxWidth(fraction = 0.5f)
                 .padding(vertical = 20.dp),
+            colors = ButtonDefaults.outlinedButtonColors(
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            ),
         )
     }
 }
@@ -104,12 +123,15 @@ fun SRPSectionHide() {
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewRevealSRPView() {
-    RevealSRPView()
+fun PreviewRevealSRPViewNotReveal() {
+    RevealSRPView(mnemonic = emptyList(), uiEvent = {})
 }
 
-@Preview(showBackground = true, heightDp = 360)
+@Preview(showBackground = true)
 @Composable
-fun PreviewSRPSectionHide() {
-    SRPSectionHide()
+fun PreviewRevealSRPViewReveal() {
+    RevealSRPView(
+        mnemonic = List(size = PhraseAmountType.TWELVE_WORDS.amount) { "bunny" },
+        uiEvent = {},
+    )
 }

@@ -58,7 +58,10 @@ fun SecureWallet(
             uiEvent = uiEvent,
         )
 
-        SecureWalletStep.GEN_SRP -> RevealSRPView()
+        SecureWalletStep.GEN_SRP -> RevealSRPView(
+            mnemonic = uiState.mnemonic,
+            uiEvent = uiEvent,
+        )
     }
 
     when (uiState.dialogType) {
@@ -67,7 +70,8 @@ fun SecureWallet(
         SecureWalletDialogType.PROTECT_WALLET_INFO ->
             ProtectWalletInfoDialog(onDismiss = { dismiss(uiEvent) })
 
-        SecureWalletDialogType.WARN_SKIP -> WarnSkipDialog(onDismiss = { dismiss(uiEvent) })
+        SecureWalletDialogType.WARN_SKIP ->
+            WarnSkipDialog(onDismiss = { handleSkipAction(it, uiEvent) })
 
         SecureWalletDialogType.HIDE -> {
             /** Hide Dialog **/
@@ -79,15 +83,12 @@ private fun dismiss(uiEvent: (SecureWalletEvent) -> Unit) {
     uiEvent(SecureWalletEvent.HandleDialog(SecureWalletDialogType.HIDE))
 }
 
+private fun handleSkipAction(skip: Boolean, uiEvent: (SecureWalletEvent) -> Unit) {
+    if (skip) uiEvent(SecureWalletEvent.SkipGenSRP) else dismiss(uiEvent)
+}
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewSecureWalletScreen() {
     SecureWalletScreen(uiState = SecureWalletState(), uiEvent = {}, navEvent = {})
 }
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewSecureWallet() {
-    SecureWallet(uiState = SecureWalletState(), uiEvent = {})
-}
-

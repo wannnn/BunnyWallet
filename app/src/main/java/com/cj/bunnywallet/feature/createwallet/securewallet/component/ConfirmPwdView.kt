@@ -93,12 +93,3 @@ fun PreviewConfirmPwd() {
         uiEvent = {},
     )
 }
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewPwdField() {
-    PwdField(
-        confirmErrMsgRes = R.string.pwd_not_match,
-        uiEvent = {},
-    )
-}
