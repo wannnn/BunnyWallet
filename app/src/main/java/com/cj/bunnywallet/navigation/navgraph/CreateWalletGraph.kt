@@ -1,8 +1,8 @@
 package com.cj.bunnywallet.navigation.navgraph
 
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
@@ -12,7 +12,6 @@ import com.cj.bunnywallet.feature.createwallet.completed.CreateWalletCompletedRo
 import com.cj.bunnywallet.feature.createwallet.confirmsrp.ConfirmSRPRoute
 import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdScreen
 import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdViewModel
-import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletEvent
 import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletScreen
 import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletViewModel
 import com.cj.bunnywallet.navigation.route.CreateWalletRoute
@@ -25,7 +24,7 @@ fun NavGraphBuilder.createWalletGraph() {
     ) {
         composable(CreateWalletRoute.CreatePassword.route) {
             val viewModel = hiltViewModel<CreatePwdViewModel>()
-            val uiState by viewModel.uiStateFlow.collectAsState()
+            val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
             CreatePwdScreen(
                 uiState = uiState,
@@ -41,7 +40,7 @@ fun NavGraphBuilder.createWalletGraph() {
             ),
         ) {
             val viewModel = hiltViewModel<SecureWalletViewModel>()
-            val uiState by viewModel.uiStateFlow.collectAsState()
+            val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
             SecureWalletScreen(uiState = uiState, uiEvent = viewModel::handleEvent)
         }

@@ -25,7 +25,7 @@ fun AppNavHost(
     LaunchedEffect(navController) {
         appNavigator.destinationFlow
             .onEach {
-                if (currentBackStackEntry?.lifecycle?.currentState == Lifecycle.State.RESUMED) {
+                if (currentBackStackEntry?.getLifecycle()?.currentState == Lifecycle.State.RESUMED) {
                     navController.handleNavEvent(it)
                 }
             }

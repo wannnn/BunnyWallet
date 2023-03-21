@@ -7,16 +7,16 @@ versionCode = "1"
 versionName = "1.0.0"
 
 # Gradle plugin
-androidGradlePlugin = "7.4.0"
+androidGradlePlugin = "7.4.2"
 
 # Kotlin
-kotlin = "1.7.20"
+kotlin = "1.8.10"
 
 # Activity
 androidxActivity = "1.6.1"
 
 # Lifecycle
-androidxLifecycle = "2.5.1"
+androidxLifecycle = "2.6.0"
 
 # Navigation
 androidxNavigation = "2.5.3"
@@ -25,7 +25,7 @@ androidxNavigation = "2.5.3"
 androidxCore = "1.9.0"
 
 # Compose
-androidxComposeComplier = "1.3.2"
+androidxComposeComplier = "1.4.2"
 androidxComposeUi = "1.3.3"
 androidxComposeFoundation = "1.3.1"
 androidxComposeMaterial3 = "1.0.1"
@@ -61,7 +61,7 @@ espresso = "3.5.1"
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
 
 # Lifecycle
-lifecycle-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
+lifecycle-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 
 # Navigation
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
