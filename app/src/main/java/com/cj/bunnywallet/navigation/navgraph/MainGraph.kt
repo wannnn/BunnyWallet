@@ -1,8 +1,8 @@
 package com.cj.bunnywallet.navigation.navgraph
 
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.cj.bunnywallet.feature.entrance.EntranceScreen
@@ -32,7 +32,7 @@ private fun NavGraphBuilder.importWallet() {
 
         val viewModel: ImportWalletViewModel = hiltViewModel()
 
-        val uiState by viewModel.uiStateFlow.collectAsState()
+        val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
         ImportWalletScreen(
             uiState = uiState,

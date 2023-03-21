@@ -83,7 +83,7 @@ dependencies {
     implementation(libs.activity.compose)
 
     // Lifecycle
-    implementation(libs.lifecycle.ktx)
+    implementation(libs.lifecycle.compose)
 
     // Navigation
     implementation(libs.navigation.compose)
