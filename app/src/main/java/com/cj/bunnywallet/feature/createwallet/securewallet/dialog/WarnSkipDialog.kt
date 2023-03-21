@@ -12,6 +12,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,14 +31,14 @@ import com.cj.bunnywallet.feature.common.CmnOutlineButton
 import com.cj.bunnywallet.feature.createwallet.component.Declaration
 
 @Composable
-fun WarnSkipDialog(onDismiss: () -> Unit) {
+fun WarnSkipDialog(onDismiss: (Boolean) -> Unit) {
     Dialog(
-        onDismissRequest = onDismiss,
+        onDismissRequest = { /** BackPress and ClickOutside are locked **/ },
         properties = dismissLockProperties,
     ) {
         Surface(
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(size = 10.dp)
+            shape = RoundedCornerShape(size = 10.dp),
         ) {
             Column(
                 modifier = Modifier.padding(all = 28.dp),
@@ -54,24 +58,29 @@ fun WarnSkipDialog(onDismiss: () -> Unit) {
                     style = MaterialTheme.typography.titleLarge,
                 )
 
-                Declaration(R.string.skip_warning_declaration, false) {}
+                var checked by remember { mutableStateOf(false) }
+
+                Declaration(
+                    declaration = R.string.skip_warning_declaration,
+                    checked = checked,
+                    onCheckedChange = { checked = it },
+                )
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     CmnOutlineButton(
-                        text = stringResource(id = R.string.close),
-                        modifier = Modifier
-                            .weight(1f),
-                        onClick = onDismiss,
+                        text = stringResource(id = R.string.secure_now),
+                        modifier = Modifier.weight(1f),
+                        onClick = { onDismiss(false) },
                     )
 
                     CmnButton(
-                        text = stringResource(id = R.string.close),
-                        modifier = Modifier
-                            .weight(1f),
-                        onClick = onDismiss,
+                        text = stringResource(id = R.string.skip),
+                        modifier = Modifier.weight(1f),
+                        onClick = { onDismiss(true) },
+                        enabled = checked,
                     )
                 }
             }
@@ -82,5 +91,5 @@ fun WarnSkipDialog(onDismiss: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewWarnSkipDialog() {
-    WarnSkipDialog {}
+    WarnSkipDialog(onDismiss = {})
 }

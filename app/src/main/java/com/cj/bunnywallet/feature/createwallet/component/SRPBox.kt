@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,18 +32,18 @@ fun SRPBox(content: @Composable BoxScope.() -> Unit) {
 }
 
 @Composable
-fun SRPContent(mnemonics: List<String>, modifier: Modifier) {
+fun SRPContent(mnemonic: List<String>, modifier: Modifier) {
     VerticalGrid(
         modifier = Modifier
             .border(
                 width = 1.dp,
-                color = PurpleGrey80,
+                color = MaterialTheme.colorScheme.primaryContainer,
                 shape = RoundedCornerShape(size = 10.dp),
             )
             .padding(all = 8.dp),
         columns = 2,
     ) {
-        mnemonics.forEachIndexed { i, phrase ->
+        mnemonic.forEachIndexed { i, phrase ->
             Row(
                 modifier = Modifier.padding(all = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -72,7 +73,7 @@ fun SRPContent(mnemonics: List<String>, modifier: Modifier) {
 private fun PreviewSRPBoxReveal() {
     SRPBox {
         SRPContent(
-            mnemonics = listOf(
+            mnemonic = listOf(
                 "summer", "summer", "summer", "summer",
                 "whale", "whale", "whale", "whale",
                 "thank", "thank", "thank", "thank",
@@ -87,7 +88,7 @@ private fun PreviewSRPBoxReveal() {
 private fun PreviewSRPBoxConfirm() {
     SRPBox {
         SRPContent(
-            mnemonics = listOf("", "", "", "", "", "", "", "", "", "", "", ""),
+            mnemonic = listOf("", "", "", "", "", "", "", "", "", "", "", ""),
             modifier = srpDashedBorder,
         )
     }

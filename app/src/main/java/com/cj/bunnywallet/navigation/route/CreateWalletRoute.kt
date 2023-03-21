@@ -16,7 +16,12 @@ sealed interface CreateWalletRoute : Routes {
     }
 
     object ConfirmSRP : CreateWalletRoute {
-        override val route: String = "confirm_srp_route"
+        const val SRP = "srp"
+        private const val BASE_ROUTE = "confirm_srp_route"
+
+        override val route: String = "$BASE_ROUTE/{$SRP}"
+
+        fun genRoute(srp: String) = "$BASE_ROUTE/$srp"
     }
 
     object CreateWalletCompleted : CreateWalletRoute {

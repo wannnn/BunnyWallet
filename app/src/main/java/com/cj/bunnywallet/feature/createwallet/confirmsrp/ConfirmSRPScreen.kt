@@ -55,7 +55,7 @@ fun ConfirmSRP(navEvent: (NavEvent) -> Unit) {
 
         SRPBox {
             SRPContent(
-                mnemonics = listOf("", "", "", "", "", "", "", "", "", "", "", ""),
+                mnemonic = listOf("", "", "", "", "", "", "", "", "", "", "", ""),
                 modifier = srpDashedBorder,
             )
         }
@@ -124,22 +124,4 @@ fun SRPSelections(mnemonics: List<String>) {
 @Composable
 private fun PreviewConfirmSRPScreen() {
     ConfirmSRPScreen {}
-}
-
-@Preview(showBackground = true, widthDp = 360)
-@Composable
-private fun PreviewConfirmSRP() {
-    ConfirmSRP {}
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PreviewSRPSelections() {
-    SRPSelections(
-        listOf(
-            "summer", "summer", "summer", "summer",
-            "whale", "whale", "whale", "whale",
-            "thank", "thank", "thank", "thank",
-        )
-    )
 }
