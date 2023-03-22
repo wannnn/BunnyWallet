@@ -10,9 +10,11 @@ sealed class CreatePwdEvent {
     data class SetBiometrics(val isEnable: Boolean) : CreatePwdEvent()
     data class SetCheckDeclaration(val isCheck: Boolean) : CreatePwdEvent()
     object CreatePwd : CreatePwdEvent()
+    object ToSecureWallet : CreatePwdEvent()
 }
 
 data class CreatePwdState(
+    val showCreatedPwd: Boolean = true,
     val pwd: String = "",
     @StringRes val pwdErrMsgRes: Int? = null,
     private val pwdIsValid: Boolean = false,

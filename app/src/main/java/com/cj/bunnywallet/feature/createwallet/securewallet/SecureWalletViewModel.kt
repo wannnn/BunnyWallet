@@ -1,9 +1,11 @@
 package com.cj.bunnywallet.feature.createwallet.securewallet
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavOptions
+import com.cj.bunnywallet.KEY_PWD
 import com.cj.bunnywallet.R
+import com.cj.bunnywallet.datasource.BunnyDataStore
 import com.cj.bunnywallet.feature.createwallet.securewallet.dialog.SecureWalletDialogType
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent
@@ -11,7 +13,10 @@ import com.cj.bunnywallet.navigation.route.CreateWalletRoute
 import com.cj.bunnywallet.navigation.route.MainRoute
 import com.cj.bunnywallet.reducer.Reducer
 import com.cj.bunnywallet.reducer.ReducerImp
+import com.cj.bunnywallet.utils.CryptoManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.web3j.crypto.MnemonicUtils
 import java.security.SecureRandom
 import javax.inject.Inject
@@ -19,11 +24,18 @@ import javax.inject.Inject
 @HiltViewModel
 class SecureWalletViewModel @Inject constructor(
     appNavigator: AppNavigator,
-    savedStateHandle: SavedStateHandle,
+    dataStore: BunnyDataStore,
+    manager: CryptoManager,
 ) : ViewModel(), AppNavigator by appNavigator,
     Reducer<SecureWalletState> by ReducerImp(SecureWalletState()) {
 
-    private val pwd: String = savedStateHandle[CreateWalletRoute.SecureWallet.PWD] ?: ""
+    private var pwd = ""
+
+    init {
+        dataStore.getString(KEY_PWD)
+            .onEach { pwd = manager.decrypt(it).orEmpty() }
+            .launchIn(viewModelScope)
+    }
 
     fun handleEvent(e: SecureWalletEvent) {
         when (e) {

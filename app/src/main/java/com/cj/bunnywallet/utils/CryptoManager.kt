@@ -44,6 +44,7 @@ class CryptoManager @Inject constructor() {
      */
     fun encrypt(sensitiveData: String): String? =
         runCatching {
+            if (sensitiveData.isBlank()) return@runCatching null
             Cipher.getInstance(TRANSFORMATION)
                 .apply { init(Cipher.ENCRYPT_MODE, getKey()) }
                 .run { iv + doFinal(sensitiveData.encodeToByteArray()) }
@@ -58,6 +59,7 @@ class CryptoManager @Inject constructor() {
      */
     fun decrypt(encryptedData: String): String? =
         runCatching {
+            if (encryptedData.isBlank()) return@runCatching null
             val ba = encryptedData.toByteArray(Charsets.ISO_8859_1)
             val iv = ba.copyOfRange(0, IV_BLOCK_SIZE)
             val decryptData = ba.copyOfRange(IV_BLOCK_SIZE, ba.size)
