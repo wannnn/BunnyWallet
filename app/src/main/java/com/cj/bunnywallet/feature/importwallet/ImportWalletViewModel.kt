@@ -15,6 +15,8 @@ import com.cj.bunnywallet.reducer.Reducer
 import com.cj.bunnywallet.reducer.ReducerImp
 import com.cj.bunnywallet.utils.CryptoManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import org.web3j.crypto.Bip44WalletUtils
 import timber.log.Timber
@@ -31,6 +33,12 @@ class ImportWalletViewModel @Inject constructor(
     private var phraseList: MutableList<String> =
         MutableList(size = PhraseAmountType.TWELVE_WORDS.amount) { "" }
 
+    init {
+        dataStore.getString(KEY_PWD)
+            .onEach { uiState = uiState.copy(showSetPwd = it.isBlank()) }
+            .launchIn(viewModelScope)
+    }
+
     fun handleEvent(event: ImportWalletEvent) {
         when (event) {
             is ImportWalletEvent.SetPhraseAmountType -> {
@@ -39,23 +47,25 @@ class ImportWalletViewModel @Inject constructor(
             }
             is ImportWalletEvent.SetPassword -> {
                 uiState = uiState.copy(
-                    password = event.pwd,
-                    passwordValid = event.pwd.isPasswordValid()
+                    pwd = event.pwd,
+                    pwdValid = event.pwd.isPasswordValid()
                 )
             }
             is ImportWalletEvent.SetConfirmPassword -> {
-                uiState = uiState.copy(
-                    confirmPassword = event.pwd,
-                    confirmPasswordValid = event.pwd.isNotBlank() && event.pwd == uiState.password
-                )
-
+                uiState = uiState.copy(confirmPwd = event.pwd)
             }
             is ImportWalletEvent.UpdatePhrase -> {
                 phraseList[event.index] = event.phrase
             }
             is ImportWalletEvent.Import -> {
-                if (uiState.passwordValid && uiState.confirmPasswordValid) {
+                if (uiState.showSetPwd) {
+                    if (uiState.btnEnable) {
+                        importWallet()
+                        savePwd { navToHome() }
+                    }
+                } else {
                     importWallet()
+                    navToHome()
                 }
             }
         }
@@ -74,19 +84,25 @@ class ImportWalletViewModel @Inject constructor(
         val credentials = Bip44WalletUtils.loadBip44Credentials("", mnemonic)
 
         Timber.d(message = "address: ${credentials.address}")
+    }
 
-        manager.encrypt(uiState.password)?.let {
+    private fun savePwd(onPwdSaved: () -> Unit) {
+        manager.encrypt(uiState.pwd)?.let {
             viewModelScope.launch {
                 dataStore.putString(KEY_PWD, it)
-                navigateTo(
-                    NavEvent.NavTo(
-                        route = MainRoute.Home.route,
-                        navOptions = NavOptions.Builder()
-                            .setPopUpTo(route = MainRoute.Entrance.route, inclusive = false)
-                            .build()
-                    )
-                )
+                onPwdSaved.invoke()
             }
         }
+    }
+
+    private fun navToHome() {
+        navigateTo(
+            NavEvent.NavTo(
+                route = MainRoute.Home.route,
+                navOptions = NavOptions.Builder()
+                    .setPopUpTo(route = MainRoute.Entrance.route, inclusive = false)
+                    .build()
+            )
+        )
     }
 }

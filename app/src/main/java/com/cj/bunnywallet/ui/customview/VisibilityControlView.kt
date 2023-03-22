@@ -1,4 +1,4 @@
-package com.cj.bunnywallet.feature.importwallet.components
+package com.cj.bunnywallet.ui.customview
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

@@ -16,8 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.cj.bunnywallet.feature.common.VerticalGrid
-import com.cj.bunnywallet.ui.theme.PurpleGrey80
+import com.cj.bunnywallet.ui.customview.VerticalGrid
 
 @Composable
 fun SRPBox(content: @Composable BoxScope.() -> Unit) {

@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
-import com.cj.bunnywallet.feature.common.VerticalGrid
+import com.cj.bunnywallet.ui.customview.VerticalGrid
 import com.cj.bunnywallet.feature.createwallet.CreateWalletStep
 import com.cj.bunnywallet.feature.createwallet.component.CreateWalletContainer
 import com.cj.bunnywallet.feature.createwallet.component.SRPBox
