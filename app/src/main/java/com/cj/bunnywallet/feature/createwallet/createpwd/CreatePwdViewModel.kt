@@ -55,9 +55,6 @@ class CreatePwdViewModel @Inject constructor(
                 )
             }
 
-            is CreatePwdEvent.SetPwdVisibility ->
-                uiState = uiState.copy(pwdVisibility = e.isVisible)
-
             is CreatePwdEvent.SetBiometrics ->
                 uiState = uiState.copy(bioEnabled = e.isEnable)
 

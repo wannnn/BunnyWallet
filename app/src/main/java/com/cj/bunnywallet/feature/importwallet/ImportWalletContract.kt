@@ -1,5 +1,6 @@
 package com.cj.bunnywallet.feature.importwallet
 
+import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.importwallet.type.PhraseAmountType
 import com.cj.bunnywallet.reducer.UiState
 
@@ -13,8 +14,17 @@ sealed class ImportWalletEvent {
 
 data class ImportWalletState(
     val phraseAmount: PhraseAmountType = PhraseAmountType.TWELVE_WORDS,
-    val password: String = "",
-    val passwordValid: Boolean = true,
-    val confirmPassword: String = "",
-    val confirmPasswordValid: Boolean = true
-): UiState
+    val showSetPwd: Boolean = true,
+    val pwd: String = "",
+    val pwdValid: Boolean = true,
+    val confirmPwd: String = "",
+): UiState {
+    val confirmPwdValid: Boolean
+        get() = pwd == confirmPwd
+    val pwdErrMsg: Int?
+        get() = if (pwdValid) null else R.string.password_condition_hint
+    val confirmPwdErrMsg: Int?
+        get() = if (confirmPwdValid) null else R.string.pwd_not_match
+    val btnEnable: Boolean
+        get() = pwd.isNotBlank() && pwdValid && confirmPwdValid
+}

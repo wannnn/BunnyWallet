@@ -1,4 +1,4 @@
-package com.cj.bunnywallet.feature.common
+package com.cj.bunnywallet.ui.customview
 
 /*
  * Copyright 2020 The Android Open Source Project

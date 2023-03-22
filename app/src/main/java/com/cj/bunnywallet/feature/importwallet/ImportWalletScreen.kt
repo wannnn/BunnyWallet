@@ -24,13 +24,13 @@ import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.AppTopBar
 import com.cj.bunnywallet.feature.common.CmnButton
-import com.cj.bunnywallet.feature.common.PasswordTextField
-import com.cj.bunnywallet.feature.common.VerticalGrid
+import com.cj.bunnywallet.ui.customview.VerticalGrid
 import com.cj.bunnywallet.feature.importwallet.components.ImportFromSeedTitle
 import com.cj.bunnywallet.feature.importwallet.components.PhraseAmountSelector
 import com.cj.bunnywallet.feature.importwallet.components.PhraseTextField
-import com.cj.bunnywallet.feature.importwallet.components.VisibilityControlView
+import com.cj.bunnywallet.ui.customview.CreatePwdView
 import com.cj.bunnywallet.navigation.NavEvent
+import com.cj.bunnywallet.ui.customview.VisibilityControlView
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 
 @Composable
@@ -43,7 +43,6 @@ fun ImportWalletScreen(
         AppTopBar(onBackClicked = { navEvent(NavEvent.NavBack) })
 
         var phraseVisibility by remember { mutableStateOf(true) }
-        var pwdVisibility by remember { mutableStateOf(true) }
 
         Column(
             modifier = Modifier
@@ -88,31 +87,17 @@ fun ImportWalletScreen(
                 }
             }
 
-            VisibilityControlView(
-                title = stringResource(id = R.string.set_up_pwd),
-                isVisible = pwdVisibility,
-                onVisibilityChange = {
-                    pwdVisibility = pwdVisibility.not()
-                }
-            )
-
-            PasswordTextField(
-                passwordState = uiState.password,
-                passwordStateUpdate = { uiEvent.invoke(ImportWalletEvent.SetPassword(it.trim())) },
-                label = stringResource(id = R.string.create_password),
-                showPassword = pwdVisibility,
-                errorMsg = if (uiState.passwordValid) null else stringResource(id = R.string.eight_characters)
-            )
-
-            PasswordTextField(
-                passwordState = uiState.confirmPassword,
-                passwordStateUpdate = {
-                    uiEvent.invoke(ImportWalletEvent.SetConfirmPassword(it.trim()))
-                },
-                label = stringResource(id = R.string.confirm_password),
-                showPassword = pwdVisibility,
-                errorMsg = if (uiState.confirmPasswordValid) null else stringResource(id = R.string.pwd_not_match)
-            )
+            if (uiState.showSetPwd) {
+                CreatePwdView(
+                    title = stringResource(id = R.string.set_up_pwd),
+                    pwd = uiState.pwd,
+                    onPwd = { uiEvent.invoke(ImportWalletEvent.SetPassword(it)) },
+                    pwdErrMsg = uiState.pwdErrMsg?.let { stringResource(id = it) },
+                    confirmPwd = uiState.confirmPwd,
+                    onConfirmPwd = { uiEvent.invoke(ImportWalletEvent.SetConfirmPassword(it)) },
+                    confirmPwdErrMsg = uiState.confirmPwdErrMsg?.let { stringResource(id = it) }
+                )
+            }
 
             CmnButton(
                 text = stringResource(id = R.string.btn_import),
