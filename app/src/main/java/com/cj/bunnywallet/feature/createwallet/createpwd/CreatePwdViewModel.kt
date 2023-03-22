@@ -37,20 +37,33 @@ class CreatePwdViewModel @Inject constructor(
         when (e) {
             is CreatePwdEvent.SetPwd -> {
                 val isValidPwd = e.pwd.isPasswordValid()
-                val pwdErrMsgRes = if (isValidPwd) null else R.string.password_condition_hint
+                val pwdErrMsgRes = R.string.password_condition_hint.takeUnless {
+                    isValidPwd || e.pwd.isBlank()
+                }
+
+                val isValidConfirmPwd = e.pwd == uiState.confirmPwd
+                val confirmPwdErrMsgRes = R.string.pwd_not_match.takeUnless {
+                    isValidConfirmPwd || uiState.confirmPwd.isBlank()
+                }
+
                 uiState = uiState.copy(
                     pwd = e.pwd,
                     pwdErrMsgRes = pwdErrMsgRes,
                     pwdIsValid = isValidPwd,
+                    confirmPwdErrMsgRes = confirmPwdErrMsgRes,
+                    confirmPwdIsValid = isValidConfirmPwd,
                 )
             }
 
             is CreatePwdEvent.SetConfirmPwd -> {
                 val isValidConfirmPwd = e.confirmPwd == uiState.pwd
-                val pwdErrMsgRes = if (isValidConfirmPwd) null else R.string.pwd_not_match
+                val confirmPwdErrMsgRes = R.string.pwd_not_match.takeUnless {
+                    isValidConfirmPwd || e.confirmPwd.isBlank()
+                }
+
                 uiState = uiState.copy(
                     confirmPwd = e.confirmPwd,
-                    confirmPwdErrMsgRes = pwdErrMsgRes,
+                    confirmPwdErrMsgRes = confirmPwdErrMsgRes,
                     confirmPwdIsValid = isValidConfirmPwd,
                 )
             }
@@ -61,8 +74,8 @@ class CreatePwdViewModel @Inject constructor(
             is CreatePwdEvent.SetBiometrics ->
                 uiState = uiState.copy(bioEnabled = e.isEnable)
 
-            is CreatePwdEvent.SetCheckDeclaration -> uiState =
-                uiState.copy(declarationChecked = e.isCheck)
+            is CreatePwdEvent.SetCheckDeclaration ->
+                uiState = uiState.copy(declarationChecked = e.isCheck)
 
             CreatePwdEvent.CreatePwd -> {
                 val encryptedPwd = manager.encrypt(uiState.pwd) ?: return
