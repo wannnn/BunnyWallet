@@ -34,12 +34,7 @@ fun NavGraphBuilder.createWalletGraph() {
             )
         }
 
-        composable(
-            CreateWalletRoute.SecureWallet.route,
-            arguments = listOf(
-                navArgument(CreateWalletRoute.SecureWallet.PWD) { type = NavType.StringType },
-            ),
-        ) {
+        composable(CreateWalletRoute.SecureWallet.route) {
             val viewModel = hiltViewModel<SecureWalletViewModel>()
             val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
 

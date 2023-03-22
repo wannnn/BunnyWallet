@@ -1,11 +1,11 @@
 package com.cj.bunnywallet.feature.createwallet.createpwd
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavOptions
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
 import com.cj.bunnywallet.feature.createwallet.CreateWalletStep
@@ -15,6 +15,7 @@ import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreatePwdFiel
 import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreatePwdTitle
 import com.cj.bunnywallet.feature.createwallet.createpwd.component.CreateWalletBioSwitch
 import com.cj.bunnywallet.navigation.NavEvent
+import com.cj.bunnywallet.navigation.route.CreateWalletRoute
 
 @Composable
 fun CreatePwdScreen(
@@ -22,11 +23,15 @@ fun CreatePwdScreen(
     uiEvent: (CreatePwdEvent) -> Unit,
     navEvent: (NavEvent) -> Unit,
 ) {
-    CreateWalletContainer(
-        step = CreateWalletStep.CREATE_PWD,
-        topBarBackClick = { navEvent(NavEvent.NavBack) },
-    ) {
-        CreatePwd(uiState, uiEvent)
+    if (uiState.showCreatedPwd) {
+        CreateWalletContainer(
+            step = CreateWalletStep.CREATE_PWD,
+            topBarBackClick = { navEvent(NavEvent.NavBack) },
+        ) {
+            CreatePwd(uiState, uiEvent)
+        }
+    } else {
+        uiEvent(CreatePwdEvent.ToSecureWallet)
     }
 }
 
@@ -55,19 +60,8 @@ fun CreatePwd(
 @Composable
 fun PreviewCreatePwdScreen() {
     CreatePwdScreen(
-        uiState = CreatePwdState(),
+        uiState = CreatePwdState(showCreatedPwd = true),
         uiEvent = {},
         navEvent = {},
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewCreatePwd() {
-    Column {
-        CreatePwd(
-            uiState = CreatePwdState(),
-            uiEvent = {},
-        )
-    }
 }

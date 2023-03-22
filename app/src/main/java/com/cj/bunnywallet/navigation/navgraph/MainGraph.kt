@@ -12,24 +12,16 @@ import com.cj.bunnywallet.feature.importwallet.ImportWalletScreen
 import com.cj.bunnywallet.feature.importwallet.ImportWalletViewModel
 import com.cj.bunnywallet.navigation.route.MainRoute
 
-fun NavGraphBuilder.mainGraph() {
-    entrance()
-    importWallet()
-    home()
-}
-
-private fun NavGraphBuilder.entrance() {
+fun NavGraphBuilder.entrance() {
     composable(MainRoute.Entrance.route) {
-
         val viewModel: EntranceViewModel = hiltViewModel()
 
         EntranceScreen(viewModel::navigateTo)
     }
 }
 
-private fun NavGraphBuilder.importWallet() {
+fun NavGraphBuilder.importWallet() {
     composable(MainRoute.ImportWallet.route) {
-
         val viewModel: ImportWalletViewModel = hiltViewModel()
 
         val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
@@ -42,7 +34,7 @@ private fun NavGraphBuilder.importWallet() {
     }
 }
 
-private fun NavGraphBuilder.home() {
+fun NavGraphBuilder.home() {
     composable(MainRoute.Home.route) {
         HomeScreen()
     }
