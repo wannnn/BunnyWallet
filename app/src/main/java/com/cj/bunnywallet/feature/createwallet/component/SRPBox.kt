@@ -17,6 +17,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.ui.customview.VerticalGrid
+import com.cj.bunnywallet.MNEMONIC_SIZE_12
+import com.cj.bunnywallet.feature.createwallet.confirmsrp.model.PhraseSlot
 
 @Composable
 fun SRPBox(content: @Composable BoxScope.() -> Unit) {
@@ -31,7 +33,18 @@ fun SRPBox(content: @Composable BoxScope.() -> Unit) {
 }
 
 @Composable
-fun SRPContent(mnemonic: List<String>, modifier: Modifier) {
+fun SRPContentStr(mnemonic: List<String>, modifier: Modifier) {
+    val phraseSlots = mnemonic.mapIndexed { index, phrase ->
+        PhraseSlot(pos = index, phrase = phrase)
+    }
+    SRPContent(
+        mnemonic = phraseSlots,
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun SRPContent(mnemonic: List<PhraseSlot>, modifier: Modifier) {
     VerticalGrid(
         modifier = Modifier
             .border(
@@ -42,7 +55,7 @@ fun SRPContent(mnemonic: List<String>, modifier: Modifier) {
             .padding(all = 8.dp),
         columns = 2,
     ) {
-        mnemonic.forEachIndexed { i, phrase ->
+        mnemonic.forEachIndexed { i, ps ->
             Row(
                 modifier = Modifier.padding(all = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -55,7 +68,7 @@ fun SRPContent(mnemonic: List<String>, modifier: Modifier) {
                     textAlign = TextAlign.Center,
                 )
                 Text(
-                    text = phrase,
+                    text = ps.phrase,
                     modifier = Modifier
                         .weight(weight = 4f)
                         .then(modifier)
@@ -72,11 +85,7 @@ fun SRPContent(mnemonic: List<String>, modifier: Modifier) {
 private fun PreviewSRPBoxReveal() {
     SRPBox {
         SRPContent(
-            mnemonic = listOf(
-                "summer", "summer", "summer", "summer",
-                "whale", "whale", "whale", "whale",
-                "thank", "thank", "thank", "thank",
-            ),
+            mnemonic = List(size = MNEMONIC_SIZE_12) { PhraseSlot(pos = it, phrase = "bunny") },
             modifier = srpSolidBorder,
         )
     }
@@ -87,7 +96,7 @@ private fun PreviewSRPBoxReveal() {
 private fun PreviewSRPBoxConfirm() {
     SRPBox {
         SRPContent(
-            mnemonic = listOf("", "", "", "", "", "", "", "", "", "", "", ""),
+            mnemonic = List(size = MNEMONIC_SIZE_12) { PhraseSlot(pos = it) },
             modifier = srpDashedBorder,
         )
     }

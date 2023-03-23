@@ -22,14 +22,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cj.bunnywallet.MNEMONIC_SIZE_12
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
 import com.cj.bunnywallet.feature.common.CmnOutlineButton
 import com.cj.bunnywallet.feature.createwallet.component.SRPBox
-import com.cj.bunnywallet.feature.createwallet.component.SRPContent
+import com.cj.bunnywallet.feature.createwallet.component.SRPContentStr
 import com.cj.bunnywallet.feature.createwallet.component.srpSolidBorder
 import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletEvent
-import com.cj.bunnywallet.feature.importwallet.type.PhraseAmountType
 
 @Composable
 fun RevealSRPView(
@@ -54,7 +54,7 @@ fun RevealSRPView(
 
         SRPBox {
             if (mnemonic.isNotEmpty()) {
-                SRPContent(
+                SRPContentStr(
                     mnemonic = mnemonic,
                     modifier = srpSolidBorder,
                 )
@@ -131,7 +131,7 @@ fun PreviewRevealSRPViewNotReveal() {
 @Composable
 fun PreviewRevealSRPViewReveal() {
     RevealSRPView(
-        mnemonic = List(size = PhraseAmountType.TWELVE_WORDS.amount) { "bunny" },
+        mnemonic = List(size = MNEMONIC_SIZE_12) { "bunny" },
         uiEvent = {},
     )
 }

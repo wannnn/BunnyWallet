@@ -65,22 +65,19 @@ class SecureWalletViewModel @Inject constructor(
                 navigateTo(navEvent)
             }
 
-            SecureWalletEvent.RevealSRP ->
-                uiState = uiState.copy(mnemonic = generateMnemonic())
+            SecureWalletEvent.RevealSRP -> uiState = uiState.copy(mnemonic = generateMnemonic())
 
             SecureWalletEvent.NavToConfirmSRP -> {
-                val srp = uiState.mnemonic.toString()
+                val srp = uiState.mnemonic.joinToString(separator = " ")
                 navigateTo(NavEvent.NavTo(route = CreateWalletRoute.ConfirmSRP.genRoute(srp)))
             }
-
         }
     }
 
-    private fun generateMnemonic(): List<String> =
-        ByteArray(BYTE_SIZE).let {
-            SecureRandom().nextBytes(it)
-            MnemonicUtils.generateMnemonic(it).split(" ")
-        }
+    private fun generateMnemonic(): List<String> = ByteArray(BYTE_SIZE).let {
+        SecureRandom().nextBytes(it)
+        MnemonicUtils.generateMnemonic(it).split(" ")
+    }
 
     private companion object {
         const val BYTE_SIZE = 16
