@@ -4,6 +4,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -33,18 +34,10 @@ fun SRPBox(content: @Composable BoxScope.() -> Unit) {
 }
 
 @Composable
-fun SRPContentStr(mnemonic: List<String>, modifier: Modifier) {
-    val phraseSlots = mnemonic.mapIndexed { index, phrase ->
-        PhraseSlot(pos = index, phrase = phrase)
-    }
-    SRPContent(
-        mnemonic = phraseSlots,
-        modifier = modifier,
-    )
-}
-
-@Composable
-fun SRPContent(mnemonic: List<PhraseSlot>, modifier: Modifier) {
+private fun SRPContent(
+    mnemonic: List<PhraseSlot>,
+    content: @Composable RowScope.(PhraseSlot) -> Unit,
+) {
     VerticalGrid(
         modifier = Modifier
             .border(
@@ -67,37 +60,60 @@ fun SRPContent(mnemonic: List<PhraseSlot>, modifier: Modifier) {
                         .padding(end = 4.dp),
                     textAlign = TextAlign.Center,
                 )
-                Text(
-                    text = ps.phrase,
-                    modifier = Modifier
-                        .weight(weight = 4f)
-                        .then(modifier)
-                        .padding(vertical = 12.dp),
-                    textAlign = TextAlign.Center,
-                )
+                content(ps)
             }
         }
     }
 }
 
+@Composable
+private fun RowScope.PhraseView(phrase: String, modifier: Modifier) {
+    Text(
+        text = phrase,
+        modifier = Modifier
+            .weight(weight = 4f)
+            .then(modifier)
+            .padding(vertical = 12.dp),
+        textAlign = TextAlign.Center,
+    )
+}
+
+@Composable
+fun ConfirmSRPContent(mnemonic: List<PhraseSlot>) {
+    SRPContent(mnemonic = mnemonic) { ps ->
+        val border = when {
+            ps.phrase.isNotBlank() -> srpSolidBorder
+            ps.selected -> srpDashedBorder
+            else -> srpGrayDashedBorder
+        }
+
+        PhraseView(phrase = ps.phrase, modifier = border)
+    }
+}
+
+@Composable
+fun RevealSRPContent(mnemonic: List<String>) {
+    val phraseSlots = mnemonic.mapIndexed { index, phrase ->
+        PhraseSlot(pos = index, phrase = phrase)
+    }
+    SRPContent(mnemonic = phraseSlots) { ps ->
+        PhraseView(phrase = ps.phrase, modifier = srpSolidBorder)
+    }
+}
+
+
 @Preview(showBackground = true)
 @Composable
 private fun PreviewSRPBoxReveal() {
     SRPBox {
-        SRPContent(
-            mnemonic = List(size = MNEMONIC_SIZE_12) { PhraseSlot(pos = it, phrase = "bunny") },
-            modifier = srpSolidBorder,
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PreviewSRPBoxConfirm() {
-    SRPBox {
-        SRPContent(
-            mnemonic = List(size = MNEMONIC_SIZE_12) { PhraseSlot(pos = it) },
-            modifier = srpDashedBorder,
+        ConfirmSRPContent(
+            mnemonic = List(size = MNEMONIC_SIZE_12) {
+                when (it) {
+                    0 -> PhraseSlot(pos = it, phrase = "bunny")
+                    1 -> PhraseSlot(pos = it, selected = true)
+                    else -> PhraseSlot(pos = it)
+                }
+            },
         )
     }
 }

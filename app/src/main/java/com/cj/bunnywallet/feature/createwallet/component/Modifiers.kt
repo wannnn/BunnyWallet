@@ -10,6 +10,7 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
+import com.cj.bunnywallet.ui.theme.Gray300
 
 val srpSolidBorder = Modifier.composed {
     border(
@@ -31,4 +32,15 @@ val srpDashedBorder = Modifier.composed {
             cornerRadius = CornerRadius(32.dp.toPx()),
         )
     }
+}
+
+val srpGrayDashedBorder = Modifier.drawBehind {
+    drawRoundRect(
+        color = Gray300,
+        style = Stroke(
+            width = 2f,
+            pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f),
+        ),
+        cornerRadius = CornerRadius(32.dp.toPx()),
+    )
 }

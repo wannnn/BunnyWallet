@@ -26,9 +26,8 @@ import com.cj.bunnywallet.MNEMONIC_SIZE_12
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
 import com.cj.bunnywallet.feature.common.CmnOutlineButton
+import com.cj.bunnywallet.feature.createwallet.component.RevealSRPContent
 import com.cj.bunnywallet.feature.createwallet.component.SRPBox
-import com.cj.bunnywallet.feature.createwallet.component.SRPContentStr
-import com.cj.bunnywallet.feature.createwallet.component.srpSolidBorder
 import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletEvent
 
 @Composable
@@ -54,10 +53,7 @@ fun RevealSRPView(
 
         SRPBox {
             if (mnemonic.isNotEmpty()) {
-                SRPContentStr(
-                    mnemonic = mnemonic,
-                    modifier = srpSolidBorder,
-                )
+                RevealSRPContent(mnemonic = mnemonic)
             } else {
                 SRPSectionHide(onReveal = { uiEvent(SecureWalletEvent.RevealSRP) })
             }

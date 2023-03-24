@@ -18,8 +18,9 @@ class ConfirmSRPViewModel @Inject constructor(
 ) : ViewModel(), AppNavigator by appNavigator,
     Reducer<ConfirmSRPContractState> by ReducerImp(ConfirmSRPContractState()) {
 
-    private val mnemonic =
-        savedStateHandle.get<String>(CreateWalletRoute.ConfirmSRP.SRP)?.split(" ").orEmpty()
+    private val mnemonic = savedStateHandle.get<String>(CreateWalletRoute.ConfirmSRP.SRP)
+            ?.split(" ")
+            .orEmpty()
 
     init {
         genShuffledMnemonic()

@@ -10,7 +10,7 @@ sealed interface ConfirmSRPContractEvent {
 
 data class ConfirmSRPContractState(
     val selectedMnemonic: MutableList<PhraseSlot> =
-        MutableList(size = MNEMONIC_SIZE_12) { PhraseSlot(pos = it) },
+        MutableList(size = MNEMONIC_SIZE_12) { PhraseSlot(pos = it, selected = it == 0) },
     val shuffledMnemonic: MutableList<PhraseSlot> =
         MutableList(size = MNEMONIC_SIZE_12) { PhraseSlot(pos = it) },
 ) : UiState

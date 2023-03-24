@@ -20,13 +20,15 @@ import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
 import com.cj.bunnywallet.ui.customview.VerticalGrid
 import com.cj.bunnywallet.feature.createwallet.CreateWalletStep
+import com.cj.bunnywallet.feature.createwallet.component.ConfirmSRPContent
 import com.cj.bunnywallet.feature.createwallet.component.CreateWalletContainer
 import com.cj.bunnywallet.feature.createwallet.component.SRPBox
-import com.cj.bunnywallet.feature.createwallet.component.SRPContent
 import com.cj.bunnywallet.feature.createwallet.component.srpDashedBorder
+import com.cj.bunnywallet.feature.createwallet.component.srpGrayDashedBorder
+import com.cj.bunnywallet.feature.createwallet.component.srpSolidBorder
 import com.cj.bunnywallet.feature.createwallet.confirmsrp.model.PhraseSlot
 import com.cj.bunnywallet.navigation.NavEvent
-import com.cj.bunnywallet.navigation.route.CreateWalletRoute
+import com.cj.bunnywallet.ui.theme.Gray300
 import com.cj.bunnywallet.ui.theme.PurpleGrey80
 
 @Composable
@@ -55,12 +57,7 @@ fun ConfirmSRP(
     ) {
         ConfirmSRPTitle()
 
-        SRPBox {
-            SRPContent(
-                mnemonic = uiState.selectedMnemonic,
-                modifier = srpDashedBorder,
-            )
-        }
+        SRPBox { ConfirmSRPContent(mnemonic = uiState.selectedMnemonic) }
 
         SRPSelections(mnemonics = uiState.shuffledMnemonic)
 
@@ -98,15 +95,20 @@ private fun ConfirmSRPTitle() {
 }
 
 @Composable
-fun SRPSelections(mnemonics: List<PhraseSlot>) {
+private fun SRPSelections(mnemonics: List<PhraseSlot>) {
     VerticalGrid(columns = 3) {
         mnemonics.forEach { ps ->
+            val bgColor = when {
+                ps.selected -> Gray300
+                else -> MaterialTheme.colorScheme.inversePrimary
+            }
+
             Text(
                 text = ps.phrase,
                 modifier = Modifier
                     .padding(all = 4.dp)
                     .background(
-                        color = PurpleGrey80,
+                        color = bgColor,
                         shape = RoundedCornerShape(size = 32.dp),
                     )
                     .padding(vertical = 12.dp),
