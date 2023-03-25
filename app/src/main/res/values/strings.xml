@@ -1,14 +1,22 @@
 <resources>
     <string name="app_name">BunnyWallet</string>
 
-    <!-- Common   -->
+    <!-- Common -->
     <string name="new_password">New password</string>
     <string name="confirm_password">Confirm password</string>
+    <string name="password">Password</string>
     <string name="secret_recovery_phrase">Secret Recovery Phrase</string>
     <string name="password_condition_hint">Must be at least 8 characters</string>
     <string name="pwd_not_match">Passwords don\'t match</string>
+    <string name="invalid_password">Invalid password</string>
 
-    <!-- Create Wallet   -->
+    <!-- Unlock -->
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="unlock">UNLOCK</string>
+    <string name="reset_wallet_hint">Wallet won\'t unlock? You can ERASE your current wallet and setup a new one</string>
+    <string name="reset_wallet">Reset Wallet</string>
+
+    <!-- Create Wallet -->
     <string name="create_password">Create password</string>
     <string name="secure_wallet">Secure wallet</string>
     <string name="confirm_mnemonics">Confirm secret\n recovery phrase</string>
@@ -60,7 +68,7 @@
     <string name="skip">Skip</string>
     <string name="secure_now">Secure now</string>
 
-    <!-- Import Wallet   -->
+    <!-- Import Wallet -->
     <string name="import_from_seed">Import from seed</string>
     <string name="set_up_pwd">Set Up Password</string>
     <string name="btn_import">IMPORT</string>

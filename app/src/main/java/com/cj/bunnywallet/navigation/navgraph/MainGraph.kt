@@ -10,7 +10,22 @@ import com.cj.bunnywallet.feature.entrance.EntranceViewModel
 import com.cj.bunnywallet.feature.home.HomeScreen
 import com.cj.bunnywallet.feature.importwallet.ImportWalletScreen
 import com.cj.bunnywallet.feature.importwallet.ImportWalletViewModel
+import com.cj.bunnywallet.feature.unlock.UnlockScreen
+import com.cj.bunnywallet.feature.unlock.UnlockViewModel
 import com.cj.bunnywallet.navigation.route.MainRoute
+
+fun NavGraphBuilder.unlock() {
+    composable(MainRoute.Unlock.route) {
+        val viewModel: UnlockViewModel = hiltViewModel()
+
+        val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
+
+        UnlockScreen(
+            uiState = uiState,
+            uiEvent = viewModel::handleEvent,
+        )
+    }
+}
 
 fun NavGraphBuilder.entrance() {
     composable(MainRoute.Entrance.route) {

@@ -19,7 +19,7 @@ data class ImportWalletState(
     val pwdValid: Boolean = true,
     val confirmPwd: String = "",
 ): UiState {
-    val confirmPwdValid: Boolean
+    private val confirmPwdValid: Boolean
         get() = pwd == confirmPwd
     val pwdErrMsg: Int?
         get() = if (pwdValid) null else R.string.password_condition_hint

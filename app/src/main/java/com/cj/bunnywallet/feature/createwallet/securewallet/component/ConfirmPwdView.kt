@@ -73,7 +73,7 @@ fun PwdField(
         PasswordTextField(
             passwordState = confirmPwd,
             passwordStateUpdate = {
-                confirmPwd = it.trim()
+                confirmPwd = it
                 uiEvent(SecureWalletEvent.UpdateConfirmPwd(confirmPwd))
             },
             label = stringResource(id = R.string.confirm_password),
