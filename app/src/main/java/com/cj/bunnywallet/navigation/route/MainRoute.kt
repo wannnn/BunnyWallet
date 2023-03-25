@@ -2,6 +2,10 @@ package com.cj.bunnywallet.navigation.route
 
 sealed interface MainRoute : Routes {
 
+    object Unlock : MainRoute {
+        override val route: String = "unlock_route"
+    }
+
     object Entrance : MainRoute {
         override val route: String = "entrance_route"
     }

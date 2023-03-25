@@ -9,7 +9,7 @@ import com.cj.bunnywallet.navigation.navgraph.createWalletGraph
 import com.cj.bunnywallet.navigation.navgraph.entrance
 import com.cj.bunnywallet.navigation.navgraph.home
 import com.cj.bunnywallet.navigation.navgraph.importWallet
-import com.cj.bunnywallet.navigation.route.MainRoute
+import com.cj.bunnywallet.navigation.navgraph.unlock
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.onEach
 fun AppNavHost(
     navController: NavHostController,
     appNavigator: AppNavigator,
+    startDestination: String,
     modifier: Modifier = Modifier,
 ) {
     LaunchedEffect(navController) {
@@ -27,9 +28,10 @@ fun AppNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = MainRoute.Entrance.route,
+        startDestination = startDestination,
         modifier = modifier,
     ) {
+        unlock()
         entrance()
         createWalletGraph()
         importWallet()

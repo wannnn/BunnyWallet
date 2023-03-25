@@ -37,7 +37,7 @@ fun CreatePwdView(
 
         PasswordTextField(
             passwordState = pwd,
-            passwordStateUpdate = { onPwd.invoke(it.trim()) },
+            passwordStateUpdate = { onPwd.invoke(it) },
             modifier = Modifier.padding(bottom = 8.dp),
             label = stringResource(id = R.string.new_password),
             showPassword = pwdVisibility,
@@ -46,7 +46,7 @@ fun CreatePwdView(
 
         PasswordTextField(
             passwordState = confirmPwd,
-            passwordStateUpdate = { onConfirmPwd.invoke(it.trim()) },
+            passwordStateUpdate = { onConfirmPwd.invoke(it) },
             label = stringResource(id = R.string.confirm_password),
             showPassword = pwdVisibility,
             errorMsg = confirmPwdErrMsg

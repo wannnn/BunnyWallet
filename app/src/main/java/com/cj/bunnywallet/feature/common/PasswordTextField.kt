@@ -24,7 +24,7 @@ fun PasswordTextField(
 ) {
     CommonTextField(
         valueState = passwordState,
-        onValueUpdate = { passwordStateUpdate.invoke(it) },
+        onValueUpdate = { passwordStateUpdate.invoke(it.trim()) },
         modifier = modifier,
         label = label,
         visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
