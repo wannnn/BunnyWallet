@@ -19,7 +19,7 @@ sealed interface CreateWalletRoute : Routes {
         fun genRoute(srp: String) = "$BASE_ROUTE/$srp"
     }
 
-    object CreateWalletCompleted : CreateWalletRoute {
+    object Completed : CreateWalletRoute {
         override val route: String = "create_wallet_completed_route"
     }
 }

@@ -19,24 +19,28 @@ import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.R
 
 @Composable
-fun AppTopBar(onBackClicked: () -> Unit) {
-
+fun AppTopBar(
+    onBackClicked: () -> Unit,
+    showBackBtn: Boolean = true,
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(64.dp)
     ) {
 
-        IconButton(
-            onClick = onBackClicked,
-            modifier = Modifier
-                .padding(start = 8.dp)
-                .align(Alignment.CenterStart)
-        ) {
-            Icon(
-                imageVector = Icons.Rounded.ArrowBack,
-                contentDescription = null
-            )
+        if (showBackBtn) {
+            IconButton(
+                onClick = onBackClicked,
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .align(Alignment.CenterStart)
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.ArrowBack,
+                    contentDescription = null
+                )
+            }
         }
 
         Text(
@@ -52,5 +56,5 @@ fun AppTopBar(onBackClicked: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewAppTopBar() {
-    AppTopBar {}
+    AppTopBar(onBackClicked = {})
 }
