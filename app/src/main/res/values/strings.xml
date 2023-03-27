@@ -67,6 +67,7 @@
     <string name="save">Save</string>
     <string name="skip">Skip</string>
     <string name="secure_now">Secure now</string>
+    <string name="wrong_order">Wrong order</string>
 
     <!-- Import Wallet -->
     <string name="import_from_seed">Import from seed</string>

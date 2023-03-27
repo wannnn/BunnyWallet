@@ -26,7 +26,7 @@ val srpDashedBorder = Modifier.composed {
         drawRoundRect(
             color = color,
             style = Stroke(
-                width = 2f,
+                width = 3f,
                 pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f),
             ),
             cornerRadius = CornerRadius(32.dp.toPx()),
