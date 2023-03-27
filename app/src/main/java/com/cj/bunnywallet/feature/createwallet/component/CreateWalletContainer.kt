@@ -23,13 +23,18 @@ import com.cj.bunnywallet.navigation.NavEvent
 fun CreateWalletContainer(
     step: CreateWalletStep,
     topBarBackClick: () -> Unit,
+    showBackBtn: Boolean = true,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AppTopBar(onBackClicked = topBarBackClick)
+        AppTopBar(
+            onBackClicked = topBarBackClick,
+            showBackBtn = showBackBtn,
+        )
+
         Column(
             modifier = Modifier
                 .fillMaxWidth(fraction = 0.8f)

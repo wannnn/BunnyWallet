@@ -34,7 +34,10 @@ import com.cj.bunnywallet.feature.common.CmnOutlineButton
 private const val MAX_LENGTH = 100
 
 @Composable
-fun RecoveryHintDialog(onDismiss: () -> Unit) {
+fun RecoveryHintDialog(
+    onDismiss: () -> Unit,
+    saveHint: (String) -> Unit,
+) {
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(size = 10.dp)
@@ -64,7 +67,11 @@ fun RecoveryHintDialog(onDismiss: () -> Unit) {
                     style = MaterialTheme.typography.bodyLarge,
                 )
 
-                HintField()
+                var hint by remember { mutableStateOf("") }
+                HintField(
+                    hint = hint,
+                    onHintChanged = { hint = it },
+                )
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -79,7 +86,7 @@ fun RecoveryHintDialog(onDismiss: () -> Unit) {
                     CmnButton(
                         text = stringResource(id = R.string.save),
                         modifier = Modifier.weight(1f),
-                        onClick = onDismiss,
+                        onClick = { saveHint(hint) },
                     )
                 }
             }
@@ -89,20 +96,19 @@ fun RecoveryHintDialog(onDismiss: () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HintField() {
+fun HintField(hint: String, onHintChanged: (String) -> Unit) {
     Column(horizontalAlignment = Alignment.End) {
-        var a by remember { mutableStateOf("") }
+
         OutlinedTextField(
-            value = a,
+            value = hint,
             onValueChange = {
                 if (it.contains("\n") || it.length > MAX_LENGTH) return@OutlinedTextField
-                a = it
+                onHintChanged(it)
             },
             modifier = Modifier.height(100.dp),
         )
-
         Text(
-            text = "${a.length} / $MAX_LENGTH",
+            text = "${hint.length} / $MAX_LENGTH",
             modifier = Modifier.padding(end = 2.dp),
         )
     }
@@ -112,5 +118,8 @@ fun HintField() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewWarnSkipDialog() {
-    RecoveryHintDialog(onDismiss = {})
+    RecoveryHintDialog(
+        onDismiss = {},
+        saveHint = {},
+    )
 }

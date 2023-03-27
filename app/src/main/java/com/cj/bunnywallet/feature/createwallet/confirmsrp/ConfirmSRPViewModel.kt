@@ -11,6 +11,7 @@ import com.cj.bunnywallet.feature.createwallet.confirmsrp.model.PhraseSlot
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent
 import com.cj.bunnywallet.navigation.route.CreateWalletRoute
+import com.cj.bunnywallet.navigation.route.MainRoute
 import com.cj.bunnywallet.reducer.Reducer
 import com.cj.bunnywallet.reducer.ReducerImp
 import com.cj.bunnywallet.utils.CryptoManager
@@ -48,8 +49,7 @@ class ConfirmSRPViewModel @Inject constructor(
                 handleSlotClicked(ps = e.ps)
             }
 
-            is ConfirmSRPEvent.OnShuffledPhraseClicked ->
-                handleShuffleClicked(ps = e.ps)
+            is ConfirmSRPEvent.OnShuffledPhraseClicked -> handleShuffleClicked(ps = e.ps)
 
             ConfirmSRPEvent.BackUpCompleted -> {
                 val encryptedMnemonic =
@@ -57,13 +57,11 @@ class ConfirmSRPViewModel @Inject constructor(
                 viewModelScope.launch {
                     dataStore.putString(KEY_MNEMONIC, encryptedMnemonic)
                     val destination = NavEvent.NavTo(
-                        route = CreateWalletRoute.CreateWalletCompleted.route,
-                        navOptions = NavOptions.Builder()
-                            .setPopUpTo(
-                                route = CreateWalletRoute.SecureWallet.route,
-                                inclusive = true,
-                            )
-                            .build()
+                        route = CreateWalletRoute.Completed.route,
+                        navOptions = NavOptions.Builder().setPopUpTo(
+                            route = MainRoute.Entrance.route,
+                            inclusive = true,
+                        ).build()
                     )
                     navigateTo(destination)
                 }

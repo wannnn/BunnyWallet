@@ -1,5 +1,6 @@
 package com.cj.bunnywallet.feature.createwallet.completed
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,8 +13,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -23,31 +22,30 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
-import com.cj.bunnywallet.feature.createwallet.component.CreateWalletContainer
-import com.cj.bunnywallet.ui.theme.Purple40
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
 import com.cj.bunnywallet.feature.createwallet.CreateWalletStep
+import com.cj.bunnywallet.feature.createwallet.component.CreateWalletContainer
 
 @Composable
-fun CreateWalletCompletedRoute() {
-    CreateWalletCompletedScreen()
-}
+fun CompletedScreen(
+    uiState: CompletedState,
+    uiEvent: (CompletedEvent) -> Unit,
+) {
+    BackHandler { uiEvent(CompletedEvent.Done) }
 
-@Composable
-private fun CreateWalletCompletedScreen() {
     CreateWalletContainer(
         step = CreateWalletStep.DONE,
         topBarBackClick = {},
+        showBackBtn = false,
     ) {
-        Completed()
+        Completed(uiState = uiState, uiEvent = uiEvent)
     }
 }
 
 @Composable
-private fun Completed() {
-    var showDialog by remember { mutableStateOf(false) }
-
+private fun Completed(
+    uiState: CompletedState,
+    uiEvent: (CompletedEvent) -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -81,8 +79,8 @@ private fun Completed() {
             text = stringResource(R.string.leave_yourself_a_hint),
             modifier = Modifier
                 .padding(top = 12.dp)
-                .clickable { showDialog = true },
-            color = Purple40,
+                .clickable { uiEvent(CompletedEvent.HandleDialog(true)) },
+            color = MaterialTheme.colorScheme.primary,
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyMedium,
         )
@@ -96,25 +94,25 @@ private fun Completed() {
 
         CmnButton(
             text = stringResource(id = R.string.done),
-            onClick = { /*TODO*/ },
+            onClick = { uiEvent(CompletedEvent.Done) },
             modifier = Modifier.fillMaxWidth(),
         )
     }
 
-    if (showDialog) {
-        RecoveryHintDialog { showDialog = false }
+    if (uiState.showDialog) {
+        RecoveryHintDialog(
+            onDismiss = { uiEvent(CompletedEvent.HandleDialog(false)) },
+            saveHint = { uiEvent(CompletedEvent.SaveHint(it)) },
+        )
     }
 }
 
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewCreateWalletCompletedScreen() {
-    CreateWalletCompletedScreen()
-}
-
-@Preview(showBackground = true)
-@Composable
 fun PreviewCompleted() {
-    Completed()
+    CompletedScreen(
+        uiState = CompletedState(),
+        uiEvent = {},
+    )
 }
