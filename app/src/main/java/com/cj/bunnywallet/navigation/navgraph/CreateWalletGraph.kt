@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import com.cj.bunnywallet.feature.createwallet.completed.CreateWalletCompletedRoute
-import com.cj.bunnywallet.feature.createwallet.confirmsrp.ConfirmSRPRoute
+import com.cj.bunnywallet.feature.createwallet.confirmsrp.ConfirmSRPScreen
 import com.cj.bunnywallet.feature.createwallet.confirmsrp.ConfirmSRPViewModel
 import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdScreen
 import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdViewModel
@@ -52,7 +52,13 @@ fun NavGraphBuilder.createWalletGraph() {
             ),
         ) {
             val viewModel = hiltViewModel<ConfirmSRPViewModel>()
-            ConfirmSRPRoute()
+            val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
+
+            ConfirmSRPScreen(
+                uiState = uiState,
+                uiEvent = viewModel::handleEvent,
+                navEvent = viewModel::navigateTo,
+            )
         }
 
         composable(CreateWalletRoute.CreateWalletCompleted.route) { CreateWalletCompletedRoute() }
