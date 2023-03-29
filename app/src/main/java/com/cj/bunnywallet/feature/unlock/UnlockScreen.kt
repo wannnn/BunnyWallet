@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -58,6 +59,7 @@ fun UnlockScreen(
                 passwordState = uiState.pwd,
                 passwordStateUpdate = { uiEvent.invoke(UnlockEvent.SetPassword(it)) },
                 label = stringResource(id = R.string.password),
+                imeAction = ImeAction.Done,
                 errorMsg = uiState.invalidPwdMsg?.let { stringResource(id = it) }
             )
 
