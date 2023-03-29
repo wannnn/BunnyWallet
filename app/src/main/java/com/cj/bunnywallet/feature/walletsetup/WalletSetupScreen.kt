@@ -1,4 +1,4 @@
-package com.cj.bunnywallet.feature.entrance
+package com.cj.bunnywallet.feature.walletsetup
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,32 +9,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.cj.bunnywallet.navigation.NavEvent
-import com.cj.bunnywallet.navigation.route.MainRoute
 
 @Composable
-fun EntranceScreen(navEvent: (NavEvent) -> Unit) {
+fun WalletSetupScreen(uiEvent: (WalletSetupEvent) -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Button(onClick = { navEvent(NavEvent.NavTo(MainRoute.CreateWallet.route)) }) {
+        Button(onClick = { uiEvent(WalletSetupEvent.CreateWallet) }) {
             Text(text = "To Create Wallet Screen")
         }
 
-        Button(onClick = { navEvent(NavEvent.NavTo(MainRoute.ImportWallet.route)) }) {
+        Button(onClick = { uiEvent(WalletSetupEvent.ImportWallet) }) {
             Text(text = "To Import Wallet Screen")
-        }
-
-        Button(onClick = { navEvent(NavEvent.NavTo(MainRoute.Home.route)) }) {
-            Text(text = "To Home Screen")
         }
     }
 }
 
 @Preview
 @Composable
-fun PreviewEntranceScreen() {
-    EntranceScreen {}
+fun PreviewWalletSetupScreen() {
+    WalletSetupScreen(uiEvent = {})
 }

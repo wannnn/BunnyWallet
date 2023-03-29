@@ -9,7 +9,9 @@ import com.cj.bunnywallet.navigation.navgraph.createWalletGraph
 import com.cj.bunnywallet.navigation.navgraph.entrance
 import com.cj.bunnywallet.navigation.navgraph.home
 import com.cj.bunnywallet.navigation.navgraph.importWallet
+import com.cj.bunnywallet.navigation.navgraph.startup
 import com.cj.bunnywallet.navigation.navgraph.unlock
+import com.cj.bunnywallet.navigation.route.MainRoute
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -17,7 +19,6 @@ import kotlinx.coroutines.flow.onEach
 fun AppNavHost(
     navController: NavHostController,
     appNavigator: AppNavigator,
-    startDestination: String,
     modifier: Modifier = Modifier,
 ) {
     LaunchedEffect(navController) {
@@ -28,9 +29,10 @@ fun AppNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = startDestination,
+        startDestination = MainRoute.Startup.route,
         modifier = modifier,
     ) {
+        startup()
         unlock()
         entrance()
         createWalletGraph()
@@ -42,6 +44,13 @@ fun AppNavHost(
 private fun NavHostController.handleNavEvent(navEvent: NavEvent) {
     when (navEvent) {
         is NavEvent.NavBack -> navigateUp()
+
         is NavEvent.NavTo -> navigate(navEvent.route, navEvent.navOptions)
+
+        is NavEvent.PopBackTo -> popBackStack(
+            route = navEvent.route,
+            inclusive = navEvent.inclusive,
+            saveState = navEvent.saveState,
+        )
     }
 }

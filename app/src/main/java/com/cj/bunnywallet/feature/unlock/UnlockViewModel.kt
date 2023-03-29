@@ -3,6 +3,7 @@ package com.cj.bunnywallet.feature.unlock
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavOptions
+import com.cj.bunnywallet.KEY_MNEMONIC
 import com.cj.bunnywallet.KEY_PWD
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.datasource.BunnyDataStore
@@ -22,7 +23,14 @@ class UnlockViewModel @Inject constructor(
     private val dataStore: BunnyDataStore,
     private val manager: CryptoManager,
     private val navigator: AppNavigator
-) : ViewModel(), AppNavigator by navigator, Reducer<UnlockState> by ReducerImp(UnlockState()) {
+) : ViewModel(), AppNavigator by navigator,
+    Reducer<UnlockState> by ReducerImp(UnlockState()) {
+
+    private var hasMnemonic = false
+
+    init {
+        checkHasMnemonic()
+    }
 
     fun handleEvent(e: UnlockEvent) {
         when (e) {
@@ -36,7 +44,7 @@ class UnlockViewModel @Inject constructor(
             .onEach {
                 val decryptPwd = manager.decrypt(it)
                 if (decryptPwd == uiState.pwd) {
-                    navToHome()
+                    navigate()
                 } else {
                     uiState = uiState.copy(invalidPwdMsg = R.string.invalid_password)
                 }
@@ -44,16 +52,19 @@ class UnlockViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    private fun navToHome() {
+    private fun navigate() {
         val navEvent = NavEvent.NavTo(
-            route = MainRoute.Home.route,
+            route = if (hasMnemonic) MainRoute.Home.route else MainRoute.WalletSetup.route,
             navOptions = NavOptions.Builder()
-                .setPopUpTo(
-                    route = MainRoute.Unlock.route,
-                    inclusive = true,
-                )
+                .setPopUpTo(route = MainRoute.Unlock.route, inclusive = true)
                 .build(),
         )
         navigateTo(navEvent)
+    }
+
+    private fun checkHasMnemonic() {
+        dataStore.getString(KEY_MNEMONIC)
+            .onEach { mnemonic -> hasMnemonic = mnemonic.isNotBlank() }
+            .launchIn(viewModelScope)
     }
 }

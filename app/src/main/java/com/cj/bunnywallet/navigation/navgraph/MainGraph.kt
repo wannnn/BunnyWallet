@@ -5,15 +5,24 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.cj.bunnywallet.feature.entrance.EntranceScreen
-import com.cj.bunnywallet.feature.entrance.EntranceViewModel
+import com.cj.bunnywallet.feature.walletsetup.WalletSetupScreen
+import com.cj.bunnywallet.feature.walletsetup.WalletSetupViewModel
 import com.cj.bunnywallet.feature.home.HomeScreen
 import com.cj.bunnywallet.feature.home.HomeViewModel
 import com.cj.bunnywallet.feature.importwallet.ImportWalletScreen
 import com.cj.bunnywallet.feature.importwallet.ImportWalletViewModel
+import com.cj.bunnywallet.feature.startupscreen.StartupScreen
+import com.cj.bunnywallet.feature.startupscreen.StartupViewModel
 import com.cj.bunnywallet.feature.unlock.UnlockScreen
 import com.cj.bunnywallet.feature.unlock.UnlockViewModel
 import com.cj.bunnywallet.navigation.route.MainRoute
+
+fun NavGraphBuilder.startup() {
+    composable(MainRoute.Startup.route) {
+        hiltViewModel<StartupViewModel>()
+        StartupScreen()
+    }
+}
 
 fun NavGraphBuilder.unlock() {
     composable(MainRoute.Unlock.route) {
@@ -29,10 +38,10 @@ fun NavGraphBuilder.unlock() {
 }
 
 fun NavGraphBuilder.entrance() {
-    composable(MainRoute.Entrance.route) {
-        val viewModel: EntranceViewModel = hiltViewModel()
+    composable(MainRoute.WalletSetup.route) {
+        val viewModel: WalletSetupViewModel = hiltViewModel()
 
-        EntranceScreen(viewModel::navigateTo)
+        WalletSetupScreen(viewModel::handleEvent)
     }
 }
 
