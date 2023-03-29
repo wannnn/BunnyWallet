@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavOptions
 import com.cj.bunnywallet.BuildConfig
+import com.cj.bunnywallet.KEY_MNEMONIC
 import com.cj.bunnywallet.KEY_PWD
 import com.cj.bunnywallet.datasource.BunnyDataStore
 import com.cj.bunnywallet.extensions.isPasswordValid
@@ -58,14 +59,8 @@ class ImportWalletViewModel @Inject constructor(
                 phraseList[event.index] = event.phrase
             }
             is ImportWalletEvent.Import -> {
-                if (uiState.showSetPwd) {
-                    if (uiState.btnEnable) {
-                        importWallet()
-                        savePwd { navToHome() }
-                    }
-                } else {
+                if (uiState.btnEnable) {
                     importWallet()
-                    navToHome()
                 }
             }
         }
@@ -84,14 +79,25 @@ class ImportWalletViewModel @Inject constructor(
         val credentials = Bip44WalletUtils.loadBip44Credentials("", mnemonic)
 
         Timber.d(message = "address: ${credentials.address}")
+
+        viewModelScope.launch {
+            if (uiState.showSetPwd) {
+                savePwd()
+            }
+            saveMnemonic(mnemonic)
+            navToHome()
+        }
     }
 
-    private fun savePwd(onPwdSaved: () -> Unit) {
+    private suspend fun savePwd() {
         manager.encrypt(uiState.pwd)?.let {
-            viewModelScope.launch {
-                dataStore.putString(KEY_PWD, it)
-                onPwdSaved.invoke()
-            }
+            dataStore.putString(KEY_PWD, it)
+        }
+    }
+
+    private suspend fun saveMnemonic(mnemonic: String) {
+        manager.encrypt(mnemonic)?.let {
+            dataStore.putString(KEY_MNEMONIC, it)
         }
     }
 

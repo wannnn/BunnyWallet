@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.R
@@ -49,6 +50,7 @@ fun CreatePwdView(
             passwordStateUpdate = { onConfirmPwd.invoke(it) },
             label = stringResource(id = R.string.confirm_password),
             showPassword = pwdVisibility,
+            imeAction = ImeAction.Done,
             errorMsg = confirmPwdErrMsg
         )
     }

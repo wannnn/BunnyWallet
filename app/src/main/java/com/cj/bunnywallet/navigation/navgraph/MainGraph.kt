@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.cj.bunnywallet.feature.entrance.EntranceScreen
 import com.cj.bunnywallet.feature.entrance.EntranceViewModel
 import com.cj.bunnywallet.feature.home.HomeScreen
+import com.cj.bunnywallet.feature.home.HomeViewModel
 import com.cj.bunnywallet.feature.importwallet.ImportWalletScreen
 import com.cj.bunnywallet.feature.importwallet.ImportWalletViewModel
 import com.cj.bunnywallet.feature.unlock.UnlockScreen
@@ -51,6 +52,12 @@ fun NavGraphBuilder.importWallet() {
 
 fun NavGraphBuilder.home() {
     composable(MainRoute.Home.route) {
-        HomeScreen()
+        val viewModel: HomeViewModel = hiltViewModel()
+
+        val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
+
+        HomeScreen(
+            uiState = uiState
+        )
     }
 }
