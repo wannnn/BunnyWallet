@@ -21,15 +21,11 @@ fun CreatePwdScreen(
     uiEvent: (CreatePwdEvent) -> Unit,
     navEvent: (NavEvent) -> Unit,
 ) {
-    if (uiState.showCreatedPwd) {
-        CreateWalletContainer(
-            step = CreateWalletStep.CREATE_PWD,
-            topBarBackClick = { navEvent(NavEvent.NavBack) },
-        ) {
-            CreatePwd(uiState, uiEvent)
-        }
-    } else {
-        uiEvent(CreatePwdEvent.ToSecureWallet)
+    CreateWalletContainer(
+        step = CreateWalletStep.CREATE_PWD,
+        topBarBackClick = { navEvent(NavEvent.NavBack) },
+    ) {
+        CreatePwd(uiState, uiEvent)
     }
 }
 
@@ -65,7 +61,7 @@ fun CreatePwd(
 @Composable
 fun PreviewCreatePwdScreen() {
     CreatePwdScreen(
-        uiState = CreatePwdState(showCreatedPwd = true),
+        uiState = CreatePwdState(),
         uiEvent = {},
         navEvent = {},
     )

@@ -57,10 +57,9 @@ class SecureWalletViewModel @Inject constructor(
 
             SecureWalletEvent.SkipGenSRP -> {
                 uiState = uiState.copy(dialogType = SecureWalletDialogType.HIDE)
-                val navEvent = NavEvent.NavTo(
-                    route = MainRoute.Entrance.route,
-                    navOptions = NavOptions.Builder()
-                        .setPopUpTo(route = MainRoute.Entrance.route, inclusive = true).build(),
+                val navEvent = NavEvent.PopBackTo(
+                    route = MainRoute.WalletSetup.route,
+                    inclusive = false,
                 )
                 navigateTo(navEvent)
             }

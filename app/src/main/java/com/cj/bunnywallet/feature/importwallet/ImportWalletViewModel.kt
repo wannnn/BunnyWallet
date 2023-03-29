@@ -106,7 +106,7 @@ class ImportWalletViewModel @Inject constructor(
             NavEvent.NavTo(
                 route = MainRoute.Home.route,
                 navOptions = NavOptions.Builder()
-                    .setPopUpTo(route = MainRoute.Entrance.route, inclusive = true)
+                    .setPopUpTo(route = MainRoute.WalletSetup.route, inclusive = true)
                     .build()
             )
         )

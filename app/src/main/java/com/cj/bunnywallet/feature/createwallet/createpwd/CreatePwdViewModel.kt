@@ -14,8 +14,6 @@ import com.cj.bunnywallet.reducer.Reducer
 import com.cj.bunnywallet.reducer.ReducerImp
 import com.cj.bunnywallet.utils.CryptoManager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,12 +24,6 @@ class CreatePwdViewModel @Inject constructor(
     private val manager: CryptoManager,
 ) : ViewModel(), AppNavigator by appNavigator,
     Reducer<CreatePwdState> by ReducerImp(CreatePwdState()) {
-
-    init {
-        dataStore.getString(key = KEY_PWD)
-            .onEach { uiState = uiState.copy(showCreatedPwd = it.isBlank()) }
-            .launchIn(viewModelScope)
-    }
 
     fun handleEvent(e: CreatePwdEvent) {
         when (e) {
@@ -81,8 +73,6 @@ class CreatePwdViewModel @Inject constructor(
                     toSecureWallet()
                 }
             }
-
-            CreatePwdEvent.ToSecureWallet -> toSecureWallet()
         }
     }
 

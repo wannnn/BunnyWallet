@@ -59,7 +59,7 @@ class ConfirmSRPViewModel @Inject constructor(
                     val destination = NavEvent.NavTo(
                         route = CreateWalletRoute.Completed.route,
                         navOptions = NavOptions.Builder().setPopUpTo(
-                            route = MainRoute.Entrance.route,
+                            route = MainRoute.WalletSetup.route,
                             inclusive = true,
                         ).build()
                     )
