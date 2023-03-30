@@ -9,7 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.cj.bunnywallet.feature.common.AppTopBar
+import com.cj.bunnywallet.feature.home.component.HomeTopBar
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 
 @Composable
@@ -17,7 +17,7 @@ fun HomeScreen(
     uiState: HomeState
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
-        AppTopBar(onBackClicked = {  })
+        HomeTopBar()
 
         Text(text = "ETH balance: ${uiState.balance}")
     }
