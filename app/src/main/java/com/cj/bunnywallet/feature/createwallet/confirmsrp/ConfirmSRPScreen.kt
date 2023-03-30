@@ -153,7 +153,7 @@ private fun SRPSelections(
 private fun SRPWrongOrderWarning() {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Icon(
-            painter = painterResource(id = R.drawable.ic_cancel),
+            painter = painterResource(id = R.drawable.ic_wrong),
             contentDescription = null,
             modifier = Modifier.size(size = 16.dp),
             tint = Red400,
