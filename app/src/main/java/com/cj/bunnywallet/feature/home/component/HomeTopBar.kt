@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cj.bunnywallet.R
+import com.cj.bunnywallet.feature.common.CommonIconBtn
 import com.cj.bunnywallet.ui.theme.Gray100
 
 @Composable
@@ -30,17 +29,13 @@ fun HomeTopBar() {
             .fillMaxWidth()
             .height(64.dp)
     ) {
-        IconButton(
-            onClick = {},
+        CommonIconBtn(
+            icon = R.drawable.ic_menu,
             modifier = Modifier
                 .padding(start = 8.dp)
-                .align(Alignment.CenterStart)
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_menu),
-                contentDescription = null,
-            )
-        }
+                .align(Alignment.CenterStart),
+            onClick = {}
+        )
 
         NetworkBar()
     }
