@@ -10,6 +10,9 @@
     <string name="pwd_not_match">Passwords don\'t match</string>
     <string name="invalid_password">Invalid password</string>
 
+    <!-- Currency -->
+    <string name="usd">USD</string>
+
     <!-- Unlock -->
     <string name="welcome_back">Welcome Back!</string>
     <string name="unlock">UNLOCK</string>
@@ -81,5 +84,6 @@
 
     <!-- Home -->
     <string name="ethereum_main_network">Ethereum Main network</string>
+    <string name="assets">Assets</string>
 
 </resources>
