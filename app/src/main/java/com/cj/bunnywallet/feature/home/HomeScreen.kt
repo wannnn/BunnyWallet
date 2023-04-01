@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.cj.bunnywallet.feature.home.component.AccountInfo
 import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.feature.home.component.BalanceInfo
 import com.cj.bunnywallet.feature.home.component.HomeTopBar
@@ -25,8 +26,9 @@ fun HomeScreen(
     var balanceVisibility by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.fillMaxSize()) {
-
         HomeTopBar()
+
+        AccountInfo()
 
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             BalanceInfo(
@@ -35,7 +37,6 @@ fun HomeScreen(
                 onVisibilityChange = { balanceVisibility = balanceVisibility.not() }
             )
         }
-
     }
 }
 
