@@ -31,7 +31,7 @@ fun AccountInfo() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp),
+            .padding(horizontal = 12.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
@@ -65,7 +65,7 @@ fun AccountInfo() {
                     .clip(shape = RoundedCornerShape(32.dp))
                     .background(color = MaterialTheme.colorScheme.inverseOnSurface)
                     .clickable { }
-                    .padding(horizontal = 8.dp),
+                    .padding(horizontal = 8.dp, vertical = 3.dp),
                 fontSize = 14.sp,
             )
         }

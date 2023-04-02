@@ -92,5 +92,7 @@
 
     <!-- Home -->
     <string name="assets">Assets</string>
+    <string name="tokens">Tokens</string>
+    <string name="nft">NFT</string>
 
 </resources>

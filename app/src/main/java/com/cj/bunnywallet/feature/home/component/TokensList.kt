@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -13,6 +14,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,8 +27,26 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CommonIconBtn
+import com.cj.bunnywallet.feature.home.HomeState
 import com.cj.bunnywallet.ui.customview.VisibilityIconBtn
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
+
+@Composable
+fun TokensList(uiState: HomeState) {
+    var balanceVisibility by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
+    ) {
+        BalanceInfo(
+            balance = uiState.balance,
+            balanceVisibility = balanceVisibility,
+            onVisibilityChange = { balanceVisibility = balanceVisibility.not() }
+        )
+    }
+}
 
 @Composable
 fun BalanceInfo(
@@ -89,14 +112,10 @@ fun BalanceInfo(
 @Preview(name = "Light Mode", showBackground = true)
 @Preview(name = "Dark Mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
-fun PreviewBalanceInfo() {
+fun PreviewTokensList() {
     BunnyWalletTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
-            BalanceInfo(
-                balance = "1.2345",
-                balanceVisibility = true,
-                onVisibilityChange = {}
-            )
+            TokensList(HomeState(balance = "123.456"))
         }
     }
 }
