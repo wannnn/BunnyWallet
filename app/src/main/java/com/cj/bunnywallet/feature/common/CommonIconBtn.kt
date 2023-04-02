@@ -3,7 +3,7 @@ package com.cj.bunnywallet.feature.common
 import android.content.res.Configuration
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 
@@ -46,10 +47,10 @@ fun PreviewCommonIconBtn() {
         Surface(color = MaterialTheme.colorScheme.background) {
             CommonIconBtn(
                 icon = R.drawable.ic_cruelty_free,
-                modifier = Modifier.background(
+                iconModifier = Modifier.background(
                     color = MaterialTheme.colorScheme.inverseOnSurface,
                     shape = CircleShape
-                ),
+                ).padding(10.dp),
                 onClick = {}
             )
         }
