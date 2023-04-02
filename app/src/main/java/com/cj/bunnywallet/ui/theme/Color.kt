@@ -24,6 +24,8 @@ val Pink200 = Color(0xFFF48FB1)
 
 val Red400 = Color(0xFFFF6565)
 
+val OrangeBunny = Color(0xFFF07554)
+
 val Amber200 = Color(0xFFFFE082)
 
 val Green400 = Color(0xFF66BB6A)

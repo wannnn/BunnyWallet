@@ -1,42 +1,48 @@
 package com.cj.bunnywallet.feature.home
 
 import android.content.res.Configuration
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.cj.bunnywallet.feature.home.component.AccountInfo
 import androidx.compose.ui.unit.dp
+import com.cj.bunnywallet.feature.home.component.AccountInfo
 import com.cj.bunnywallet.feature.home.component.BalanceInfo
+import com.cj.bunnywallet.feature.home.component.HomePagers
+import com.cj.bunnywallet.feature.home.component.HomeTabs
 import com.cj.bunnywallet.feature.home.component.HomeTopBar
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(
-    uiState: HomeState
-) {
-    var balanceVisibility by remember { mutableStateOf(false) }
+fun HomeScreen(uiState: HomeState) {
+
+    val pagerState = rememberPagerState()
 
     Column(modifier = Modifier.fillMaxSize()) {
         HomeTopBar()
 
         AccountInfo()
 
-        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-            BalanceInfo(
-                balance = uiState.balance,
-                balanceVisibility = balanceVisibility,
-                onVisibilityChange = { balanceVisibility = balanceVisibility.not() }
-            )
-        }
+        HomeTabs(pagerState)
+
+        HomePagers(pagerState, uiState)
     }
 }
 
