@@ -1,31 +1,43 @@
 package com.cj.bunnywallet.utils
 
 import com.cj.bunnywallet.BuildConfig
+import com.cj.bunnywallet.KEY_MNEMONIC
+import com.cj.bunnywallet.datasource.BunnyDataStore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import org.web3j.crypto.Bip44WalletUtils
+import org.web3j.crypto.Credentials
 import org.web3j.protocol.Web3j
+import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.http.HttpService
+import org.web3j.utils.Convert
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class Web3jManager @Inject constructor() {
+class Web3jManager @Inject constructor(
+    private val dataStore: BunnyDataStore,
+    private val cryptoManager: CryptoManager,
+) {
+    private var credentials: Credentials? = null
 
-    private lateinit var web3j: Web3j
+    private var _address: String = ""
+    val address get() = _address
 
     init {
         initWeb3j()
     }
 
     private fun initWeb3j() {
-        web3j = Web3j.build(
-            HttpService(
-                "https://${BuildConfig.ETH_DOMAIN}.g.alchemy.com/v2/${BuildConfig.ETH_KEY}"
-            )
-        )
+        web3j = Web3j.build(HttpService(ALCHEMY_URL))
 
-        runCatching {
-            web3j.web3ClientVersion().sendAsync().get()
-        }
+        runCatching { web3j.web3ClientVersion().sendAsync().get() }
             .onSuccess {
                 if (it.hasError()) {
                     Timber.d(message = "Connected to Ethereum Failed: ${it.error.message}")
@@ -38,5 +50,45 @@ class Web3jManager @Inject constructor() {
             }
     }
 
-    fun getWeb3j() = web3j
+    private fun loadCredentials() = dataStore.getString(KEY_MNEMONIC)
+        .map { encryptedMnemonic ->
+            val mnemonic = cryptoManager.decrypt(encryptedMnemonic)
+                ?: throw ArithmeticException("Mnemonic decrypted fail")
+            Bip44WalletUtils.loadBip44Credentials("", mnemonic)
+                .also {
+                    credentials = it
+                    _address = it.address
+                    Timber.d(message = "Address: $_address")
+                }
+        }
+        .catch { Timber.d(message = "Load Credential fail: ${it.message}") }
+        .flowOn(Dispatchers.IO)
+
+    @OptIn(FlowPreview::class)
+    fun getEthBalance() =
+        if (credentials == null) {
+            loadCredentials().flatMapConcat { getBalance() }
+        } else {
+            getBalance()
+        }
+
+    private fun getBalance() = flow {
+        val balanceWei = web3j.ethGetBalance(address, DefaultBlockParameterName.LATEST)
+            .send()
+            .balance
+        Timber.d(message = "Balance(Wei): $balanceWei")
+
+        val balanceEther = Convert.fromWei(balanceWei.toString(), Convert.Unit.ETHER)
+        Timber.d(message = "Balance(ETH): $balanceEther")
+
+        emit(balanceEther)
+    }
+        .flowOn(Dispatchers.IO)
+
+    companion object {
+        lateinit var web3j: Web3j
+
+        private const val ALCHEMY_URL =
+            "https://${BuildConfig.ETH_DOMAIN}.g.alchemy.com/v2/${BuildConfig.ETH_KEY}"
+    }
 }
