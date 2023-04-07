@@ -9,6 +9,7 @@ import com.cj.bunnywallet.navigation.navgraph.createWalletGraph
 import com.cj.bunnywallet.navigation.navgraph.entrance
 import com.cj.bunnywallet.navigation.navgraph.home
 import com.cj.bunnywallet.navigation.navgraph.importWallet
+import com.cj.bunnywallet.navigation.navgraph.manageWalletGraph
 import com.cj.bunnywallet.navigation.navgraph.manageCrypto
 import com.cj.bunnywallet.navigation.navgraph.startup
 import com.cj.bunnywallet.navigation.navgraph.unlock
@@ -39,6 +40,7 @@ fun AppNavHost(
         createWalletGraph()
         importWallet()
         home()
+        manageWalletGraph()
         manageCrypto()
     }
 }

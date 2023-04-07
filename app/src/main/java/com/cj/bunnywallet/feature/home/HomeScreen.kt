@@ -22,7 +22,7 @@ import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 @Composable
 fun HomeScreen(
     uiState: HomeState,
-    uiEvent: (HomeEvent) -> Unit
+    uiEvent: (HomeEvent) -> Unit,
 ) {
 
     val pagerState = rememberPagerState()
@@ -30,7 +30,9 @@ fun HomeScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         HomeTopBar()
 
-        AccountInfo()
+        AccountInfo(
+            onManageWalletClicked = { uiEvent(HomeEvent.ManageWallet) },
+        )
 
         TransactionView {
             when (it) {
@@ -61,10 +63,7 @@ fun HomeScreen(
 fun PreviewHomeScreen() {
     BunnyWalletTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
-            HomeScreen(
-                uiState = HomeState(),
-                uiEvent = {}
-            )
+            HomeScreen(uiState = HomeState(), uiEvent = {})
         }
     }
 }

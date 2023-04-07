@@ -30,7 +30,7 @@ class WalletSetupViewModel @Inject constructor(
             WalletSetupEvent.CreateWallet -> if (hasPwd) {
                 CreateWalletRoute.SecureWallet.route
             } else {
-                MainRoute.CreateWallet.route
+                CreateWalletRoute.CreateWallet.route
             }
 
             WalletSetupEvent.ImportWallet -> MainRoute.ImportWallet.route
