@@ -11,6 +11,7 @@ import com.cj.bunnywallet.feature.home.HomeScreen
 import com.cj.bunnywallet.feature.home.HomeViewModel
 import com.cj.bunnywallet.feature.importwallet.ImportWalletScreen
 import com.cj.bunnywallet.feature.importwallet.ImportWalletViewModel
+import com.cj.bunnywallet.feature.managecrypto.ManageCryptoScreen
 import com.cj.bunnywallet.feature.startupscreen.StartupScreen
 import com.cj.bunnywallet.feature.startupscreen.StartupViewModel
 import com.cj.bunnywallet.feature.unlock.UnlockScreen
@@ -66,7 +67,15 @@ fun NavGraphBuilder.home() {
         val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
         HomeScreen(
-            uiState = uiState
+            uiState = uiState,
+            uiEvent = viewModel::handleEvent,
         )
+    }
+}
+
+fun NavGraphBuilder.manageCrypto() {
+    composable(MainRoute.ManageCrypto.route) {
+
+        ManageCryptoScreen()
     }
 }

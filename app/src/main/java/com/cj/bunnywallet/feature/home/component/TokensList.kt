@@ -15,11 +15,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.cj.bunnywallet.feature.home.HomeEvent
 import com.cj.bunnywallet.feature.home.HomeState
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 
 @Composable
-fun TokensList(uiState: HomeState) {
+fun TokensList(
+    uiState: HomeState,
+    uiEvent: (HomeEvent) -> Unit
+) {
     var balanceVisibility by remember { mutableStateOf(false) }
 
     LazyColumn(
@@ -31,7 +35,8 @@ fun TokensList(uiState: HomeState) {
             AssetsInfo(
                 balance = uiState.balance,
                 balanceVisibility = balanceVisibility,
-                onVisibilityChange = { balanceVisibility = balanceVisibility.not() }
+                onVisibilityChange = { balanceVisibility = balanceVisibility.not() },
+                onAddClick = { uiEvent.invoke(HomeEvent.NavToManageCrypto) }
             )
         }
 
@@ -47,7 +52,9 @@ fun TokensList(uiState: HomeState) {
 fun PreviewTokensList() {
     BunnyWalletTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
-            TokensList(HomeState(balance = "123.456"))
+            TokensList(
+                HomeState(balance = "123.456")
+            ) {}
         }
     }
 }

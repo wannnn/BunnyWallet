@@ -29,9 +29,11 @@ import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 fun AssetsInfo(
     balance: String,
     balanceVisibility: Boolean,
-    onVisibilityChange: () -> Unit
+    onVisibilityChange: () -> Unit,
+    onAddClick: () -> Unit
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -46,41 +48,32 @@ fun AssetsInfo(
                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
             )
 
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                val bgModifier = Modifier.background(
-                    color = MaterialTheme.colorScheme.inverseOnSurface,
-                    shape = CircleShape
-                ).padding(10.dp)
-
-                CommonIconBtn(
-                    icon = R.drawable.ic_create,
-                    iconModifier = bgModifier,
-                    onClick = { }
-                )
-
-                CommonIconBtn(
-                    icon = R.drawable.ic_add,
-                    iconModifier = bgModifier,
-                    onClick = { }
-                )
-            }
+            CommonIconBtn(
+                icon = R.drawable.ic_add,
+                iconModifier = Modifier
+                    .background(
+                        color = MaterialTheme.colorScheme.inverseOnSurface,
+                        shape = CircleShape
+                    )
+                    .padding(10.dp),
+                onClick = onAddClick
+            )
         }
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-
-            VisibilityIconBtn(
-                isVisible = balanceVisibility,
-                onVisibilityChange = onVisibilityChange
-            )
-
             val currency = stringResource(id = R.string.usd)
             Text(
                 text = balance.plus(" ").plus(currency),
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
+            )
+
+            VisibilityIconBtn(
+                isVisible = balanceVisibility,
+                onVisibilityChange = onVisibilityChange
             )
         }
     }
@@ -95,7 +88,8 @@ fun PreviewAssetsInfo() {
             AssetsInfo(
                 balance = "123",
                 balanceVisibility = true,
-                onVisibilityChange = {}
+                onVisibilityChange = {},
+                onAddClick = {}
             )
         }
     }

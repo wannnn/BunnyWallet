@@ -9,19 +9,24 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.cj.bunnywallet.feature.home.HomeEvent
 import com.cj.bunnywallet.feature.home.HomeState
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomePagers(pagerState: PagerState, uiState: HomeState) {
+fun HomePagers(
+    pagerState: PagerState,
+    uiState: HomeState,
+    uiEvent: (HomeEvent) -> Unit
+) {
     HorizontalPager(
         pageCount = 2,
         state = pagerState,
     ) {
         when (it) {
-            0 -> TokensList(uiState)
+            0 -> TokensList(uiState, uiEvent)
             1 -> NFTsList()
         }
     }
@@ -34,7 +39,7 @@ fun HomePagers(pagerState: PagerState, uiState: HomeState) {
 fun PreviewHomePagers() {
     BunnyWalletTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
-            HomePagers(rememberPagerState(), HomeState())
+            HomePagers(rememberPagerState(), HomeState()) {}
         }
     }
 }

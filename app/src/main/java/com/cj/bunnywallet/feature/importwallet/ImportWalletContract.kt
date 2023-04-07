@@ -1,5 +1,6 @@
 package com.cj.bunnywallet.feature.importwallet
 
+import com.cj.bunnywallet.BuildConfig
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.importwallet.type.PhraseAmountType
 import com.cj.bunnywallet.reducer.UiState
@@ -26,5 +27,5 @@ data class ImportWalletState(
     val confirmPwdErrMsg: Int?
         get() = if (confirmPwdValid) null else R.string.pwd_not_match
     val btnEnable: Boolean
-        get() = pwd.isNotBlank() && pwdValid && confirmPwdValid
+        get() = pwd.isNotBlank() && pwdValid && confirmPwdValid || BuildConfig.DEBUG
 }

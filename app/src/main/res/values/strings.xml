@@ -91,6 +91,10 @@
     <string name="goerli_test_network">Goerli Test Network</string>
 
     <!-- Home -->
+    <string name="send">Send</string>
+    <string name="receive">Receive</string>
+    <string name="buy">Buy</string>
+    <string name="history">History</string>
     <string name="assets">Assets</string>
     <string name="tokens">Tokens</string>
     <string name="nft">NFT</string>

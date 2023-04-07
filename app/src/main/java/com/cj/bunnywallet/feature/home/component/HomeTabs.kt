@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.cj.bunnywallet.R
+import com.cj.bunnywallet.feature.home.type.HomeTabType
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 import kotlinx.coroutines.launch
 
@@ -37,11 +37,6 @@ fun HomeTabs(pagerState: PagerState) {
             )
         }
     }
-}
-
-enum class HomeTabType(val tabName: Int, val page: Int) {
-    TOKEN(tabName = R.string.tokens, page = 0),
-    NFT(tabName = R.string.nft, page = 1)
 }
 
 @OptIn(ExperimentalFoundationApi::class)
