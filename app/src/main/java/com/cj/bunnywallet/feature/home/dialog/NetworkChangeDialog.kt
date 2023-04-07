@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CommonIconBtn
-import com.cj.bunnywallet.feature.home.SupportNetworks
+import com.cj.bunnywallet.feature.home.type.SupportNetworks
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 
 @Composable

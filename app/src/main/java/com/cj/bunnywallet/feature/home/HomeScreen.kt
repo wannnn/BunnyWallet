@@ -14,11 +14,16 @@ import com.cj.bunnywallet.feature.home.component.AccountInfo
 import com.cj.bunnywallet.feature.home.component.HomePagers
 import com.cj.bunnywallet.feature.home.component.HomeTabs
 import com.cj.bunnywallet.feature.home.component.HomeTopBar
+import com.cj.bunnywallet.feature.home.component.TransactionView
+import com.cj.bunnywallet.feature.home.type.TransactionType
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(uiState: HomeState) {
+fun HomeScreen(
+    uiState: HomeState,
+    uiEvent: (HomeEvent) -> Unit
+) {
 
     val pagerState = rememberPagerState()
 
@@ -27,9 +32,26 @@ fun HomeScreen(uiState: HomeState) {
 
         AccountInfo()
 
+        TransactionView {
+            when (it) {
+                TransactionType.SEND -> {
+
+                }
+                TransactionType.RECEIVE -> {
+
+                }
+                TransactionType.BUY -> {
+
+                }
+                TransactionType.HISTORY -> {
+
+                }
+            }
+        }
+
         HomeTabs(pagerState)
 
-        HomePagers(pagerState, uiState)
+        HomePagers(pagerState, uiState, uiEvent)
     }
 }
 
@@ -41,6 +63,7 @@ fun PreviewHomeScreen() {
         Surface(color = MaterialTheme.colorScheme.background) {
             HomeScreen(
                 uiState = HomeState(),
+                uiEvent = {}
             )
         }
     }

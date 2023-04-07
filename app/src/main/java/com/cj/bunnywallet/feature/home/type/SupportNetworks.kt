@@ -1,4 +1,4 @@
-package com.cj.bunnywallet.feature.home
+package com.cj.bunnywallet.feature.home.type
 
 import androidx.compose.ui.graphics.Color
 import com.cj.bunnywallet.R

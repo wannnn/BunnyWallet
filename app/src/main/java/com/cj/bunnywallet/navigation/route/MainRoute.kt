@@ -25,4 +25,8 @@ sealed interface MainRoute : Routes {
     object Home : MainRoute {
         override val route: String = "home_route"
     }
+
+    object ManageCrypto : MainRoute {
+        override val route: String = "manage_crypto_route"
+    }
 }
