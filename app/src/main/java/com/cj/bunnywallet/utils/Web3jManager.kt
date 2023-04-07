@@ -10,8 +10,10 @@ import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import org.web3j.crypto.Bip32ECKeyPair
 import org.web3j.crypto.Bip44WalletUtils
 import org.web3j.crypto.Credentials
+import org.web3j.crypto.MnemonicUtils
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.http.HttpService
@@ -85,8 +87,31 @@ class Web3jManager @Inject constructor(
     }
         .flowOn(Dispatchers.IO)
 
+    /**
+     *  Mnemonic Code Converter
+     *  https://iancoleman.io/bip39/#english
+     */
+    fun deriveChild(mnemonic: String, childNumber: Int) {
+        val seed = MnemonicUtils.generateSeed(mnemonic, "")
+        val masterKeypair = Bip32ECKeyPair.generateKeyPair(seed)
+        val path = intArrayOf(
+            BIP44 or Bip32ECKeyPair.HARDENED_BIT,
+            COIN_ETH or Bip32ECKeyPair.HARDENED_BIT,
+            0 or Bip32ECKeyPair.HARDENED_BIT,
+            0,
+            childNumber,
+        )
+        val childKeypair = Bip32ECKeyPair.deriveKeyPair(masterKeypair, path)
+        Credentials.create(childKeypair).let { c ->
+            Timber.d(message = "credentials address: ${c.address}")
+        }
+    }
+
     companion object {
         lateinit var web3j: Web3j
+
+        private const val BIP44 = 44
+        private const val COIN_ETH = 60
 
         private const val ALCHEMY_URL =
             "https://${BuildConfig.ETH_DOMAIN}.g.alchemy.com/v2/${BuildConfig.ETH_KEY}"
