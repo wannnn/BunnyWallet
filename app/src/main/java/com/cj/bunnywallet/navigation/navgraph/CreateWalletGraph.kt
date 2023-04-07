@@ -22,7 +22,7 @@ import com.cj.bunnywallet.navigation.route.MainRoute
 fun NavGraphBuilder.createWalletGraph() {
     navigation(
         startDestination = CreateWalletRoute.CreatePassword.route,
-        route = MainRoute.CreateWallet.route,
+        route = CreateWalletRoute.CreateWallet.route,
     ) {
         composable(CreateWalletRoute.CreatePassword.route) {
             val viewModel = hiltViewModel<CreatePwdViewModel>()

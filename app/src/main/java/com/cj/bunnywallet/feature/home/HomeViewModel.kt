@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent
+import com.cj.bunnywallet.navigation.route.ManageWalletRoute
 import com.cj.bunnywallet.navigation.route.MainRoute
 import com.cj.bunnywallet.reducer.Reducer
 import com.cj.bunnywallet.reducer.ReducerImp
@@ -23,17 +24,20 @@ class HomeViewModel @Inject constructor(
         getAccountBalance()
     }
 
-    fun handleEvent(e: HomeEvent) {
-        when (e) {
-            HomeEvent.NavToManageCrypto -> {
-                navigateTo(NavEvent.NavTo(route = MainRoute.ManageCrypto.route))
-            }
-        }
-    }
-
     private fun getAccountBalance() {
         web3jManager.getEthBalance()
             .onEach { balanceEth -> uiState = uiState.copy(balance = balanceEth.toString()) }
             .launchIn(viewModelScope)
+    }
+
+    fun handleEvent(e: HomeEvent) {
+        when (e) {
+            HomeEvent.ManageWallet ->
+                navigateTo(NavEvent.NavTo(route = ManageWalletRoute.ManageWallet.route))
+
+            HomeEvent.NavToManageCrypto -> {
+                navigateTo(NavEvent.NavTo(route = MainRoute.ManageCrypto.route))
+            }
+        }
     }
 }

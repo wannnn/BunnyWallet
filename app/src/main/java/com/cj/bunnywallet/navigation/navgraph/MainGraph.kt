@@ -63,7 +63,6 @@ fun NavGraphBuilder.importWallet() {
 fun NavGraphBuilder.home() {
     composable(MainRoute.Home.route) {
         val viewModel: HomeViewModel = hiltViewModel()
-
         val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
         HomeScreen(

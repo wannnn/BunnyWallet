@@ -56,12 +56,11 @@ class Web3jManager @Inject constructor(
         .map { encryptedMnemonic ->
             val mnemonic = cryptoManager.decrypt(encryptedMnemonic)
                 ?: throw ArithmeticException("Mnemonic decrypted fail")
-            Bip44WalletUtils.loadBip44Credentials("", mnemonic)
-                .also {
-                    credentials = it
-                    _address = it.address
-                    Timber.d(message = "Address: $_address")
-                }
+            Bip44WalletUtils.loadBip44Credentials("", mnemonic).let {
+                credentials = it
+                _address = it.address
+                Timber.d(message = "Address: $_address")
+            }
         }
         .catch { Timber.d(message = "Load Credential fail: ${it.message}") }
         .flowOn(Dispatchers.IO)

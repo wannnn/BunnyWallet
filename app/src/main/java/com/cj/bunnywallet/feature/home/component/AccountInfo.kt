@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -27,7 +28,9 @@ import com.cj.bunnywallet.R
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 
 @Composable
-fun AccountInfo() {
+fun AccountInfo(
+    onManageWalletClicked: () -> Unit,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,7 +42,9 @@ fun AccountInfo() {
             contentDescription = null,
             modifier = Modifier
                 .weight(weight = 1f)
-                .aspectRatio(ratio = 1f),
+                .aspectRatio(ratio = 1f)
+                .clip(shape = RoundedCornerShape(CornerSize(percent = 50)))
+                .clickable { onManageWalletClicked() },
         )
 
         Column(
@@ -78,7 +83,7 @@ fun AccountInfo() {
 fun PreviewAccountInfo() {
     BunnyWalletTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
-            AccountInfo()
+            AccountInfo(onManageWalletClicked = {})
         }
     }
 }
