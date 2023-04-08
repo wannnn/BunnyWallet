@@ -1,10 +1,15 @@
 package com.cj.bunnywallet.navigation.navgraph
 
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdViewModel
 import com.cj.bunnywallet.feature.managewallet.edit.EditWalletScreen
 import com.cj.bunnywallet.feature.managewallet.manage.ManageWalletScreen
+import com.cj.bunnywallet.feature.managewallet.manage.ManageWalletViewModel
 import com.cj.bunnywallet.navigation.route.ManageWalletRoute
 
 fun NavGraphBuilder.manageWalletGraph() {
@@ -13,7 +18,13 @@ fun NavGraphBuilder.manageWalletGraph() {
         route = ManageWalletRoute.ManageWalletGraph.route,
     ) {
         composable(ManageWalletRoute.ManageWallet.route) {
-            ManageWalletScreen()
+            val viewModel = hiltViewModel<ManageWalletViewModel>()
+            val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
+
+            ManageWalletScreen(
+                uiState = uiState,
+                uiEvent = viewModel::handleEvent,
+            )
         }
 
         composable(ManageWalletRoute.EditWallet.route) {

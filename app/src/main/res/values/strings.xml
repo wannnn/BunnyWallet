@@ -99,4 +99,8 @@
     <string name="tokens">Tokens</string>
     <string name="nft">NFT</string>
 
+    <!-- Manage Wallet -->
+    <string name="manage_wallet">Manage Wallet</string>
+    <string name="add_account">Add account</string>
+
 </resources>
