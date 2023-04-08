@@ -18,8 +18,8 @@ import com.cj.bunnywallet.R
 
 @Composable
 fun AppTopBar(
-    @StringRes appbarTitle: Int = R.string.app_name,
     onBackClicked: () -> Unit,
+    @StringRes appbarTitle: Int = R.string.app_name,
     showBackBtn: Boolean = true,
     @DrawableRes tailIcon: Int? = null,
     onTailIconClicked: () -> Unit = {},
