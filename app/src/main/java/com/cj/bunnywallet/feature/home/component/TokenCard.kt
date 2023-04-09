@@ -38,7 +38,7 @@ fun TokenCard(onCardClick: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_bunny),
+            painter = painterResource(id = R.drawable.user_bunny),
             contentDescription = null,
             modifier = Modifier
                 .weight(1f)

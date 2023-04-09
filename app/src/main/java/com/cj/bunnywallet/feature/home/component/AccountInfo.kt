@@ -10,8 +10,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
+import com.cj.bunnywallet.ui.theme.NoRippleInteractionSource
 
 @Composable
 fun AccountInfo(
@@ -34,17 +36,20 @@ fun AccountInfo(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 4.dp),
+            .padding(horizontal = 12.dp, vertical = 4.dp)
+            .clickable(
+                interactionSource = NoRippleInteractionSource(),
+                indication = null,
+                onClick = { onManageWalletClicked() },
+            ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_bunny),
+            painter = painterResource(id = R.drawable.user_polar_bear),
             contentDescription = null,
             modifier = Modifier
                 .weight(weight = 1f)
-                .aspectRatio(ratio = 1f)
-                .clip(shape = RoundedCornerShape(CornerSize(percent = 50)))
-                .clickable { onManageWalletClicked() },
+                .aspectRatio(ratio = 1f),
         )
 
         Column(
@@ -56,10 +61,7 @@ fun AccountInfo(
         ) {
             Text(
                 text = "Account 1",
-                modifier = Modifier
-                    .clip(shape = RoundedCornerShape(32.dp))
-                    .clickable { }
-                    .padding(horizontal = 4.dp),
+                modifier = Modifier.padding(horizontal = 4.dp),
                 fontWeight = FontWeight.SemiBold,
                 style = MaterialTheme.typography.titleMedium,
             )
@@ -74,6 +76,12 @@ fun AccountInfo(
                 fontSize = 14.sp,
             )
         }
+
+        Icon(
+            painter = painterResource(id = R.drawable.ic_arrow_forward),
+            contentDescription = null,
+            modifier = Modifier.size(15.dp),
+        )
     }
 }
 
