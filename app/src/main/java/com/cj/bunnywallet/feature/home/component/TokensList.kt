@@ -41,7 +41,7 @@ fun TokensList(
         }
 
         items(count = 10) {
-            TokenCard()
+            TokenCard {  }
         }
     }
 }

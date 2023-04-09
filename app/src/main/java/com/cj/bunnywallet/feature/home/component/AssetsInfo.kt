@@ -49,7 +49,7 @@ fun AssetsInfo(
             )
 
             CommonIconBtn(
-                icon = R.drawable.ic_add,
+                icon = R.drawable.ic_currency_bitcoin,
                 iconModifier = Modifier
                     .background(
                         color = MaterialTheme.colorScheme.inverseOnSurface,
