@@ -10,8 +10,10 @@ import com.cj.bunnywallet.reducer.Reducer
 import com.cj.bunnywallet.reducer.ReducerImp
 import com.cj.bunnywallet.utils.Web3jManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,6 +29,7 @@ class HomeViewModel @Inject constructor(
     private fun getAccountBalance() {
         web3jManager.getEthBalance()
             .onEach { balanceEth -> uiState = uiState.copy(balance = balanceEth.toString()) }
+            .catch { e -> Timber.d(message = "Get Balance(Error): ${e.message}") }
             .launchIn(viewModelScope)
     }
 

@@ -25,4 +25,8 @@ sealed interface MainRoute : Routes {
     object ManageCrypto : MainRoute {
         override val route: String = "manage_crypto_route"
     }
+
+    object CustomCrypto : MainRoute {
+        override val route: String = "custom_crypto_route"
+    }
 }

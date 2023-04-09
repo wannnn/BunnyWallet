@@ -103,4 +103,10 @@
     <string name="manage_wallet">Manage Wallet</string>
     <string name="add_account">Add account</string>
 
+    <!-- Manage Crypto -->
+    <string name="manage_crypto">Manage crypto</string>
+    <string name="search_hint">Search crypto symbol, contract address</string>
+    <string name="custom_crypto">Custom crypto</string>
+    <string name="added_cryptos">Added cryptos</string>
+    <string name="popular_cryptos">Popular cryptos</string>
 </resources>

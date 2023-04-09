@@ -26,14 +26,14 @@ import com.cj.bunnywallet.R
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 
 @Composable
-fun TokenCard() {
+fun TokenCard(onCardClick: () -> Unit) {
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(10.dp))
             .background(color = MaterialTheme.colorScheme.inversePrimary)
-            .clickable {  }
+            .clickable { onCardClick.invoke() }
             .padding(15.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -78,7 +78,7 @@ fun TokenCard() {
 fun PreviewTokenCard() {
     BunnyWalletTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
-            TokenCard()
+            TokenCard {}
         }
     }
 }
