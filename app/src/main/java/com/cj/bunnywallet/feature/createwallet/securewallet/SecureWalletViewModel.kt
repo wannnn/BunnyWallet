@@ -2,10 +2,9 @@ package com.cj.bunnywallet.feature.createwallet.securewallet
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavOptions
 import com.cj.bunnywallet.KEY_PWD
 import com.cj.bunnywallet.R
-import com.cj.bunnywallet.datasource.BunnyDataStore
+import com.cj.bunnywallet.datasource.BunnyPreferencesDataStore
 import com.cj.bunnywallet.feature.createwallet.securewallet.dialog.SecureWalletDialogType
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent
@@ -24,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SecureWalletViewModel @Inject constructor(
     appNavigator: AppNavigator,
-    dataStore: BunnyDataStore,
+    dataStore: BunnyPreferencesDataStore,
     manager: CryptoManager,
 ) : ViewModel(), AppNavigator by appNavigator,
     Reducer<SecureWalletState> by ReducerImp(SecureWalletState()) {

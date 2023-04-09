@@ -1,11 +1,14 @@
 import java.io.FileInputStream
 import java.util.Properties
 
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("io.gitlab.arturbosch.detekt")
     id("com.google.dagger.hilt.android")
+
+    alias(libs.plugins.protobuf)
 
     kotlin("kapt")
 }
@@ -21,7 +24,7 @@ android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId  = "com.cj.bunnywallet"
+        applicationId = "com.cj.bunnywallet"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = libs.versions.versionCode.get().toInt()
@@ -38,13 +41,25 @@ android {
                 "proguard-rules.pro",
             )
             buildConfigField(type = "String", name = "ETH_DOMAIN", value = "\"eth-mainnet\"")
-            buildConfigField(type = "String", name = "ETH_KEY", value = "\"${keystoreProps["prodEthKey"]}\"")
+            buildConfigField(
+                type = "String",
+                name = "ETH_KEY",
+                value = "\"${keystoreProps["prodEthKey"]}\""
+            )
             buildConfigField(type = "String", name = "DEBUG_MNEMONIC", value = "\"\"")
         }
         getByName("debug") {
             buildConfigField(type = "String", name = "ETH_DOMAIN", value = "\"eth-goerli\"")
-            buildConfigField(type = "String", name = "ETH_KEY", value = "\"${keystoreProps["stgEthKey"]}\"")
-            buildConfigField(type = "String", name = "DEBUG_MNEMONIC", value = "\"${keystoreProps["debugMnemonic"]}\"")
+            buildConfigField(
+                type = "String",
+                name = "ETH_KEY",
+                value = "\"${keystoreProps["stgEthKey"]}\""
+            )
+            buildConfigField(
+                type = "String",
+                name = "DEBUG_MNEMONIC",
+                value = "\"${keystoreProps["debugMnemonic"]}\""
+            )
         }
     }
 
@@ -111,10 +126,13 @@ dependencies {
     implementation(libs.web3j.android)
 
     // DataStore
-    implementation(libs.datastore.preferences)
+    implementation(libs.bundles.datastore)
 
     // Timber
     implementation(libs.timber)
+
+    // Protobuf
+    implementation(libs.protobuf.kotlin.lite)
 
     /** Testing Start */
     testImplementation(libs.junit4)
@@ -128,4 +146,22 @@ dependencies {
     // Coroutines
     testImplementation(libs.coroutines.test)
     /** Testing End */
+}
+
+protobuf {
+    protoc {
+        artifact = libs.protobuf.protoc.get().toString()
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                val java by registering {
+                    option("lite")
+                }
+                val kotlin by registering {
+                    option("lite")
+                }
+            }
+        }
+    }
 }

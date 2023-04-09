@@ -6,7 +6,7 @@ import androidx.navigation.NavOptions
 import com.cj.bunnywallet.KEY_MNEMONIC
 import com.cj.bunnywallet.KEY_PWD
 import com.cj.bunnywallet.R
-import com.cj.bunnywallet.datasource.BunnyDataStore
+import com.cj.bunnywallet.datasource.BunnyPreferencesDataStore
 import com.cj.bunnywallet.extensions.onLoading
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent
@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UnlockViewModel @Inject constructor(
-    private val dataStore: BunnyDataStore,
+    private val dataStore: BunnyPreferencesDataStore,
     private val manager: CryptoManager,
     private val navigator: AppNavigator
 ) : ViewModel(), AppNavigator by navigator,

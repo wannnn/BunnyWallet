@@ -19,7 +19,7 @@ import javax.inject.Singleton
 
 @Suppress("TooManyFunctions")
 @Singleton
-class BunnyDataStore @Inject constructor(private val dataStore: DataStore<Preferences>) {
+class BunnyPreferencesDataStore @Inject constructor(private val dataStore: DataStore<Preferences>) {
 
     private fun <T> getValue(
         key: Preferences.Key<T>,

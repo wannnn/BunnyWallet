@@ -31,11 +31,12 @@ import androidx.compose.ui.unit.sp
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CommonIconBtn
 import com.cj.bunnywallet.feature.managewallet.manage.ManageWalletEvent
-import com.cj.bunnywallet.feature.managewallet.manage.Wallet
+import com.cj.bunnywallet.model.wallet.WalletDisplay
+import com.cj.bunnywallet.ui.theme.NoRippleInteractionSource
 
 @Composable
 fun WalletList(
-    wallets: List<Wallet>,
+    wallets: List<WalletDisplay>,
     currentAccount: String,
     uiEvent: (ManageWalletEvent) -> Unit,
 ) {
@@ -55,7 +56,7 @@ fun WalletList(
 }
 
 private fun LazyListScope.walletInfo(
-    wallet: Wallet,
+    wallet: WalletDisplay,
     currentAccount: String,
     uiEvent: (ManageWalletEvent) -> Unit,
 ) {
@@ -76,7 +77,7 @@ private fun LazyListScope.walletInfo(
 }
 
 private fun LazyListScope.walletItem(
-    wallet: Wallet,
+    wallet: WalletDisplay,
     expandClicked: () -> Unit,
 ) {
     item {
@@ -131,7 +132,7 @@ private fun LazyListScope.walletItem(
 }
 
 private fun LazyListScope.accountItems(
-    accounts: List<Wallet.Account>,
+    accounts: List<WalletDisplay.AccountDisplay>,
     currentAccount: String,
     onAccountSelected: (String) -> Unit,
 ) {
@@ -141,14 +142,18 @@ private fun LazyListScope.accountItems(
                 .fillMaxWidth()
                 .background(color = MaterialTheme.colorScheme.inverseOnSurface)
                 .padding(start = 18.dp, end = 30.dp, top = 4.dp, bottom = 4.dp)
-                .clickable { onAccountSelected(it.address) },
+                .clickable(
+                    interactionSource = NoRippleInteractionSource(),
+                    indication = null,
+                    onClick = { onAccountSelected(it.address) },
+                ),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Info(
                 name = it.name,
                 nameSize = 18.sp,
-                amount = it.amount.toString(),
+                amount = it.amount,
                 amountSize = 14.sp,
             )
 

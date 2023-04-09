@@ -12,6 +12,10 @@ import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.AppTopBar
 import com.cj.bunnywallet.feature.managewallet.manage.component.ManageDropDown
 import com.cj.bunnywallet.feature.managewallet.manage.component.WalletList
+import com.cj.bunnywallet.model.wallet.WalletDisplay
+import com.cj.bunnywallet.proto.wallet.account
+import com.cj.bunnywallet.proto.wallet.wallet
+import com.cj.bunnywallet.proto.wallet.wallets
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 
 @Composable
@@ -38,32 +42,47 @@ fun ManageWalletScreen(
 @Preview(name = "Dark Mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 fun PreviewManageWalletScreen() {
-    val fakeData = listOf(
-        Wallet(
-            id = "1",
-            name = "ETH wallet",
-            accounts = listOf(
-                Wallet.Account(address = "0x1", name = "Stake account", amount = 100.0),
-                Wallet.Account(address = "0x2", name = "Default account", amount = 20.2),
-            ),
-            isExpand = true,
-        ),
-        Wallet(
-            id = "2",
-            name = "To the moon wallet",
-            accounts = listOf(
-                Wallet.Account(address = "0x3", name = "Shit coin account", amount = 666.6),
-                Wallet.Account(address = "0x4", name = "Doge coin account", amount = 222.2),
-            )
-        ),
-    )
-
     BunnyWalletTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
             ManageWalletScreen(
-                uiState = ManageWalletState(wallets = fakeData, currentAccount = "0x3"),
+                uiState = ManageWalletState(wallets = genFakeData(), currentAccount = "0x3"),
                 uiEvent = {},
             )
         }
     }
+}
+
+private fun genFakeData(): List<WalletDisplay> {
+    val w1 = wallet {
+        id = "1"
+        name = "ETH wallet"
+        accounts.putAll(
+            mapOf(
+                "0x11" to account { address = "0x11"; name = "Stake account" },
+                "0x12" to account { address = "0x12"; name = "Default account" },
+            )
+        )
+    }
+    val w2 = wallet {
+        id = "2"
+        name = "To the moon wallet"
+        accounts.putAll(
+            mapOf(
+                "0x21" to account { address = "0x21"; name = "Shit coin account" },
+                "0x22" to account { address = "0x22"; name = "Doge coin account" },
+            )
+        )
+    }
+    return wallets { wallets.putAll(mapOf("w1" to w1, "w2" to w2)) }
+        .walletsMap
+        .values
+        .map { w ->
+            WalletDisplay(
+                id = w.id,
+                name = w.name,
+                accounts = w.accountsMap.values.map { acc ->
+                    WalletDisplay.AccountDisplay(address = acc.address, name = acc.name)
+                },
+            )
+        }
 }

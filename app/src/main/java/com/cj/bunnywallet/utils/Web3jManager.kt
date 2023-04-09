@@ -2,7 +2,7 @@ package com.cj.bunnywallet.utils
 
 import com.cj.bunnywallet.BuildConfig
 import com.cj.bunnywallet.KEY_MNEMONIC
-import com.cj.bunnywallet.datasource.BunnyDataStore
+import com.cj.bunnywallet.datasource.BunnyPreferencesDataStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.catch
@@ -24,7 +24,7 @@ import javax.inject.Singleton
 
 @Singleton
 class Web3jManager @Inject constructor(
-    private val dataStore: BunnyDataStore,
+    private val dataStore: BunnyPreferencesDataStore,
     private val cryptoManager: CryptoManager,
 ) {
     private var credentials: Credentials? = null

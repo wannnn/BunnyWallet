@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavOptions
 import com.cj.bunnywallet.KEY_HINT
-import com.cj.bunnywallet.datasource.BunnyDataStore
+import com.cj.bunnywallet.datasource.BunnyPreferencesDataStore
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent
 import com.cj.bunnywallet.navigation.route.CreateWalletRoute
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CompletedViewModel @Inject constructor(
     appNavigator: AppNavigator,
-    private val dataStore: BunnyDataStore,
+    private val dataStore: BunnyPreferencesDataStore,
 ) : ViewModel(), AppNavigator by appNavigator,
     Reducer<CompletedState> by ReducerImp(CompletedState()) {
 

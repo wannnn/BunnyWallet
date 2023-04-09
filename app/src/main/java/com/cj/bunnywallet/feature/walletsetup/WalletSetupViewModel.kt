@@ -3,7 +3,7 @@ package com.cj.bunnywallet.feature.walletsetup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cj.bunnywallet.KEY_PWD
-import com.cj.bunnywallet.datasource.BunnyDataStore
+import com.cj.bunnywallet.datasource.BunnyPreferencesDataStore
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent
 import com.cj.bunnywallet.navigation.route.CreateWalletRoute
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WalletSetupViewModel @Inject constructor(
     appNavigator: AppNavigator,
-    private val dataStore: BunnyDataStore,
+    private val dataStore: BunnyPreferencesDataStore,
 ) : ViewModel(), AppNavigator by appNavigator {
 
     private var hasPwd = false

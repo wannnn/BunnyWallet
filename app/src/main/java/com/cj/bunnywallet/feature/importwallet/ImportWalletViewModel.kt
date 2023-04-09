@@ -6,7 +6,7 @@ import androidx.navigation.NavOptions
 import com.cj.bunnywallet.BuildConfig
 import com.cj.bunnywallet.KEY_MNEMONIC
 import com.cj.bunnywallet.KEY_PWD
-import com.cj.bunnywallet.datasource.BunnyDataStore
+import com.cj.bunnywallet.datasource.BunnyPreferencesDataStore
 import com.cj.bunnywallet.extensions.isPasswordValid
 import com.cj.bunnywallet.feature.importwallet.type.PhraseAmountType
 import com.cj.bunnywallet.navigation.AppNavigator
@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ImportWalletViewModel @Inject constructor(
-    private val dataStore: BunnyDataStore,
+    private val dataStore: BunnyPreferencesDataStore,
     private val manager: CryptoManager,
     private val navigator: AppNavigator
 ) : ViewModel(), AppNavigator by navigator,

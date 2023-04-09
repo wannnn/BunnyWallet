@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavOptions
 import com.cj.bunnywallet.KEY_MNEMONIC
-import com.cj.bunnywallet.datasource.BunnyDataStore
+import com.cj.bunnywallet.datasource.BunnyPreferencesDataStore
 import com.cj.bunnywallet.extensions.indexOfFirstOrNull
 import com.cj.bunnywallet.feature.createwallet.confirmsrp.model.PhraseSlot
 import com.cj.bunnywallet.navigation.AppNavigator
@@ -23,7 +23,7 @@ import javax.inject.Inject
 class ConfirmSRPViewModel @Inject constructor(
     appNavigator: AppNavigator,
     savedStateHandle: SavedStateHandle,
-    private val dataStore: BunnyDataStore,
+    private val dataStore: BunnyPreferencesDataStore,
     private val manager: CryptoManager,
 ) : ViewModel(), AppNavigator by appNavigator,
     Reducer<ConfirmSRPState> by ReducerImp(ConfirmSRPState()) {
