@@ -67,6 +67,7 @@ class ImportWalletViewModel @Inject constructor(
     }
 
     private fun importWallet() {
+        uiState = uiState.copy(isLoading = true)
         val mnemonic = when {
             BuildConfig.DEBUG -> {
                 // 0x162521dbAB8D42985159ECB28ABC9447990e527e
@@ -102,6 +103,7 @@ class ImportWalletViewModel @Inject constructor(
     }
 
     private fun navToHome() {
+        uiState = uiState.copy(isLoading = false)
         navigateTo(
             NavEvent.NavTo(
                 route = MainRoute.Home.route,

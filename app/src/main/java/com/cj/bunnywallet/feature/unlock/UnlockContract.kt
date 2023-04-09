@@ -9,5 +9,6 @@ sealed class UnlockEvent {
 
 data class UnlockState(
     val pwd: String = "",
-    val invalidPwdMsg: Int? = null
+    val invalidPwdMsg: Int? = null,
+    val isLoading: Boolean = false
 ): UiState

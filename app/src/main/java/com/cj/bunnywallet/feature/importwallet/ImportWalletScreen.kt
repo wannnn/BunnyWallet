@@ -104,7 +104,8 @@ fun ImportWalletScreen(
                 onClick = { uiEvent.invoke(ImportWalletEvent.Import) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 35.dp)
+                    .padding(bottom = 35.dp),
+                isLoading = uiState.isLoading
             )
         }
     }
