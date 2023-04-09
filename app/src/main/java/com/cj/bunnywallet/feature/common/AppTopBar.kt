@@ -1,8 +1,8 @@
 package com.cj.bunnywallet.feature.common
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,8 +21,7 @@ fun AppTopBar(
     onBackClicked: () -> Unit,
     @StringRes appbarTitle: Int = R.string.app_name,
     showBackBtn: Boolean = true,
-    @DrawableRes tailIcon: Int? = null,
-    onTailIconClicked: () -> Unit = {},
+    tailContent: @Composable BoxScope.() -> Unit = {},
 ) {
     Box(
         modifier = Modifier
@@ -48,15 +47,7 @@ fun AppTopBar(
             style = MaterialTheme.typography.titleLarge
         )
 
-        if (tailIcon != null) {
-            CommonIconBtn(
-                icon = tailIcon,
-                modifier = Modifier
-                    .padding(end = 8.dp)
-                    .align(Alignment.CenterEnd),
-                onClick = onTailIconClicked
-            )
-        }
+        tailContent()
     }
 }
 

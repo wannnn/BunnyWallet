@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.AppTopBar
+import com.cj.bunnywallet.feature.managewallet.manage.component.ManageDropDown
 import com.cj.bunnywallet.feature.managewallet.manage.component.WalletList
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 
@@ -22,8 +23,7 @@ fun ManageWalletScreen(
         AppTopBar(
             onBackClicked = { uiEvent(ManageWalletEvent.OnBackClick) },
             appbarTitle = R.string.manage_wallet,
-            tailIcon = R.drawable.ic_wallet,
-            onTailIconClicked = {},
+            tailContent = { ManageDropDown() },
         )
 
         WalletList(
@@ -33,7 +33,6 @@ fun ManageWalletScreen(
         )
     }
 }
-
 
 @Preview(name = "Light Mode", showBackground = true)
 @Preview(name = "Dark Mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
