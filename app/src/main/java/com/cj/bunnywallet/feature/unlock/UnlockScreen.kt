@@ -66,7 +66,8 @@ fun UnlockScreen(
             CmnButton(
                 text = stringResource(id = R.string.unlock),
                 onClick = { uiEvent.invoke(UnlockEvent.Unlock) },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                isLoading = uiState.isLoading
             )
 
             Text(

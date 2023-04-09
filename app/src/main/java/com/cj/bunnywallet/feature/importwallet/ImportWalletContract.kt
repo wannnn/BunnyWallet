@@ -19,6 +19,7 @@ data class ImportWalletState(
     val pwd: String = "",
     val pwdValid: Boolean = true,
     val confirmPwd: String = "",
+    val isLoading: Boolean = false
 ): UiState {
     private val confirmPwdValid: Boolean
         get() = pwd == confirmPwd

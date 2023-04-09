@@ -7,6 +7,7 @@ import com.cj.bunnywallet.KEY_MNEMONIC
 import com.cj.bunnywallet.KEY_PWD
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.datasource.BunnyDataStore
+import com.cj.bunnywallet.extensions.onLoading
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent
 import com.cj.bunnywallet.navigation.route.MainRoute
@@ -41,6 +42,7 @@ class UnlockViewModel @Inject constructor(
 
     private fun unlockWallet() {
         dataStore.getString(KEY_PWD)
+            .onLoading { uiState = uiState.copy(isLoading = it) }
             .onEach {
                 val decryptPwd = manager.decrypt(it)
                 if (decryptPwd == uiState.pwd) {

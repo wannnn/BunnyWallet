@@ -32,14 +32,10 @@ class Web3jManager @Inject constructor(
     private var _address: String = ""
     val address get() = _address
 
-    init {
-        initWeb3j()
-    }
-
-    private fun initWeb3j() {
+    fun initWeb3j() {
         web3j = Web3j.build(HttpService(ALCHEMY_URL))
 
-        runCatching { web3j.web3ClientVersion().sendAsync().get() }
+        runCatching { web3j.web3ClientVersion().send() }
             .onSuccess {
                 if (it.hasError()) {
                     Timber.d(message = "Connected to Ethereum Failed: ${it.error.message}")
