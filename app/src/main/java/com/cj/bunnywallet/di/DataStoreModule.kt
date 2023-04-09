@@ -2,9 +2,13 @@ package com.cj.bunnywallet.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.datastore.core.DataStoreFactory
+import androidx.datastore.dataStoreFile
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import com.cj.bunnywallet.model.wallet.WalletSerializer
+import com.cj.bunnywallet.proto.wallet.Wallet
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,13 +20,26 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DataStoreModule {
 
-    private const val BUNNY_DATA_STORE = "BUNNY_DATA_STORE"
+    private const val PREFERENCE_DATA_STORE = "PREFERENCE_DATA_STORE"
+    private const val DS_WALLET_TEST = "wallet_test.pb"
 
     @Singleton
     @Provides
-    fun providePreferencesDataStore(@ApplicationContext appContext: Context): DataStore<Preferences> =
+    fun providePreferencesDataStore(
+        @ApplicationContext appContext: Context,
+    ): DataStore<Preferences> =
         PreferenceDataStoreFactory.create(
-            produceFile = { appContext.preferencesDataStoreFile(BUNNY_DATA_STORE) }
+            produceFile = { appContext.preferencesDataStoreFile(PREFERENCE_DATA_STORE) }
         )
 
+    @Singleton
+    @Provides
+    fun providesWalletDataStore(
+        @ApplicationContext context: Context,
+        walletSerializer: WalletSerializer,
+    ): DataStore<Wallet> =
+        DataStoreFactory.create(
+            serializer = walletSerializer,
+            produceFile = { context.dataStoreFile(DS_WALLET_TEST) },
+        )
 }

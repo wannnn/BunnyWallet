@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavOptions
 import com.cj.bunnywallet.KEY_PWD
 import com.cj.bunnywallet.R
-import com.cj.bunnywallet.datasource.BunnyDataStore
+import com.cj.bunnywallet.datasource.BunnyPreferencesDataStore
 import com.cj.bunnywallet.extensions.isPasswordValid
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent
@@ -20,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CreatePwdViewModel @Inject constructor(
     appNavigator: AppNavigator,
-    private val dataStore: BunnyDataStore,
+    private val dataStore: BunnyPreferencesDataStore,
     private val manager: CryptoManager,
 ) : ViewModel(), AppNavigator by appNavigator,
     Reducer<CreatePwdState> by ReducerImp(CreatePwdState()) {
