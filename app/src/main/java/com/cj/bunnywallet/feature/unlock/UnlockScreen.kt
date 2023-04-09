@@ -43,7 +43,7 @@ fun UnlockScreen(
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.ic_bunny),
+                painter = painterResource(id = R.drawable.user_bunny),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth(fraction = 0.4f)
