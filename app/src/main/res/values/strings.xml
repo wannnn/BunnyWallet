@@ -102,6 +102,8 @@
     <!-- Manage Wallet -->
     <string name="manage_wallet">Manage Wallet</string>
     <string name="add_account">Add account</string>
+    <string name="add_wallet">Add wallet</string>
+    <string name="edit_wallet">Edit wallet</string>
 
     <!-- Manage Crypto -->
     <string name="manage_crypto">Manage crypto</string>
