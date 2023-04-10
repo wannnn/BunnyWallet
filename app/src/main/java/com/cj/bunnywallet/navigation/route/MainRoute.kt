@@ -6,6 +6,10 @@ sealed interface MainRoute : Routes {
         override val route: String = "startup_route"
     }
 
+    object CreatePassword : CreateWalletRoute {
+        override val route: String = "create_password_route"
+    }
+
     object Unlock : MainRoute {
         override val route: String = "unlock_route"
     }

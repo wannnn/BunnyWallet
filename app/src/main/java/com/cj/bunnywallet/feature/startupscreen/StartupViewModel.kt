@@ -27,7 +27,11 @@ class StartupViewModel @Inject constructor(
         dataStore.getString(KEY_PWD)
             .onEach { pwd ->
                 val navEvent = NavEvent.NavTo(
-                    route = if (pwd.isBlank()) MainRoute.WalletSetup.route else MainRoute.Unlock.route,
+                    route = if (pwd.isBlank()) {
+                        MainRoute.CreatePassword.route
+                    } else {
+                        MainRoute.Unlock.route
+                    },
                     navOptions = NavOptions.Builder()
                         .setPopUpTo(route = MainRoute.Startup.route, inclusive = true)
                         .build(),

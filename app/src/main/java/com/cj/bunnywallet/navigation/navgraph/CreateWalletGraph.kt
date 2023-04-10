@@ -12,29 +12,15 @@ import com.cj.bunnywallet.feature.createwallet.completed.CompletedScreen
 import com.cj.bunnywallet.feature.createwallet.completed.CompletedViewModel
 import com.cj.bunnywallet.feature.createwallet.confirmsrp.ConfirmSRPScreen
 import com.cj.bunnywallet.feature.createwallet.confirmsrp.ConfirmSRPViewModel
-import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdScreen
-import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdViewModel
 import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletScreen
 import com.cj.bunnywallet.feature.createwallet.securewallet.SecureWalletViewModel
 import com.cj.bunnywallet.navigation.route.CreateWalletRoute
-import com.cj.bunnywallet.navigation.route.MainRoute
 
 fun NavGraphBuilder.createWalletGraph() {
     navigation(
-        startDestination = CreateWalletRoute.CreatePassword.route,
+        startDestination = CreateWalletRoute.SecureWallet.route,
         route = CreateWalletRoute.CreateWallet.route,
     ) {
-        composable(CreateWalletRoute.CreatePassword.route) {
-            val viewModel = hiltViewModel<CreatePwdViewModel>()
-            val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
-
-            CreatePwdScreen(
-                uiState = uiState,
-                uiEvent = viewModel::handleEvent,
-                navEvent = viewModel::navigateTo,
-            )
-        }
-
         composable(CreateWalletRoute.SecureWallet.route) {
             val viewModel = hiltViewModel<SecureWalletViewModel>()
             val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()

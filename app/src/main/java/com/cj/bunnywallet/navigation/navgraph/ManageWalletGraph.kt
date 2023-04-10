@@ -6,7 +6,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdViewModel
+import com.cj.bunnywallet.feature.createpwd.CreatePwdViewModel
 import com.cj.bunnywallet.feature.managewallet.edit.EditWalletScreen
 import com.cj.bunnywallet.feature.managewallet.manage.ManageWalletScreen
 import com.cj.bunnywallet.feature.managewallet.manage.ManageWalletViewModel

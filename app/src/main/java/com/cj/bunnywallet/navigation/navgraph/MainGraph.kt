@@ -40,28 +40,6 @@ fun NavGraphBuilder.unlock() {
     }
 }
 
-fun NavGraphBuilder.entrance() {
-    composable(MainRoute.WalletSetup.route) {
-        val viewModel: WalletSetupViewModel = hiltViewModel()
-
-        WalletSetupScreen(viewModel::handleEvent)
-    }
-}
-
-fun NavGraphBuilder.importWallet() {
-    composable(MainRoute.ImportWallet.route) {
-        val viewModel: ImportWalletViewModel = hiltViewModel()
-
-        val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
-
-        ImportWalletScreen(
-            uiState = uiState,
-            uiEvent = viewModel::handleEvent,
-            navEvent = viewModel::navigateTo
-        )
-    }
-}
-
 fun NavGraphBuilder.home() {
     composable(MainRoute.Home.route) {
         val viewModel: HomeViewModel = hiltViewModel()
