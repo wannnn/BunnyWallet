@@ -10,6 +10,13 @@
     <string name="pwd_not_match">Passwords don\'t match</string>
     <string name="invalid_password">Invalid password</string>
 
+    <!-- Button Common -->
+    <string name="confirm">Confirm</string>
+    <string name="close">Close</string>
+    <string name="done">Done</string>
+    <string name="save">Save</string>
+    <string name="skip">Skip</string>
+
     <!-- Currency -->
     <string name="usd">USD</string>
 
@@ -37,7 +44,6 @@
     <string name="memorize_title">Memorize it:</string>
     <string name="memorize_content">If you have a good memory, you could memorize your mnemonic passphrase.</string>
     <string name="start">Start</string>
-    <string name="close">Close</string>
     <string name="what_is">What is</string>
     <string name="mnemonics_explanation_1">Secret Recovery Phrase is a set of twelve words contains all the information about your wallet, including your funds. It\'s like a secret code used to access your entire wallet.</string>
     <string name="mnemonics_explanation_2">You must keep your Secret Recovery Phrase secret and safe. If someone gets your Secret Recovery Phrase, they\'ll gain control over your accounts.</string>
@@ -49,7 +55,6 @@
     <string name="skip_warning_declaration">I understand that if I lose my Secret Recovery Phrase I will not be able to access my wallet.</string>
     <string name="confirm_your_password">Confirm your password</string>
     <string name="confirm_your_hint">Before continuing we need you to confirm your password.</string>
-    <string name="confirm">Confirm</string>
     <string name="_continue">Continue</string>
     <string name="write_down_srp_title">Write down your Secret Recovery Phrase</string>
     <string name="write_down_srp_hint">This is your Secret Recovery Phrase. Write it down on a paper and keep it in a safe place. You\'ll be asked to re-enter this phrase (in order) on the next step.</string>
@@ -63,12 +68,9 @@
     <string name="complete_msg_1">You\'ve successfully protected your wallet. Remember to keep your Secret Recovery Phrase safe. It\'s your responsibility!</string>
     <string name="complete_msg_2">BunnyWallet cannot recover your wallet when you lose it. You can find your Secret Recovery Phrase in Settings > Security &amp; privacy.</string>
     <string name="leave_yourself_a_hint">Leave yourself a hint ?</string>
-    <string name="done">Done</string>
     <string name="recovery_hint">Recovery Hint</string>
     <string name="recovery_hint_msg_1">Leave yourself a hint. Write the location where you saved it to remind yourself how you can access it. This information does not leave your device.</string>
     <string name="recovery_hint_msg_2">Do not use this to write your Secret Recovery Phrase!!!</string>
-    <string name="save">Save</string>
-    <string name="skip">Skip</string>
     <string name="secure_now">Secure now</string>
     <string name="wrong_order">Wrong order</string>
 
@@ -111,4 +113,12 @@
     <string name="custom_crypto">Custom crypto</string>
     <string name="added_cryptos">Added cryptos</string>
     <string name="popular_cryptos">Popular cryptos</string>
+
+    <!-- Custom Crypto -->
+    <string name="contract_address">Contract Address</string>
+    <string name="contract_address_hint">Enter contract address</string>
+    <string name="symbol">Symbol</string>
+    <string name="symbol_hint">Enter crypto symbol</string>
+    <string name="decimal">Decimal point</string>
+    <string name="decimal_hint">Up to 18 decimal places</string>
 </resources>
