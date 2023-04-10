@@ -1,4 +1,4 @@
-package com.cj.bunnywallet.feature.createwallet.createpwd
+package com.cj.bunnywallet.feature.createpwd
 
 import androidx.annotation.StringRes
 import com.cj.bunnywallet.reducer.UiState

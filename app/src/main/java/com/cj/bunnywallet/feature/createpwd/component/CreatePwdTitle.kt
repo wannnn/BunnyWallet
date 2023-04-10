@@ -1,4 +1,4 @@
-package com.cj.bunnywallet.feature.createwallet.createpwd.component
+package com.cj.bunnywallet.feature.createpwd.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,7 +20,7 @@ fun CreatePwdTitle() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp),
+            .padding(top = 16.dp, bottom = 4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(

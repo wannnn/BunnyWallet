@@ -5,15 +5,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.cj.bunnywallet.navigation.navgraph.createPassword
 import com.cj.bunnywallet.navigation.navgraph.createWalletGraph
 import com.cj.bunnywallet.navigation.navgraph.customCrypto
-import com.cj.bunnywallet.navigation.navgraph.entrance
 import com.cj.bunnywallet.navigation.navgraph.home
 import com.cj.bunnywallet.navigation.navgraph.importWallet
-import com.cj.bunnywallet.navigation.navgraph.manageWalletGraph
 import com.cj.bunnywallet.navigation.navgraph.manageCrypto
+import com.cj.bunnywallet.navigation.navgraph.manageWalletGraph
 import com.cj.bunnywallet.navigation.navgraph.startup
 import com.cj.bunnywallet.navigation.navgraph.unlock
+import com.cj.bunnywallet.navigation.navgraph.walletSetup
 import com.cj.bunnywallet.navigation.route.MainRoute
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -37,9 +38,12 @@ fun AppNavHost(
     ) {
         startup()
         unlock()
-        entrance()
+
+        walletSetup()
+        createPassword()
         createWalletGraph()
         importWallet()
+
         home()
         manageWalletGraph()
         manageCrypto()
