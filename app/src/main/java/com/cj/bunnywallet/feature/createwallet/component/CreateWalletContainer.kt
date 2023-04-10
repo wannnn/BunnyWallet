@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.feature.common.AppTopBar
 import com.cj.bunnywallet.feature.createwallet.CreateWalletStep
 import com.cj.bunnywallet.feature.createwallet.component.progress.CreateWalletProgress
-import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwd
-import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdState
+import com.cj.bunnywallet.feature.createpwd.CreatePwd
+import com.cj.bunnywallet.feature.createpwd.CreatePwdState
 import com.cj.bunnywallet.navigation.NavEvent
 
 @Composable

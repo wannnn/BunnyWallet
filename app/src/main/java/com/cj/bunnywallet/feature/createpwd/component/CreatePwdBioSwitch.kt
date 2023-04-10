@@ -1,4 +1,4 @@
-package com.cj.bunnywallet.feature.createwallet.createpwd.component
+package com.cj.bunnywallet.feature.createpwd.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.R
-import com.cj.bunnywallet.feature.createwallet.createpwd.CreatePwdEvent
+import com.cj.bunnywallet.feature.createpwd.CreatePwdEvent
 
 @Composable
 fun CreateWalletBioSwitch(

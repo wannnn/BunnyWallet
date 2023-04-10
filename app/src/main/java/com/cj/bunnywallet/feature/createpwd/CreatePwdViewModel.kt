@@ -1,15 +1,16 @@
-package com.cj.bunnywallet.feature.createwallet.createpwd
+package com.cj.bunnywallet.feature.createpwd
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavOptions
+import com.cj.bunnywallet.KEY_ENABLE_BIOMETRICS
 import com.cj.bunnywallet.KEY_PWD
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.datasource.BunnyPreferencesDataStore
 import com.cj.bunnywallet.extensions.isPasswordValid
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent
-import com.cj.bunnywallet.navigation.route.CreateWalletRoute
+import com.cj.bunnywallet.navigation.route.MainRoute
 import com.cj.bunnywallet.reducer.Reducer
 import com.cj.bunnywallet.reducer.ReducerImp
 import com.cj.bunnywallet.utils.CryptoManager
@@ -70,6 +71,7 @@ class CreatePwdViewModel @Inject constructor(
                 val encryptedPwd = manager.encrypt(uiState.pwd) ?: return
                 viewModelScope.launch {
                     dataStore.putString(KEY_PWD, encryptedPwd)
+                    dataStore.putBoolean(KEY_ENABLE_BIOMETRICS, uiState.bioEnabled)
                     toSecureWallet()
                 }
             }
@@ -78,12 +80,9 @@ class CreatePwdViewModel @Inject constructor(
 
     private fun toSecureWallet() {
         val navDestination = NavEvent.NavTo(
-            route = CreateWalletRoute.SecureWallet.route,
+            route = MainRoute.WalletSetup.route,
             navOptions = NavOptions.Builder()
-                .setPopUpTo(
-                    route = CreateWalletRoute.CreatePassword.route,
-                    inclusive = true,
-                )
+                .setPopUpTo(route = MainRoute.CreatePassword.route, inclusive = true)
                 .build(),
         )
         navigateTo(navDestination)
