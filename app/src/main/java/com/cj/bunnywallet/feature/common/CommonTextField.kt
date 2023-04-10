@@ -18,6 +18,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cj.bunnywallet.ui.theme.Gray500
 import com.cj.bunnywallet.ui.theme.Red400
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,6 +28,7 @@ fun CommonTextField(
     onValueUpdate: (String) -> Unit,
     modifier: Modifier = Modifier,
     label: String = "",
+    hint: String = "",
     trailingIcon: @Composable (() -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardType: KeyboardType = KeyboardType.Text,
@@ -44,6 +46,11 @@ fun CommonTextField(
                 null
             } else {
                 { Label(label = label) }
+            },
+            placeholder = if (hint.isEmpty()) {
+                null
+            } else {
+                { Hint(hint = hint) }
             },
             trailingIcon = trailingIcon,
             visualTransformation = visualTransformation,
@@ -68,6 +75,15 @@ private fun Label(label: String) {
     Text(
         text = label,
         style = MaterialTheme.typography.bodyLarge
+    )
+}
+
+@Composable
+private fun Hint(hint: String) {
+    Text(
+        text = hint,
+        color = Gray500,
+        style = MaterialTheme.typography.bodySmall
     )
 }
 
