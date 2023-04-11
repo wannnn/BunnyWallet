@@ -3,6 +3,7 @@ package com.cj.bunnywallet.feature.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cj.bunnywallet.datasource.WalletDataStore
+import com.cj.bunnywallet.extensions.shortAddress
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent
 import com.cj.bunnywallet.navigation.route.MainRoute
@@ -46,14 +47,9 @@ class HomeViewModel @Inject constructor(
                     it.selectedAccount,
                     Account.getDefaultInstance(),
                 )
-                val shortAddress = account.address.replaceRange(
-                    startIndex = START_INDEX,
-                    endIndex = account.address.length - END_INDEX,
-                    replacement = REPLACEMENT_DOT,
-                )
                 uiState = uiState.copy(
                     accountName = account.name,
-                    accountAddress = shortAddress,
+                    accountAddress = account.address.shortAddress,
                 )
             }
             .flatMapMerge { web3jManager.getEthBalance(account.address) }
@@ -70,11 +66,5 @@ class HomeViewModel @Inject constructor(
             HomeEvent.NavToManageCrypto ->
                 navigateTo(NavEvent.NavTo(route = MainRoute.ManageCrypto.route))
         }
-    }
-
-    private companion object {
-        const val START_INDEX = 6
-        const val END_INDEX = 4
-        const val REPLACEMENT_DOT = "...."
     }
 }
