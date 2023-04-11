@@ -7,6 +7,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.cj.bunnywallet.feature.createpwd.CreatePwdScreen
 import com.cj.bunnywallet.feature.createpwd.CreatePwdViewModel
+import com.cj.bunnywallet.feature.createwallet.CreateWalletScreen
+import com.cj.bunnywallet.feature.createwallet.CreateWalletViewModel
 import com.cj.bunnywallet.feature.importwallet.ImportWalletScreen
 import com.cj.bunnywallet.feature.importwallet.ImportWalletViewModel
 import com.cj.bunnywallet.feature.walletsetup.WalletSetupScreen
@@ -30,6 +32,20 @@ fun NavGraphBuilder.createPassword() {
             uiState = uiState,
             uiEvent = viewModel::handleEvent,
             navEvent = viewModel::navigateTo,
+        )
+    }
+}
+
+fun NavGraphBuilder.createWallet() {
+    composable(MainRoute.CreateWallet.route) {
+        val viewModel: CreateWalletViewModel = hiltViewModel()
+
+        val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
+
+        CreateWalletScreen(
+            uiState = uiState,
+            uiEvent = viewModel::handleEvent,
+            navEvent = viewModel::navigateTo
         )
     }
 }

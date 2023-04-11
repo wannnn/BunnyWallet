@@ -31,6 +31,8 @@ fun HomeScreen(
         HomeTopBar()
 
         AccountInfo(
+            accountName = uiState.accountName,
+            accountAddress = uiState.accountAddress,
             onManageWalletClicked = { uiEvent(HomeEvent.ManageWallet) },
         )
 
