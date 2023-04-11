@@ -10,6 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -21,15 +22,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.AppTopBar
 import com.cj.bunnywallet.feature.common.CmnButton
-import com.cj.bunnywallet.ui.customview.VerticalGrid
 import com.cj.bunnywallet.feature.importwallet.components.ImportFromSeedTitle
 import com.cj.bunnywallet.feature.importwallet.components.PhraseAmountSelector
 import com.cj.bunnywallet.feature.importwallet.components.PhraseTextField
-import com.cj.bunnywallet.ui.customview.CreatePwdView
 import com.cj.bunnywallet.navigation.NavEvent
+import com.cj.bunnywallet.ui.customview.VerticalGrid
 import com.cj.bunnywallet.ui.customview.VisibilityControlView
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 
@@ -50,7 +51,7 @@ fun ImportWalletScreen(
                 .padding(horizontal = 24.dp)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             ImportFromSeedTitle()
 
@@ -87,15 +88,11 @@ fun ImportWalletScreen(
                 }
             }
 
-            if (uiState.showSetPwd) {
-                CreatePwdView(
-                    title = stringResource(id = R.string.set_up_pwd),
-                    pwd = uiState.pwd,
-                    onPwd = { uiEvent.invoke(ImportWalletEvent.SetPassword(it)) },
-                    pwdErrMsg = uiState.pwdErrMsg?.let { stringResource(id = it) },
-                    confirmPwd = uiState.confirmPwd,
-                    onConfirmPwd = { uiEvent.invoke(ImportWalletEvent.SetConfirmPassword(it)) },
-                    confirmPwdErrMsg = uiState.confirmPwdErrMsg?.let { stringResource(id = it) }
+            if (!uiState.validMnemonic) {
+                Text(
+                    text = stringResource(id = R.string.invalid_mnemonic),
+                    color = MaterialTheme.colorScheme.error,
+                    fontSize = 14.sp,
                 )
             }
 
@@ -105,7 +102,8 @@ fun ImportWalletScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 35.dp),
-                isLoading = uiState.isLoading
+                enabled = uiState.btnEnable,
+                isLoading = uiState.isLoading,
             )
         }
     }

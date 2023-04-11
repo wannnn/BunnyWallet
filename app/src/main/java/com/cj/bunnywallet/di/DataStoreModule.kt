@@ -21,7 +21,7 @@ import javax.inject.Singleton
 object DataStoreModule {
 
     private const val PREFERENCE_DATA_STORE = "PREFERENCE_DATA_STORE"
-    private const val DS_WALLET_TEST = "wallets.pb"
+    private const val DS_WALLET = "wallets.pb"
 
     @Singleton
     @Provides
@@ -40,6 +40,6 @@ object DataStoreModule {
     ): DataStore<Wallets> =
         DataStoreFactory.create(
             serializer = walletSerializer,
-            produceFile = { context.dataStoreFile(DS_WALLET_TEST) },
+            produceFile = { context.dataStoreFile(DS_WALLET) },
         )
 }

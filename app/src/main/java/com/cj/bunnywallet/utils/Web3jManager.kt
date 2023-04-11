@@ -1,13 +1,11 @@
 package com.cj.bunnywallet.utils
 
 import com.cj.bunnywallet.BuildConfig
-import com.cj.bunnywallet.utils.wallet.WalletHelper
-import com.cj.bunnywallet.utils.wallet.WalletHelperImpl
+import com.cj.bunnywallet.helper.WalletHelper
+import com.cj.bunnywallet.helper.WalletHelperImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import org.web3j.crypto.Bip44WalletUtils
-import org.web3j.crypto.Credentials
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.http.HttpService
@@ -17,7 +15,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class Web3jManager @Inject constructor() : WalletHelper by WalletHelperImpl() {
+class Web3jManager @Inject constructor(cryptoManager: CryptoManager) :
+    WalletHelper by WalletHelperImpl(cryptoManager) {
 
     fun initWeb3j() {
         web3j = Web3j.build(HttpService(ALCHEMY_URL))
@@ -34,9 +33,6 @@ class Web3jManager @Inject constructor() : WalletHelper by WalletHelperImpl() {
                 Timber.d(message = "Connected to Ethereum Exception: ${it.message}")
             }
     }
-
-    fun loadCredentials(mnemonic: String): Credentials =
-        Bip44WalletUtils.loadBip44Credentials("", mnemonic)
 
     fun getEthBalance(address: String) = flow {
         val balanceWei = web3j.ethGetBalance(address, DefaultBlockParameterName.LATEST)
