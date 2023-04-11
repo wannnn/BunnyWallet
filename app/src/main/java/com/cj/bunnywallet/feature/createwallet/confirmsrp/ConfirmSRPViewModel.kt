@@ -4,8 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavOptions
-import com.cj.bunnywallet.KEY_MNEMONIC
-import com.cj.bunnywallet.datasource.BunnyPreferencesDataStore
 import com.cj.bunnywallet.extensions.indexOfFirstOrNull
 import com.cj.bunnywallet.feature.createwallet.confirmsrp.model.PhraseSlot
 import com.cj.bunnywallet.navigation.AppNavigator
@@ -14,7 +12,6 @@ import com.cj.bunnywallet.navigation.route.CreateWalletRoute
 import com.cj.bunnywallet.navigation.route.MainRoute
 import com.cj.bunnywallet.reducer.Reducer
 import com.cj.bunnywallet.reducer.ReducerImp
-import com.cj.bunnywallet.utils.CryptoManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,8 +20,6 @@ import javax.inject.Inject
 class ConfirmSRPViewModel @Inject constructor(
     appNavigator: AppNavigator,
     savedStateHandle: SavedStateHandle,
-    private val dataStore: BunnyPreferencesDataStore,
-    private val manager: CryptoManager,
 ) : ViewModel(), AppNavigator by appNavigator,
     Reducer<ConfirmSRPState> by ReducerImp(ConfirmSRPState()) {
 
@@ -52,10 +47,7 @@ class ConfirmSRPViewModel @Inject constructor(
             is ConfirmSRPEvent.OnShuffledPhraseClicked -> handleShuffleClicked(ps = e.ps)
 
             ConfirmSRPEvent.BackUpCompleted -> {
-                val encryptedMnemonic =
-                    manager.encrypt(mnemonic.joinToString(separator = " ")) ?: return
                 viewModelScope.launch {
-                    dataStore.putString(KEY_MNEMONIC, encryptedMnemonic)
                     val destination = NavEvent.NavTo(
                         route = CreateWalletRoute.Completed.route,
                         navOptions = NavOptions.Builder().setPopUpTo(
