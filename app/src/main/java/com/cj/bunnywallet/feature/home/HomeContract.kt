@@ -8,5 +8,7 @@ sealed interface HomeEvent {
 }
 
 data class HomeState(
+    val accountName: String = "",
+    val accountAddress: String = "",
     val balance: String = ""
 ) : UiState

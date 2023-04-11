@@ -3,10 +3,10 @@ package com.cj.bunnywallet.feature.unlock
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavOptions
-import com.cj.bunnywallet.KEY_MNEMONIC
 import com.cj.bunnywallet.KEY_PWD
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.datasource.BunnyPreferencesDataStore
+import com.cj.bunnywallet.datasource.WalletDataStore
 import com.cj.bunnywallet.extensions.onLoading
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent
@@ -21,16 +21,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UnlockViewModel @Inject constructor(
-    private val dataStore: BunnyPreferencesDataStore,
+    navigator: AppNavigator,
+    private val prefDS: BunnyPreferencesDataStore,
+    private val walletDS: WalletDataStore,
     private val manager: CryptoManager,
-    private val navigator: AppNavigator
 ) : ViewModel(), AppNavigator by navigator,
     Reducer<UnlockState> by ReducerImp(UnlockState()) {
 
-    private var hasMnemonic = false
+    private var hasWallet = false
 
     init {
-        checkHasMnemonic()
+        checkHasWallet()
     }
 
     fun handleEvent(e: UnlockEvent) {
@@ -41,7 +42,7 @@ class UnlockViewModel @Inject constructor(
     }
 
     private fun unlockWallet() {
-        dataStore.getString(KEY_PWD)
+        prefDS.getString(KEY_PWD)
             .onLoading { uiState = uiState.copy(isLoading = it) }
             .onEach {
                 val decryptPwd = manager.decrypt(it)
@@ -56,7 +57,7 @@ class UnlockViewModel @Inject constructor(
 
     private fun navigate() {
         val navEvent = NavEvent.NavTo(
-            route = if (hasMnemonic) MainRoute.Home.route else MainRoute.WalletSetup.route,
+            route = if (hasWallet) MainRoute.Home.route else MainRoute.WalletSetup.route,
             navOptions = NavOptions.Builder()
                 .setPopUpTo(route = MainRoute.Unlock.route, inclusive = true)
                 .build(),
@@ -64,9 +65,9 @@ class UnlockViewModel @Inject constructor(
         navigateTo(navEvent)
     }
 
-    private fun checkHasMnemonic() {
-        dataStore.getString(KEY_MNEMONIC)
-            .onEach { mnemonic -> hasMnemonic = mnemonic.isNotBlank() }
+    private fun checkHasWallet() {
+        walletDS.hasWallet
+            .onEach { hasWallet = it }
             .launchIn(viewModelScope)
     }
 }
