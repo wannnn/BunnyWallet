@@ -31,6 +31,8 @@ import com.cj.bunnywallet.ui.theme.NoRippleInteractionSource
 
 @Composable
 fun AccountInfo(
+    accountName: String,
+    accountAddress: String,
     onManageWalletClicked: () -> Unit,
 ) {
     Row(
@@ -60,14 +62,14 @@ fun AccountInfo(
             verticalArrangement = Arrangement.SpaceEvenly,
         ) {
             Text(
-                text = "Account 1",
+                text = accountName,
                 modifier = Modifier.padding(horizontal = 4.dp),
                 fontWeight = FontWeight.SemiBold,
                 style = MaterialTheme.typography.titleMedium,
             )
 
             Text(
-                text = "0x71C7...976F",
+                text = accountAddress,
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(32.dp))
                     .background(color = MaterialTheme.colorScheme.inverseOnSurface)
@@ -91,7 +93,11 @@ fun AccountInfo(
 fun PreviewAccountInfo() {
     BunnyWalletTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
-            AccountInfo(onManageWalletClicked = {})
+            AccountInfo(
+                accountName = "Shit coin account",
+                accountAddress = "0x71C7...976F",
+                onManageWalletClicked = {},
+            )
         }
     }
 }

@@ -8,7 +8,7 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.cj.bunnywallet.model.wallet.WalletSerializer
-import com.cj.bunnywallet.proto.wallet.Wallet
+import com.cj.bunnywallet.proto.wallet.Wallets
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +21,7 @@ import javax.inject.Singleton
 object DataStoreModule {
 
     private const val PREFERENCE_DATA_STORE = "PREFERENCE_DATA_STORE"
-    private const val DS_WALLET_TEST = "wallet_test.pb"
+    private const val DS_WALLET_TEST = "wallets.pb"
 
     @Singleton
     @Provides
@@ -37,7 +37,7 @@ object DataStoreModule {
     fun providesWalletDataStore(
         @ApplicationContext context: Context,
         walletSerializer: WalletSerializer,
-    ): DataStore<Wallet> =
+    ): DataStore<Wallets> =
         DataStoreFactory.create(
             serializer = walletSerializer,
             produceFile = { context.dataStoreFile(DS_WALLET_TEST) },
