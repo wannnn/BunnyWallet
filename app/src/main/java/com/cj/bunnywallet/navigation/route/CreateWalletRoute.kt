@@ -3,7 +3,7 @@ package com.cj.bunnywallet.navigation.route
 sealed interface CreateWalletRoute : Routes {
 
     object CreateWallet : MainRoute {
-        override val route: String = "create_wallet_route"
+        override val route: String = "create_wallet_route_legacy"
     }
 
     object SecureWallet : CreateWalletRoute {

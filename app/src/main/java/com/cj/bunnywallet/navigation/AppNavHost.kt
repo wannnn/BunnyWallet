@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.cj.bunnywallet.navigation.navgraph.createPassword
+import com.cj.bunnywallet.navigation.navgraph.createWallet
 import com.cj.bunnywallet.navigation.navgraph.createWalletGraph
 import com.cj.bunnywallet.navigation.navgraph.customCrypto
 import com.cj.bunnywallet.navigation.navgraph.home
@@ -41,6 +42,7 @@ fun AppNavHost(
 
         walletSetup()
         createPassword()
+        createWallet()
         createWalletGraph()
         importWallet()
 
