@@ -32,7 +32,6 @@ fun ManageWalletScreen(
 
         WalletList(
             wallets = uiState.wallets,
-            currentAccount = uiState.currentAccount,
             uiEvent = uiEvent,
         )
     }
@@ -45,7 +44,7 @@ fun PreviewManageWalletScreen() {
     BunnyWalletTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
             ManageWalletScreen(
-                uiState = ManageWalletState(wallets = genFakeData(), currentAccount = "0x3"),
+                uiState = ManageWalletState(wallets = genFakeData()),
                 uiEvent = {},
             )
         }
@@ -53,18 +52,8 @@ fun PreviewManageWalletScreen() {
 }
 
 private fun genFakeData(): List<WalletDisplay> {
-    val w1 = wallet {
+    val wallet = wallet {
         id = "1"
-        name = "ETH wallet"
-        accounts.putAll(
-            mapOf(
-                "0x11" to account { address = "0x11"; name = "Stake account" },
-                "0x12" to account { address = "0x12"; name = "Default account" },
-            )
-        )
-    }
-    val w2 = wallet {
-        id = "2"
         name = "To the moon wallet"
         accounts.putAll(
             mapOf(
@@ -73,7 +62,7 @@ private fun genFakeData(): List<WalletDisplay> {
             )
         )
     }
-    return wallets { wallets.putAll(mapOf("w1" to w1, "w2" to w2)) }
+    return wallets { wallets.putAll(mapOf("wallet" to wallet)) }
         .walletsMap
         .values
         .map { w ->
@@ -81,8 +70,13 @@ private fun genFakeData(): List<WalletDisplay> {
                 id = w.id,
                 name = w.name,
                 accounts = w.accountsMap.values.map { acc ->
-                    WalletDisplay.AccountDisplay(address = acc.address, name = acc.name)
+                    WalletDisplay.AccountDisplay(
+                        address = acc.address,
+                        name = acc.name,
+                        isCurrent = true,
+                    )
                 },
+                isExpand = true,
             )
         }
 }

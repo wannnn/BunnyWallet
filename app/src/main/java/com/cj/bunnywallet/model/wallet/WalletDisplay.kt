@@ -11,5 +11,6 @@ data class WalletDisplay(
         val address: String = "",
         val name: String = "",
         val amount: String = "--",
+        val isCurrent: Boolean = false,
     )
 }

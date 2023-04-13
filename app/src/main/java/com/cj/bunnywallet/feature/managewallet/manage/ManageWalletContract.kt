@@ -13,5 +13,4 @@ sealed interface ManageWalletEvent {
 
 data class ManageWalletState(
     val wallets: List<WalletDisplay> = emptyList(),
-    val currentAccount: String = "",
 ) : UiState

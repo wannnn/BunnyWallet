@@ -300,7 +300,6 @@ exceptions:
       - 'Error'
       - 'Exception'
       - 'RuntimeException'
-      - 'Throwable'
 
 naming:
   active: true

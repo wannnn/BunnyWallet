@@ -7,7 +7,8 @@ message Wallets {
   // key: encrypted mnemonic
   map<string, Wallet> wallets = 1;
 
-  string selectedWallet = 2; // encrypted mnemonic
+  string currentWallet = 2; // encrypted mnemonic
+  string currentAccount = 3; // account address
 }
 
 message Wallet {
@@ -16,7 +17,6 @@ message Wallet {
 
   // key: account address
   map<string, Account> accounts = 3;
-  string selectedAccount = 4; // account address
 }
 
 message Account {

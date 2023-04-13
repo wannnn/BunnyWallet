@@ -9,7 +9,6 @@ import com.cj.bunnywallet.navigation.NavEvent
 import com.cj.bunnywallet.navigation.route.MainRoute
 import com.cj.bunnywallet.navigation.route.ManageWalletRoute
 import com.cj.bunnywallet.proto.wallet.Account
-import com.cj.bunnywallet.proto.wallet.Wallet
 import com.cj.bunnywallet.reducer.Reducer
 import com.cj.bunnywallet.reducer.ReducerImp
 import com.cj.bunnywallet.utils.Web3jManager
@@ -31,7 +30,6 @@ class HomeViewModel @Inject constructor(
     Reducer<HomeState> by ReducerImp(HomeState()) {
 
     // These can remove if not use in future
-    private var wallet: Wallet = Wallet.getDefaultInstance()
     private var account: Account = Account.getDefaultInstance()
 
     init {
@@ -40,16 +38,12 @@ class HomeViewModel @Inject constructor(
 
     @OptIn(FlowPreview::class)
     private fun getWallet() {
-        walletDS.selectedWallet
-            .onEach {
-                wallet = it
-                account = it.accountsMap.getOrDefault(
-                    it.selectedAccount,
-                    Account.getDefaultInstance(),
-                )
+        walletDS.currentAccount
+            .onEach { acc ->
+                account = acc
                 uiState = uiState.copy(
-                    accountName = account.name,
-                    accountAddress = account.address.shortAddress,
+                    accountName = acc.name,
+                    accountAddress = acc.address.shortAddress,
                 )
             }
             .flatMapMerge { web3jManager.getEthBalance(account.address) }

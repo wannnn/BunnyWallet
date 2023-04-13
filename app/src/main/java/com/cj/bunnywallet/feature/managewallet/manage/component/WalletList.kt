@@ -37,7 +37,6 @@ import com.cj.bunnywallet.ui.theme.NoRippleInteractionSource
 @Composable
 fun WalletList(
     wallets: List<WalletDisplay>,
-    currentAccount: String,
     uiEvent: (ManageWalletEvent) -> Unit,
 ) {
     LazyColumn(
@@ -48,7 +47,6 @@ fun WalletList(
         wallets.forEach {
             walletInfo(
                 wallet = it,
-                currentAccount = currentAccount,
                 uiEvent = uiEvent,
             )
         }
@@ -57,7 +55,6 @@ fun WalletList(
 
 private fun LazyListScope.walletInfo(
     wallet: WalletDisplay,
-    currentAccount: String,
     uiEvent: (ManageWalletEvent) -> Unit,
 ) {
     walletItem(
@@ -68,7 +65,6 @@ private fun LazyListScope.walletInfo(
     if (wallet.isExpand) {
         accountItems(
             accounts = wallet.accounts,
-            currentAccount = currentAccount,
             onAccountSelected = { uiEvent(ManageWalletEvent.SelectAccount(it)) },
         )
 
@@ -133,7 +129,6 @@ private fun LazyListScope.walletItem(
 
 private fun LazyListScope.accountItems(
     accounts: List<WalletDisplay.AccountDisplay>,
-    currentAccount: String,
     onAccountSelected: (String) -> Unit,
 ) {
     items(accounts) {
@@ -157,7 +152,7 @@ private fun LazyListScope.accountItems(
                 amountSize = 14.sp,
             )
 
-            if (it.address == currentAccount) {
+            if (it.isCurrent) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_check_filled),
                     contentDescription = null,
