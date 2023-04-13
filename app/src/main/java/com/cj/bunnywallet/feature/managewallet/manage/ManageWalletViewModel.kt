@@ -1,59 +1,59 @@
 package com.cj.bunnywallet.feature.managewallet.manage
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.cj.bunnywallet.datasource.WalletDataStore
 import com.cj.bunnywallet.extensions.indexOfFirstOrNull
 import com.cj.bunnywallet.model.wallet.WalletDisplay
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent
-import com.cj.bunnywallet.proto.wallet.account
-import com.cj.bunnywallet.proto.wallet.wallet
-import com.cj.bunnywallet.proto.wallet.wallets
+import com.cj.bunnywallet.proto.wallet.Wallets
 import com.cj.bunnywallet.reducer.Reducer
 import com.cj.bunnywallet.reducer.ReducerImp
+import com.cj.bunnywallet.utils.CryptoManager
+import com.cj.bunnywallet.utils.Web3jManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class ManageWalletViewModel @Inject constructor(
-    private val navigator: AppNavigator
+    navigator: AppNavigator,
+    private val walletDS: WalletDataStore,
+    private val cryptoManager: CryptoManager,
+    private val web3jManager: Web3jManager,
 ) : ViewModel(), AppNavigator by navigator,
     Reducer<ManageWalletState> by ReducerImp(ManageWalletState()) {
 
     init {
-        uiState = uiState.copy(wallets = genFakeData(), currentAccount = "0x21")
+        getWallets()
     }
 
-    private fun genFakeData(): List<WalletDisplay> {
-        val w1 = wallet {
-            id = "1"
-            name = "ETH wallet"
-            accounts.putAll(
-                mapOf(
-                    "0x11" to account { address = "0x11"; name = "Stake account" },
-                    "0x12" to account { address = "0x12"; name = "Default account" },
-                )
-            )
-        }
-        val w2 = wallet {
-            id = "2"
-            name = "To the moon wallet"
-            accounts.putAll(
-                mapOf(
-                    "0x21" to account { address = "0x21"; name = "Shit coin account" },
-                    "0x22" to account { address = "0x22"; name = "Doge coin account" },
-                )
-            )
-        }
-        return wallets { wallets.putAll(mapOf("w1" to w1, "w2" to w2)) }
-            .walletsMap
+    private fun getWallets() {
+        walletDS.wallets
+            .onEach { uiState = uiState.copy(wallets = genDisplayData(it)) }
+            .launchIn(viewModelScope)
+    }
+
+    private fun genDisplayData(wallets: Wallets): List<WalletDisplay> {
+        return wallets.walletsMap
             .values
             .map { w ->
+                val accounts = w.accountsMap.values.map { acc ->
+                    WalletDisplay.AccountDisplay(
+                        address = acc.address,
+                        name = acc.name,
+                        isCurrent = acc.address == wallets.currentAccount,
+                    )
+                }
                 WalletDisplay(
                     id = w.id,
                     name = w.name,
-                    accounts = w.accountsMap.values.map { acc ->
-                        WalletDisplay.AccountDisplay(address = acc.address, name = acc.name)
-                    },
+                    accounts = accounts,
+                    isExpand = w.id == wallets.currentWallet,
                 )
             }
     }
@@ -72,27 +72,28 @@ class ManageWalletViewModel @Inject constructor(
             }
 
             is ManageWalletEvent.AddAccount -> {
-                val newWallets = uiState.wallets.toMutableList()
-
-                uiState.wallets.indexOfFirstOrNull { it.id == e.walletId }?.let {
-                    // Temp logic for UI display,
-                    // will update when implement real add account logic
-                    val wallet = uiState.wallets[it]
-                    val newAccounts = wallet.accounts.toMutableList().apply {
-                        val num = size + 1
-                        val newAccount = WalletDisplay.AccountDisplay(
-                            address = "0x${wallet.id}$num",
-                            name = "Account $num",
-                        )
-                        add(newAccount)
-                    }
-                    newWallets[it] = wallet.copy(accounts = newAccounts)
+                val decryptId = cryptoManager.decrypt(e.walletId) ?: run {
+                    Timber.d("Wallet ID decrypt fail")
+                    return
                 }
-
-                uiState = uiState.copy(wallets = newWallets)
+                val childNumber = uiState.wallets.find { it.id == e.walletId }
+                    ?.accounts?.size
+                    ?: run {
+                        Timber.d("Get current account size fail")
+                        return
+                    }
+                val account = web3jManager.deriveAccount(
+                    mnemonic = decryptId,
+                    childNumber = childNumber,
+                )
+                viewModelScope.launch {
+                    walletDS.createAccount(e.walletId, account)
+                }
             }
 
-            is ManageWalletEvent.SelectAccount -> uiState = uiState.copy(currentAccount = e.address)
+            is ManageWalletEvent.SelectAccount -> viewModelScope.launch {
+                walletDS.updateCurrentAccount(e.address)
+            }
 
             ManageWalletEvent.OnBackClick -> navigateTo(NavEvent.NavBack)
         }

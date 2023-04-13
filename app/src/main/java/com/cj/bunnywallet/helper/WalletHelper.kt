@@ -1,5 +1,6 @@
 package com.cj.bunnywallet.helper
 
+import com.cj.bunnywallet.proto.wallet.Account
 import com.cj.bunnywallet.proto.wallet.Wallet
 import com.cj.bunnywallet.proto.wallet.account
 import com.cj.bunnywallet.proto.wallet.wallet
@@ -24,7 +25,7 @@ interface WalletHelper {
 
     fun createWallet(mnemonic: String): Wallet?
 
-    fun deriveChild(mnemonic: String, childNumber: Int)
+    fun deriveAccount(mnemonic: String, childNumber: Int): Account
 }
 
 class WalletHelperImpl(private val cryptoManager: CryptoManager) : WalletHelper {
@@ -63,7 +64,6 @@ class WalletHelperImpl(private val cryptoManager: CryptoManager) : WalletHelper 
                     name = FIRST_ACCOUNT
                 },
             )
-            selectedAccount = credentials.address
         }
     }
         .onFailure { Timber.d(message = "Create wallet fail: ${it.message}") }
@@ -73,7 +73,7 @@ class WalletHelperImpl(private val cryptoManager: CryptoManager) : WalletHelper 
      *  Mnemonic Code Converter
      *  https://iancoleman.io/bip39/#english
      */
-    override fun deriveChild(mnemonic: String, childNumber: Int) {
+    override fun deriveAccount(mnemonic: String, childNumber: Int): Account {
         val seed = MnemonicUtils.generateSeed(mnemonic, "")
         val masterKeypair = Bip32ECKeyPair.generateKeyPair(seed)
         val path = intArrayOf(
@@ -84,14 +84,18 @@ class WalletHelperImpl(private val cryptoManager: CryptoManager) : WalletHelper 
             childNumber,
         )
         val childKeypair = Bip32ECKeyPair.deriveKeyPair(masterKeypair, path)
-        Credentials.create(childKeypair).let { c ->
-            Timber.d(message = "credentials address: ${c.address}")
+        val credentials = Credentials.create(childKeypair)
+
+        return account {
+            address = credentials.address
+            name = "$ACCOUNT ${childNumber + 1}"
         }
     }
 
     private companion object {
         const val FIRST_WALLET = "Wallet 1"
-        const val FIRST_ACCOUNT = "Account 1"
+        const val ACCOUNT = "Account"
+        const val FIRST_ACCOUNT = "$ACCOUNT 1"
 
         const val BYTE_SIZE = 16
         const val BIP44 = 44
