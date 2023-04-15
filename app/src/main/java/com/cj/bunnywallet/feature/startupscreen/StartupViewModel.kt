@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavOptions
 import com.cj.bunnywallet.KEY_PWD
-import com.cj.bunnywallet.datasource.BunnyPreferencesDataStore
+import com.cj.bunnywallet.datasource.local.BunnyPreferencesDataStore
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent
 import com.cj.bunnywallet.navigation.route.MainRoute

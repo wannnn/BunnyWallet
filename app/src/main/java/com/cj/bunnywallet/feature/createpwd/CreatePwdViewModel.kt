@@ -6,7 +6,7 @@ import androidx.navigation.NavOptions
 import com.cj.bunnywallet.KEY_ENABLE_BIOMETRICS
 import com.cj.bunnywallet.KEY_PWD
 import com.cj.bunnywallet.R
-import com.cj.bunnywallet.datasource.BunnyPreferencesDataStore
+import com.cj.bunnywallet.datasource.local.BunnyPreferencesDataStore
 import com.cj.bunnywallet.extensions.isPasswordValid
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent

@@ -2,7 +2,7 @@ package com.cj.bunnywallet.feature.managewallet.manage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cj.bunnywallet.datasource.WalletDataStore
+import com.cj.bunnywallet.datasource.local.WalletDataStore
 import com.cj.bunnywallet.extensions.indexOfFirstOrNull
 import com.cj.bunnywallet.model.wallet.WalletDisplay
 import com.cj.bunnywallet.navigation.AppNavigator

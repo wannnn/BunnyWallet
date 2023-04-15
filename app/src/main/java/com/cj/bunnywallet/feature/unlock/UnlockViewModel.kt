@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavOptions
 import com.cj.bunnywallet.KEY_PWD
 import com.cj.bunnywallet.R
-import com.cj.bunnywallet.datasource.BunnyPreferencesDataStore
-import com.cj.bunnywallet.datasource.WalletDataStore
+import com.cj.bunnywallet.datasource.local.BunnyPreferencesDataStore
+import com.cj.bunnywallet.datasource.local.WalletDataStore
 import com.cj.bunnywallet.extensions.onLoading
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent

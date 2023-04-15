@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.protobuf)
 
     kotlin("kapt")
+    kotlin("plugin.serialization") version libs.versions.kotlin
 }
 
 // Load keystore properties
@@ -133,6 +134,18 @@ dependencies {
 
     // Protobuf
     implementation(libs.protobuf.kotlin.lite)
+
+    // Ktor
+    implementation(libs.bundles.ktor)
+
+    // slf4j
+    implementation(libs.slf4j)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization)
+
+    // Coil
+    implementation(libs.coil)
 
     /** Testing Start */
     testImplementation(libs.junit4)

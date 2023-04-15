@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cj.bunnywallet.KEY_PWD
 import com.cj.bunnywallet.R
-import com.cj.bunnywallet.datasource.BunnyPreferencesDataStore
+import com.cj.bunnywallet.datasource.local.BunnyPreferencesDataStore
 import com.cj.bunnywallet.feature.createwallet.securewallet.dialog.SecureWalletDialogType
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent
