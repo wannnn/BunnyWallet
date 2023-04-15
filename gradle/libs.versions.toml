@@ -22,12 +22,12 @@ androidxLifecycle = "2.6.0"
 androidxNavigation = "2.5.3"
 
 # Android Core
-androidxCore = "1.9.0"
+androidxCore = "1.10.0"
 
 # Compose
-androidxComposeComplier = "1.4.2"
-androidxComposeUi = "1.3.3"
-androidxComposeFoundation = "1.4.0"
+androidxComposeComplier = "1.4.4"
+androidxComposeUi = "1.4.1"
+androidxComposeFoundation = "1.4.1"
 androidxComposeMaterial3 = "1.0.1"
 
 # Detekt
@@ -52,6 +52,18 @@ timber = "5.0.1"
 # Protobuf
 protobuf = "3.22.2"
 protobufGradlePlugin = "0.9.1"
+
+# Ktor
+ktor = "2.2.4"
+
+# slf4j
+slf4j = "1.7.36"
+
+# Serialization
+kotlinxSerialization = "1.5.0"
+
+# Coil
+coil = "2.3.0"
 
 # Testing
 junit4 = "4.13.2"
@@ -109,6 +121,22 @@ timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "tim
 protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
 protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 
+# Ktor
+ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
+ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
+
+# slf4j
+slf4j = { group = "org.slf4j", name = "slf4j-android", version.ref = "slf4j" }
+
+# Serialization
+kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+
+# Coil
+coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+
 # Test
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 androidx-test-ext = { group = "androidx.test.ext", name = "junit", version.ref = "androidxTestExt" }
@@ -141,6 +169,14 @@ datastore = [
     "datastore",
 ]
 
+# Ktor
+ktor = [
+    "ktor-client-core",
+    "ktor-client-cio",
+    "ktor-client-content-negotiation",
+    "ktor-serialization-kotlinx-json",
+    "ktor-client-logging"
+]
 
 
 [plugins]

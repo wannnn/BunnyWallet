@@ -1,4 +1,4 @@
-package com.cj.bunnywallet.datasource
+package com.cj.bunnywallet.datasource.local
 
 import androidx.datastore.core.DataStore
 import com.cj.bunnywallet.proto.wallet.Account
