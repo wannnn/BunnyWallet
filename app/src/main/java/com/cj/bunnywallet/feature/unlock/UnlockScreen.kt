@@ -24,7 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.CmnButton
-import com.cj.bunnywallet.feature.common.PasswordTextField
+import com.cj.bunnywallet.feature.common.PasswordTailIconTextField
+import com.cj.bunnywallet.ui.customview.ConfirmPwdDialog
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 
 @Composable
@@ -55,7 +56,7 @@ fun UnlockScreen(
                 style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
             )
 
-            PasswordTextField(
+            PasswordTailIconTextField(
                 passwordState = uiState.pwd,
                 passwordStateUpdate = { uiEvent.invoke(UnlockEvent.SetPassword(it)) },
                 label = stringResource(id = R.string.password),
