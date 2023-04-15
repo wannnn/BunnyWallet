@@ -27,6 +27,8 @@
     <string name="reset_wallet">Reset Wallet</string>
 
     <!-- Create Wallet -->
+    <string name="create_wallet">Create wallet</string>
+    <string name="create_wallet_description">Generate a new wallet</string>
     <string name="create_password">Create password</string>
     <string name="secure_wallet">Secure wallet</string>
     <string name="confirm_mnemonics">Confirm secret\n recovery phrase</string>
@@ -75,6 +77,8 @@
     <string name="wrong_order">Wrong order</string>
 
     <!-- Import Wallet -->
+    <string name="import_wallet">Import wallet</string>
+    <string name="import_wallet_description">Import with seed phrase from backup</string>
     <string name="import_from_seed">Import from seed</string>
     <string name="set_up_pwd">Set Up Password</string>
     <string name="btn_import">IMPORT</string>
