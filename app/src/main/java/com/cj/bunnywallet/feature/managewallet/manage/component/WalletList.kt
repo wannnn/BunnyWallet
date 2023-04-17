@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cj.bunnywallet.R
+import com.cj.bunnywallet.extensions.shortAddress
 import com.cj.bunnywallet.feature.common.CommonIconBtn
 import com.cj.bunnywallet.feature.managewallet.manage.ManageWalletEvent
 import com.cj.bunnywallet.model.wallet.WalletDisplay
@@ -65,7 +66,9 @@ private fun LazyListScope.walletInfo(
     if (wallet.isExpand) {
         accountItems(
             accounts = wallet.accounts,
-            onAccountSelected = { uiEvent(ManageWalletEvent.SelectAccount(it)) },
+            onAccountSelected = { addr ->
+                uiEvent(ManageWalletEvent.SelectAccount(wallet.id, addr))
+            },
         )
 
         addAccountItem(addAccount = { uiEvent(ManageWalletEvent.AddAccount(wallet.id)) })
@@ -150,6 +153,7 @@ private fun LazyListScope.accountItems(
                 nameSize = 18.sp,
                 amount = it.amount,
                 amountSize = 14.sp,
+                address = it.address.shortAddress,
             )
 
             if (it.isCurrent) {
@@ -203,15 +207,25 @@ private fun LazyListScope.addAccountItem(addAccount: () -> Unit) {
 private fun Info(
     name: String, nameSize: TextUnit,
     amount: String, amountSize: TextUnit,
+    address: String = "",
     nameColor: Color = Color.Unspecified,
 ) {
     Column {
-        Text(
-            text = name,
-            color = nameColor,
-            fontSize = nameSize,
-            fontWeight = FontWeight.SemiBold,
-        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = name,
+                color = nameColor,
+                fontSize = nameSize,
+                fontWeight = FontWeight.SemiBold,
+            )
+
+            Text(
+                text = address,
+                modifier = Modifier.padding(start = 16.dp),
+                color = MaterialTheme.colorScheme.secondary,
+                fontSize = amountSize,
+            )
+        }
 
         Text(
             text = amount,

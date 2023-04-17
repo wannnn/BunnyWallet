@@ -63,10 +63,13 @@ class WalletDataStore @Inject constructor(private val dataStore: DataStore<Walle
         }
     }
 
-    suspend fun updateCurrentAccount(address: String) {
+    suspend fun updateCurrentAccount(walletId: String, address: String) {
         try {
             dataStore.updateData {
-                it.copy { currentAccount = address }
+                it.copy {
+                    currentWallet = walletId
+                    currentAccount = address
+                }
             }
         } catch (e: IOException) {
             Timber.d(message = "Failed to update wallet preferences: ${e.message}")

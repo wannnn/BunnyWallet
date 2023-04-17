@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,6 +34,7 @@ import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.home.dialog.NetworkChangeDialog
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 import com.cj.bunnywallet.feature.common.CommonIconBtn
+import com.cj.bunnywallet.ui.modifier.customShadow
 
 @Composable
 fun HomeTopBar() {
@@ -40,6 +42,8 @@ fun HomeTopBar() {
         modifier = Modifier
             .fillMaxWidth()
             .height(64.dp)
+            .customShadow(blurRadius = 4.dp)
+            .background(MaterialTheme.colorScheme.background),
     ) {
         CommonIconBtn(
             icon = R.drawable.ic_menu,

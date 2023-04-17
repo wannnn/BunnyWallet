@@ -4,9 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cj.bunnywallet.datasource.local.WalletDataStore
 import com.cj.bunnywallet.extensions.indexOfFirstOrNull
+import com.cj.bunnywallet.feature.managewallet.manage.type.ManageType
 import com.cj.bunnywallet.model.wallet.WalletDisplay
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent
+import com.cj.bunnywallet.navigation.route.MainRoute
 import com.cj.bunnywallet.proto.wallet.Wallets
 import com.cj.bunnywallet.reducer.Reducer
 import com.cj.bunnywallet.reducer.ReducerImp
@@ -92,10 +94,24 @@ class ManageWalletViewModel @Inject constructor(
             }
 
             is ManageWalletEvent.SelectAccount -> viewModelScope.launch {
-                walletDS.updateCurrentAccount(e.address)
+                walletDS.updateCurrentAccount(e.walletId, e.address)
             }
 
+            is ManageWalletEvent.MenuItemClick -> handleManageAction(e.type)
+
             ManageWalletEvent.OnBackClick -> navigateTo(NavEvent.NavBack)
+        }
+    }
+
+    private fun handleManageAction(type: ManageType) {
+        when (type) {
+            ManageType.ADD_WALLET -> {
+                navigateTo(NavEvent.NavTo(MainRoute.WalletSetup.route))
+            }
+
+            ManageType.EDIT_WALLET -> {
+                // TODO
+            }
         }
     }
 }

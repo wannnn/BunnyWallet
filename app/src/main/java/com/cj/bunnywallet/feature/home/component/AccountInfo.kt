@@ -38,7 +38,7 @@ fun AccountInfo(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 4.dp)
+            .padding(horizontal = 12.dp, vertical = 8.dp)
             .clickable(
                 interactionSource = NoRippleInteractionSource(),
                 indication = null,
