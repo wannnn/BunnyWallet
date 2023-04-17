@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavOptions
 import com.cj.bunnywallet.BuildConfig
+import com.cj.bunnywallet.R
 import com.cj.bunnywallet.datasource.local.WalletDataStore
 import com.cj.bunnywallet.feature.importwallet.type.PhraseAmountType
 import com.cj.bunnywallet.navigation.AppNavigator
@@ -12,8 +13,12 @@ import com.cj.bunnywallet.navigation.route.MainRoute
 import com.cj.bunnywallet.proto.wallet.Wallet
 import com.cj.bunnywallet.reducer.Reducer
 import com.cj.bunnywallet.reducer.ReducerImp
+import com.cj.bunnywallet.utils.CryptoManager
 import com.cj.bunnywallet.utils.Web3jManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,6 +27,7 @@ class ImportWalletViewModel @Inject constructor(
     navigator: AppNavigator,
     private val web3jManager: Web3jManager,
     private val walletDS: WalletDataStore,
+    private val cryptoManager: CryptoManager,
 ) : ViewModel(), AppNavigator by navigator,
     Reducer<ImportWalletState> by ReducerImp(ImportWalletState()) {
 
@@ -39,7 +45,7 @@ class ImportWalletViewModel @Inject constructor(
                 phraseList[event.index] = event.phrase
                 uiState = uiState.copy(
                     btnEnable = "" !in phraseList,
-                    validMnemonic = true,
+                    errMsg = null,
                 )
             }
 
@@ -51,7 +57,7 @@ class ImportWalletViewModel @Inject constructor(
         }
     }
 
-    private fun checkAndCreateWallet(): Wallet? {
+    private suspend fun checkAndCreateWallet(): Wallet? {
         uiState = uiState.copy(isLoading = true)
 
         val mnemonic = when {
@@ -61,15 +67,33 @@ class ImportWalletViewModel @Inject constructor(
         }
 
         if (!web3jManager.validateMnemonic(mnemonic)) {
-            uiState = uiState.copy(isLoading = false, validMnemonic = false)
+            uiState = uiState.copy(isLoading = false, errMsg = R.string.invalid_mnemonic)
             return null
         }
 
-        return web3jManager.createWallet(mnemonic) ?: run {
-            uiState = uiState.copy(isLoading = false)
-            // TODO Show Toast create wallet failed plz try again
+        var exist = false
+        var walletNum = 0
+        walletDS.wallets
+            .take(count = 1)
+            .collect { wallets ->
+                exist = wallets.walletsMap.values
+                    .mapNotNull { w -> cryptoManager.decrypt(w.id) }
+                    .any { phrase -> phrase == mnemonic }
+                walletNum = wallets.walletsMap.size
+            }
+
+        if (exist) {
+            uiState = uiState.copy(isLoading = false, errMsg = R.string.exist_mnemonic)
             return null
         }
+
+
+        return web3jManager.createWallet(mnemonic = mnemonic, nextWalletNum = walletNum + 1)
+            ?: run {
+                uiState = uiState.copy(isLoading = false)
+                // TODO Show Toast create wallet failed plz try again
+                return null
+            }
     }
 
     private fun navToHome() {
@@ -77,7 +101,7 @@ class ImportWalletViewModel @Inject constructor(
             NavEvent.NavTo(
                 route = MainRoute.Home.route,
                 navOptions = NavOptions.Builder()
-                    .setPopUpTo(route = MainRoute.WalletSetup.route, inclusive = true)
+                    .setPopUpTo(route = MainRoute.Home.route, inclusive = true)
                     .build()
             )
         )

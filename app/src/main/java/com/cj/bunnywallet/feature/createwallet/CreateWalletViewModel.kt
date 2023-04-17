@@ -11,6 +11,9 @@ import com.cj.bunnywallet.reducer.Reducer
 import com.cj.bunnywallet.reducer.ReducerImp
 import com.cj.bunnywallet.utils.Web3jManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,6 +25,19 @@ class CreateWalletViewModel @Inject constructor(
 ) : ViewModel(), AppNavigator by appNavigator,
     Reducer<CreateWalletState> by ReducerImp(CreateWalletState()) {
 
+    private var walletNum = 0
+
+    init {
+        getWalletNum()
+    }
+
+    private fun getWalletNum() {
+        walletDS.wallets
+            .take(count = 1)
+            .onEach { walletNum = it.walletsMap.size }
+            .launchIn(viewModelScope)
+    }
+
     fun handleEvent(e: CreateWalletEvent) {
         when (e) {
             CreateWalletEvent.RevealSRP ->
@@ -29,7 +45,12 @@ class CreateWalletViewModel @Inject constructor(
 
             CreateWalletEvent.Continue -> viewModelScope.launch {
                 val wallet = web3jManager.mnemonicList2String(uiState.mnemonic)
-                    .let { mnemonic -> web3jManager.createWallet(mnemonic) }
+                    .let { mnemonic ->
+                        web3jManager.createWallet(
+                            mnemonic = mnemonic,
+                            nextWalletNum = walletNum + 1,
+                        )
+                    }
                     ?: run {
                         // TODO Show Toast create wallet failed plz try again
                         return@launch
@@ -45,7 +66,7 @@ class CreateWalletViewModel @Inject constructor(
             NavEvent.NavTo(
                 route = MainRoute.Home.route,
                 navOptions = NavOptions.Builder()
-                    .setPopUpTo(route = MainRoute.WalletSetup.route, inclusive = true)
+                    .setPopUpTo(route = MainRoute.Home.route, inclusive = true)
                     .build(),
             )
         )

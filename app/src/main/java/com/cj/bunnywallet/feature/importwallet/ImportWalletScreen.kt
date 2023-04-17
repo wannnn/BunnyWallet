@@ -88,9 +88,9 @@ fun ImportWalletScreen(
                 }
             }
 
-            if (!uiState.validMnemonic) {
+            if (uiState.errMsg != null) {
                 Text(
-                    text = stringResource(id = R.string.invalid_mnemonic),
+                    text = stringResource(id = uiState.errMsg),
                     color = MaterialTheme.colorScheme.error,
                     fontSize = 14.sp,
                 )

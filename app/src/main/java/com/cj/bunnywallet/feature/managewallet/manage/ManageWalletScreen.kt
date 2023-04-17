@@ -27,7 +27,9 @@ fun ManageWalletScreen(
         AppTopBar(
             onBackClicked = { uiEvent(ManageWalletEvent.OnBackClick) },
             appbarTitle = R.string.manage_wallet,
-            tailContent = { ManageDropDown() },
+            tailContent = {
+                ManageDropDown(menuItemClick = { uiEvent(ManageWalletEvent.MenuItemClick(it)) })
+            },
         )
 
         WalletList(

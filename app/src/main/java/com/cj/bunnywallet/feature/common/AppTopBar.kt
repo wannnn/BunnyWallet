@@ -1,6 +1,7 @@
 package com.cj.bunnywallet.feature.common
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,10 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cj.bunnywallet.R
+import com.cj.bunnywallet.ui.modifier.customShadow
 
 @Composable
 fun AppTopBar(
@@ -26,7 +29,9 @@ fun AppTopBar(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(64.dp),
+            .height(64.dp)
+            .customShadow(blurRadius = 4.dp)
+            .background(MaterialTheme.colorScheme.background),
     ) {
 
         if (showBackBtn) {

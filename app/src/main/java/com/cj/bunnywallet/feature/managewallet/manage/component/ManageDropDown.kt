@@ -23,7 +23,7 @@ import com.cj.bunnywallet.feature.common.CommonIconBtn
 import com.cj.bunnywallet.feature.managewallet.manage.type.ManageType
 
 @Composable
-fun BoxScope.ManageDropDown() {
+fun BoxScope.ManageDropDown(menuItemClick: (ManageType) -> Unit) {
     var dmExpand by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.align(Alignment.CenterEnd)) {
@@ -43,7 +43,10 @@ fun BoxScope.ManageDropDown() {
             ManageType.values().forEach {
                 DropdownMenuItem(
                     text = { Text(text = stringResource(id = it.typeName)) },
-                    onClick = { },
+                    onClick = {
+                        menuItemClick(it)
+                        dmExpand = false
+                    },
                     leadingIcon = {
                         Icon(painter = painterResource(id = it.icon), contentDescription = null)
                     },

@@ -23,7 +23,7 @@ interface WalletHelper {
 
     fun loadCredentials(mnemonic: String): Credentials
 
-    fun createWallet(mnemonic: String): Wallet?
+    fun createWallet(mnemonic: String, nextWalletNum: Int): Wallet?
 
     fun deriveAccount(mnemonic: String, childNumber: Int): Account
 }
@@ -49,19 +49,19 @@ class WalletHelperImpl(private val cryptoManager: CryptoManager) : WalletHelper 
     override fun loadCredentials(mnemonic: String): Credentials =
         Bip44WalletUtils.loadBip44Credentials("", mnemonic)
 
-    override fun createWallet(mnemonic: String): Wallet? = runCatching {
+    override fun createWallet(mnemonic: String, nextWalletNum: Int): Wallet? = runCatching {
         val credentials = loadCredentials(mnemonic)
         val encryptedMnemonic = cryptoManager.encrypt(mnemonic)
             ?: throw ArithmeticException("Mnemonic encrypted fail")
 
         wallet {
             id = encryptedMnemonic
-            name = FIRST_WALLET
+            name = "$WALLET $nextWalletNum"
             accounts.put(
                 credentials.address,
                 account {
                     address = credentials.address
-                    name = FIRST_ACCOUNT
+                    name = "$ACCOUNT 1"
                 },
             )
         }
@@ -93,9 +93,8 @@ class WalletHelperImpl(private val cryptoManager: CryptoManager) : WalletHelper 
     }
 
     private companion object {
-        const val FIRST_WALLET = "Wallet 1"
+        const val WALLET = "Wallet"
         const val ACCOUNT = "Account"
-        const val FIRST_ACCOUNT = "$ACCOUNT 1"
 
         const val BYTE_SIZE = 16
         const val BIP44 = 44

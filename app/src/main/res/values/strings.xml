@@ -88,6 +88,7 @@
     <string name="twenty_one_words">I have a 21-words phrase</string>
     <string name="twenty_four_words">I have a 24-words phrase</string>
     <string name="invalid_mnemonic">Invalid mnemonic, please try another one.</string>
+    <string name="exist_mnemonic">Wallet already imported, please try another one.</string>
 
     <!-- Network -->
     <string name="network">Network</string>
