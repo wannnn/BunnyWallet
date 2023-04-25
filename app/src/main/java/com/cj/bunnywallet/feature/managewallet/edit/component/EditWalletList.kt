@@ -49,6 +49,7 @@ fun EditWalletList(
     ) {
         wallets.forEach {
             editWalletInfo(
+                wallets.size,
                 wallet = it,
                 uiEvent = uiEvent,
             )
@@ -57,13 +58,15 @@ fun EditWalletList(
 }
 
 private fun LazyListScope.editWalletInfo(
+    walletCount: Int,
     wallet: EditWalletDisplay,
     uiEvent: (EditWalletEvent) -> Unit,
 ) {
     wallet(
+        walletCount = walletCount,
         walletId = wallet.id,
         walletName = wallet.name,
-        edit = { uiEvent(it) }
+        action = { uiEvent(it) },
     )
 
     accounts(
@@ -74,9 +77,10 @@ private fun LazyListScope.editWalletInfo(
 }
 
 private fun LazyListScope.wallet(
+    walletCount: Int,
     walletId: String,
     walletName: String,
-    edit: (EditWalletEvent) -> Unit,
+    action: (EditWalletEvent) -> Unit,
 ) {
     item {
         Column(
@@ -111,22 +115,24 @@ private fun LazyListScope.wallet(
                             walletId = walletId,
                             walletName = walletName,
                         )
-                        edit(e)
+                        action(e)
                     },
                 )
 
-                Divider(
-                    modifier = Modifier
-                        .fillMaxHeight(fraction = .5f)
-                        .padding(horizontal = 2.dp)
-                        .width(1.dp)
-                )
+                if (walletCount > 1) {
+                    Divider(
+                        modifier = Modifier
+                            .fillMaxHeight(fraction = .5f)
+                            .padding(horizontal = 2.dp)
+                            .width(1.dp)
+                    )
 
-                CommonIconBtn(
-                    icon = R.drawable.ic_remove_circle,
-                    tint = Red400,
-                    onClick = { /* TODO */ },
-                )
+                    CommonIconBtn(
+                        icon = R.drawable.ic_remove_circle,
+                        tint = Red400,
+                        onClick = { action(EditWalletEvent.DeleteWallet(walletId = walletId)) },
+                    )
+                }
             }
 
             Divider(modifier = Modifier.padding(top = 4.dp))

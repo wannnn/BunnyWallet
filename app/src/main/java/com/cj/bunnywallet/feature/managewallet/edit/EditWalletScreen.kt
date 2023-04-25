@@ -21,10 +21,11 @@ import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 fun EditWalletScreen(
     uiState: EditWalletState,
     uiEvent: (EditWalletEvent) -> Unit,
+    navBack: () -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         AppTopBar(
-            onBackClicked = { },
+            onBackClicked = { navBack() },
             appbarTitle = R.string.edit_wallet,
         )
 
@@ -81,6 +82,7 @@ fun PreviewEditWalletScreen() {
             EditWalletScreen(
                 uiState = EditWalletState(wallets = wallets),
                 uiEvent = {},
+                navBack = {},
             )
         }
     }

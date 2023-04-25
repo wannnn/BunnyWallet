@@ -18,6 +18,8 @@ sealed interface EditWalletEvent {
 
     data class EditDone(val editInfo: EditInfo) : EditWalletEvent
 
+    data class DeleteWallet(val walletId: String) : EditWalletEvent
+
     object NoUpdate : EditWalletEvent
 }
 

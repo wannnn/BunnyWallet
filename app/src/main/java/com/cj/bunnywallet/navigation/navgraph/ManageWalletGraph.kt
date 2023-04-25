@@ -10,6 +10,7 @@ import com.cj.bunnywallet.feature.managewallet.edit.EditWalletScreen
 import com.cj.bunnywallet.feature.managewallet.edit.EditWalletViewModel
 import com.cj.bunnywallet.feature.managewallet.manage.ManageWalletScreen
 import com.cj.bunnywallet.feature.managewallet.manage.ManageWalletViewModel
+import com.cj.bunnywallet.navigation.NavEvent
 import com.cj.bunnywallet.navigation.route.ManageWalletRoute
 
 fun NavGraphBuilder.manageWalletGraph() {
@@ -34,6 +35,7 @@ fun NavGraphBuilder.manageWalletGraph() {
             EditWalletScreen(
                 uiState = uiState,
                 uiEvent = viewModel::handleEvent,
+                navBack = { viewModel.navigateTo(NavEvent.NavBack) }
             )
         }
     }
