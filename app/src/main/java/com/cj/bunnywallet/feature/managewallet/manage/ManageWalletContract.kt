@@ -1,7 +1,7 @@
 package com.cj.bunnywallet.feature.managewallet.manage
 
 import com.cj.bunnywallet.feature.managewallet.manage.type.ManageType
-import com.cj.bunnywallet.model.wallet.WalletDisplay
+import com.cj.bunnywallet.model.managewallet.ManageWalletDisplay
 import com.cj.bunnywallet.reducer.UiState
 
 sealed interface ManageWalletEvent {
@@ -14,5 +14,5 @@ sealed interface ManageWalletEvent {
 }
 
 data class ManageWalletState(
-    val wallets: List<WalletDisplay> = emptyList(),
+    val wallets: List<ManageWalletDisplay> = emptyList(),
 ) : UiState

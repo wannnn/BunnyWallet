@@ -12,7 +12,7 @@ import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.AppTopBar
 import com.cj.bunnywallet.feature.managewallet.manage.component.ManageDropDown
 import com.cj.bunnywallet.feature.managewallet.manage.component.WalletList
-import com.cj.bunnywallet.model.wallet.WalletDisplay
+import com.cj.bunnywallet.model.managewallet.ManageWalletDisplay
 import com.cj.bunnywallet.proto.wallet.account
 import com.cj.bunnywallet.proto.wallet.wallet
 import com.cj.bunnywallet.proto.wallet.wallets
@@ -53,7 +53,7 @@ fun PreviewManageWalletScreen() {
     }
 }
 
-private fun genFakeData(): List<WalletDisplay> {
+private fun genFakeData(): List<ManageWalletDisplay> {
     val wallet = wallet {
         id = "1"
         name = "To the moon wallet"
@@ -68,11 +68,11 @@ private fun genFakeData(): List<WalletDisplay> {
         .walletsMap
         .values
         .map { w ->
-            WalletDisplay(
+            ManageWalletDisplay(
                 id = w.id,
                 name = w.name,
                 accounts = w.accountsMap.values.map { acc ->
-                    WalletDisplay.AccountDisplay(
+                    ManageWalletDisplay.AccountDisplay(
                         address = acc.address,
                         name = acc.name,
                         isCurrent = true,
