@@ -12,6 +12,7 @@ import com.cj.bunnywallet.reducer.ReducerImp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,24 +27,22 @@ class EditWalletViewModel @Inject constructor(
     }
 
     private fun fetchWallets() {
-        walletDS.wallets
-            .onEach { wallets ->
-                val displayData = wallets.walletsMap.map { w ->
-                    val accounts = w.value.accountsMap.map { acc ->
-                        EditWalletDisplay.EditAccountDisplay(
-                            address = acc.key,
-                            name = acc.value.name,
-                        )
-                    }
-                    EditWalletDisplay(
-                        id = w.key,
-                        name = w.value.name,
-                        accounts = accounts,
+        walletDS.wallets.onEach { wallets ->
+            val displayData = wallets.walletsMap.map { w ->
+                val accounts = w.value.accountsMap.map { acc ->
+                    EditWalletDisplay.EditAccountDisplay(
+                        address = acc.key,
+                        name = acc.value.name,
                     )
                 }
-                uiState = uiState.copy(wallets = displayData)
+                EditWalletDisplay(
+                    id = w.key,
+                    name = w.value.name,
+                    accounts = accounts,
+                )
             }
-            .launchIn(viewModelScope)
+            uiState = uiState.copy(wallets = displayData)
+        }.launchIn(viewModelScope)
     }
 
     fun handleEvent(e: EditWalletEvent) {
@@ -69,11 +68,31 @@ class EditWalletViewModel @Inject constructor(
             }
 
             is EditWalletEvent.EditDone -> {
-                /* TODO */
+                when (e.editInfo.type) {
+                    EditType.Wallet -> viewModelScope.launch {
+                        walletDS.editWalletName(
+                            walletId = e.editInfo.walletId,
+                            newName = e.editInfo.name,
+                        )
+                    }
+
+                    EditType.Account -> viewModelScope.launch {
+                        walletDS.editAccountName(
+                            walletId = e.editInfo.walletId,
+                            address = e.editInfo.address,
+                            newName = e.editInfo.name,
+                        )
+                    }
+                }
                 uiState = uiState.copy(editInfo = null)
             }
 
+            is EditWalletEvent.DeleteWallet -> viewModelScope.launch {
+                walletDS.deleteWallet(walletId = e.walletId)
+            }
+
             EditWalletEvent.NoUpdate -> uiState = uiState.copy(editInfo = null)
+
         }
     }
 }
