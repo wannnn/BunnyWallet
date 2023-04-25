@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -28,6 +29,7 @@ import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 
 @Composable
 fun ManageCryptoScreen(
+    uiState: ManageCryptoState,
     navEvent: (NavEvent) -> Unit
 ) {
 
@@ -37,7 +39,7 @@ fun ManageCryptoScreen(
             onBackClicked = { navEvent(NavEvent.NavBack) }
         )
 
-        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+        Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)) {
 
             SearchTextField(modifier = Modifier.padding(vertical = 5.dp))
 
@@ -53,16 +55,24 @@ fun ManageCryptoScreen(
                     ManageCryptoTitle(R.string.added_cryptos)
                 }
 
-                items(count = 5) {
-                    CryptoItem(true)
+                items(uiState.added) {
+                    CryptoItem(
+                        crypto = it,
+                        rightIcon = R.drawable.ic_remove_circle_outline,
+                        iconTint = MaterialTheme.colorScheme.error
+                    )
                 }
 
                 item {
                     ManageCryptoTitle(R.string.popular_cryptos)
                 }
 
-                items(count = 5) {
-                    CryptoItem(false)
+                items(uiState.popular) {
+                    CryptoItem(
+                        crypto = it,
+                        rightIcon = R.drawable.ic_add_circle_outline,
+                        iconTint = MaterialTheme.colorScheme.tertiary
+                    )
                 }
             }
         }
@@ -85,6 +95,7 @@ fun PreviewManageCryptoScreen() {
     BunnyWalletTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
             ManageCryptoScreen(
+                uiState = ManageCryptoState(),
                 navEvent = {}
             )
         }

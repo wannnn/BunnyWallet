@@ -56,8 +56,10 @@ fun NavGraphBuilder.manageCrypto() {
     composable(MainRoute.ManageCrypto.route) {
 
         val viewModel: ManageCryptoViewModel = hiltViewModel()
+        val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
 
         ManageCryptoScreen(
+            uiState = uiState,
             navEvent = viewModel::navigateTo
         )
     }
