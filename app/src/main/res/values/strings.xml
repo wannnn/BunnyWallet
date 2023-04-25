@@ -112,6 +112,7 @@
     <string name="add_account">Add account</string>
     <string name="add_wallet">Add wallet</string>
     <string name="edit_wallet">Edit wallet</string>
+    <string name="edit_dialog_title">Edit %s name</string>
 
     <!-- Manage Crypto -->
     <string name="manage_crypto">Manage crypto</string>

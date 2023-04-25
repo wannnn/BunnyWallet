@@ -1,6 +1,6 @@
-package com.cj.bunnywallet.model.wallet
+package com.cj.bunnywallet.model.managewallet
 
-data class WalletDisplay(
+data class ManageWalletDisplay(
     val id: String = "",
     val name: String = "",
     val amount: String = "--",

@@ -32,12 +32,12 @@ import com.cj.bunnywallet.R
 import com.cj.bunnywallet.extensions.shortAddress
 import com.cj.bunnywallet.feature.common.CommonIconBtn
 import com.cj.bunnywallet.feature.managewallet.manage.ManageWalletEvent
-import com.cj.bunnywallet.model.wallet.WalletDisplay
+import com.cj.bunnywallet.model.managewallet.ManageWalletDisplay
 import com.cj.bunnywallet.ui.theme.NoRippleInteractionSource
 
 @Composable
 fun WalletList(
-    wallets: List<WalletDisplay>,
+    wallets: List<ManageWalletDisplay>,
     uiEvent: (ManageWalletEvent) -> Unit,
 ) {
     LazyColumn(
@@ -55,7 +55,7 @@ fun WalletList(
 }
 
 private fun LazyListScope.walletInfo(
-    wallet: WalletDisplay,
+    wallet: ManageWalletDisplay,
     uiEvent: (ManageWalletEvent) -> Unit,
 ) {
     walletItem(
@@ -76,7 +76,7 @@ private fun LazyListScope.walletInfo(
 }
 
 private fun LazyListScope.walletItem(
-    wallet: WalletDisplay,
+    wallet: ManageWalletDisplay,
     expandClicked: () -> Unit,
 ) {
     item {
@@ -131,7 +131,7 @@ private fun LazyListScope.walletItem(
 }
 
 private fun LazyListScope.accountItems(
-    accounts: List<WalletDisplay.AccountDisplay>,
+    accounts: List<ManageWalletDisplay.AccountDisplay>,
     onAccountSelected: (String) -> Unit,
 ) {
     items(accounts) {

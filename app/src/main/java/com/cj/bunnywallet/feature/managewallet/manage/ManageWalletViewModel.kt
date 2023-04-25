@@ -5,10 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.cj.bunnywallet.datasource.local.WalletDataStore
 import com.cj.bunnywallet.extensions.indexOfFirstOrNull
 import com.cj.bunnywallet.feature.managewallet.manage.type.ManageType
-import com.cj.bunnywallet.model.wallet.WalletDisplay
+import com.cj.bunnywallet.model.managewallet.ManageWalletDisplay
 import com.cj.bunnywallet.navigation.AppNavigator
 import com.cj.bunnywallet.navigation.NavEvent
 import com.cj.bunnywallet.navigation.route.MainRoute
+import com.cj.bunnywallet.navigation.route.ManageWalletRoute
 import com.cj.bunnywallet.proto.wallet.Wallets
 import com.cj.bunnywallet.reducer.Reducer
 import com.cj.bunnywallet.reducer.ReducerImp
@@ -40,18 +41,18 @@ class ManageWalletViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    private fun genDisplayData(wallets: Wallets): List<WalletDisplay> {
+    private fun genDisplayData(wallets: Wallets): List<ManageWalletDisplay> {
         return wallets.walletsMap
             .values
             .map { w ->
                 val accounts = w.accountsMap.values.map { acc ->
-                    WalletDisplay.AccountDisplay(
+                    ManageWalletDisplay.AccountDisplay(
                         address = acc.address,
                         name = acc.name,
                         isCurrent = acc.address == wallets.currentAccount,
                     )
                 }
-                WalletDisplay(
+                ManageWalletDisplay(
                     id = w.id,
                     name = w.name,
                     accounts = accounts,
@@ -105,13 +106,11 @@ class ManageWalletViewModel @Inject constructor(
 
     private fun handleManageAction(type: ManageType) {
         when (type) {
-            ManageType.ADD_WALLET -> {
+            ManageType.ADD_WALLET ->
                 navigateTo(NavEvent.NavTo(MainRoute.WalletSetup.route))
-            }
 
-            ManageType.EDIT_WALLET -> {
-                // TODO
-            }
+            ManageType.EDIT_WALLET ->
+                navigateTo(NavEvent.NavTo(ManageWalletRoute.EditWallet.route))
         }
     }
 }
