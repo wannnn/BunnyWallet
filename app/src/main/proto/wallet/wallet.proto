@@ -28,8 +28,7 @@ message Account {
 message Crypto {
   string address = 1;
   string symbol = 2;
-  float decimal = 3;
+  uint32 decimal = 3;
   string name = 4;
   string logo = 5;
-  bool hasAdded = 6;
 }

@@ -1,8 +1,10 @@
 package com.cj.bunnywallet.helper
 
 import com.cj.bunnywallet.proto.wallet.Account
+import com.cj.bunnywallet.proto.wallet.Crypto
 import com.cj.bunnywallet.proto.wallet.Wallet
 import com.cj.bunnywallet.proto.wallet.account
+import com.cj.bunnywallet.proto.wallet.crypto
 import com.cj.bunnywallet.proto.wallet.wallet
 import com.cj.bunnywallet.utils.CryptoManager
 import org.web3j.crypto.Bip32ECKeyPair
@@ -57,13 +59,8 @@ class WalletHelperImpl(private val cryptoManager: CryptoManager) : WalletHelper 
         wallet {
             id = encryptedMnemonic
             name = "$WALLET $nextWalletNum"
-            accounts.put(
-                credentials.address,
-                account {
-                    address = credentials.address
-                    name = "$ACCOUNT 1"
-                },
-            )
+            val acc = deriveAccount(mnemonic = mnemonic, childNumber = 0)
+            accounts.put(credentials.address, acc)
         }
     }
         .onFailure { Timber.d(message = "Create wallet fail: ${it.message}") }
@@ -86,9 +83,19 @@ class WalletHelperImpl(private val cryptoManager: CryptoManager) : WalletHelper 
         val childKeypair = Bip32ECKeyPair.deriveKeyPair(masterKeypair, path)
         val credentials = Credentials.create(childKeypair)
 
+        fun genDefaultCryptoTokens(): List<Crypto> = listOf(
+            crypto {
+                symbol = "TBT"
+                decimal = TBT_DECIMAL
+                name = "Bunny Token"
+                logo = "https://cdn-icons-png.flaticon.com/512/4775/4775505.png"
+            },
+        )
+
         return account {
             address = credentials.address
             name = "$ACCOUNT ${childNumber + 1}"
+            cryptos.addAll(genDefaultCryptoTokens())
         }
     }
 
@@ -99,5 +106,7 @@ class WalletHelperImpl(private val cryptoManager: CryptoManager) : WalletHelper 
         const val BYTE_SIZE = 16
         const val BIP44 = 44
         const val COIN_ETH = 60
+
+        const val TBT_DECIMAL = 6
     }
 }
