@@ -32,6 +32,22 @@ android {
         versionName = libs.versions.versionName.get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField(
+            type = "String",
+            name = "ETH_KEY_MAIN",
+            value = "\"${keystoreProps["ETH_KEY_MAIN"]}\""
+        )
+        buildConfigField(
+            type = "String",
+            name = "ETH_KEY_GOERLI",
+            value = "\"${keystoreProps["ETH_KEY_GOERLI"]}\""
+        )
+        buildConfigField(
+            type = "String",
+            name = "ETH_KEY_SEPOLIA",
+            value = "\"${keystoreProps["ETH_KEY_SEPOLIA"]}\""
+        )
     }
 
     buildTypes {
@@ -41,25 +57,13 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-            buildConfigField(type = "String", name = "ETH_DOMAIN", value = "\"eth-mainnet\"")
-            buildConfigField(
-                type = "String",
-                name = "ETH_KEY",
-                value = "\"${keystoreProps["prodEthKey"]}\""
-            )
             buildConfigField(type = "String", name = "DEBUG_MNEMONIC", value = "\"\"")
         }
         getByName("debug") {
-            buildConfigField(type = "String", name = "ETH_DOMAIN", value = "\"eth-goerli\"")
-            buildConfigField(
-                type = "String",
-                name = "ETH_KEY",
-                value = "\"${keystoreProps["stgEthKey"]}\""
-            )
             buildConfigField(
                 type = "String",
                 name = "DEBUG_MNEMONIC",
-                value = "\"${keystoreProps["debugMnemonic"]}\""
+                value = "\"${keystoreProps["DEBUG_MNEMONIC"]}\""
             )
         }
     }

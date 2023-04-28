@@ -24,11 +24,13 @@ fun HomeScreen(
     uiState: HomeState,
     uiEvent: (HomeEvent) -> Unit,
 ) {
-
     val pagerState = rememberPagerState()
 
     Column(modifier = Modifier.fillMaxSize()) {
-        HomeTopBar()
+        HomeTopBar(
+            network = uiState.network,
+            uiEvent = uiEvent,
+        )
 
         AccountInfo(
             accountName = uiState.accountName,

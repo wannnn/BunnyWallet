@@ -92,11 +92,10 @@
 
     <!-- Network -->
     <string name="network">Network</string>
+    <string name="unknown_network">Unknown Network</string>
     <string name="ethereum_main_network">Ethereum Main Network</string>
-    <string name="ropsten_test_network">Ropsten Test Network</string>
-    <string name="kovan_test_network">Kovan Test Network</string>
-    <string name="rinkeby_test_network">Rinkeby Test Network</string>
     <string name="goerli_test_network">Goerli Test Network</string>
+    <string name="sepolia_test_network">Sepolia Test Network</string>
 
     <!-- Home -->
     <string name="send">Send</string>
