@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -27,17 +29,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cj.bunnywallet.R
-import com.cj.bunnywallet.feature.home.dialog.NetworkChangeDialog
-import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 import com.cj.bunnywallet.feature.common.CommonIconBtn
+import com.cj.bunnywallet.feature.home.HomeEvent
+import com.cj.bunnywallet.feature.home.dialog.NetworkChangeDialog
+import com.cj.bunnywallet.feature.home.type.SupportNetwork
 import com.cj.bunnywallet.ui.modifier.customShadow
+import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 
 @Composable
-fun HomeTopBar() {
+fun HomeTopBar(
+    network: SupportNetwork,
+    uiEvent: (HomeEvent) -> Unit,
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -53,12 +61,18 @@ fun HomeTopBar() {
             onClick = {}
         )
 
-        NetworkBar()
+        NetworkBar(
+            network = network,
+            selectNetwork = { uiEvent(HomeEvent.NetworkChange(it)) },
+        )
     }
 }
 
 @Composable
-fun BoxScope.NetworkBar() {
+fun BoxScope.NetworkBar(
+    network: SupportNetwork,
+    selectNetwork: (SupportNetwork) -> Unit,
+) {
     var showDialog by remember { mutableStateOf(false) }
 
     Row(
@@ -70,16 +84,29 @@ fun BoxScope.NetworkBar() {
             .padding(horizontal = 8.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_eth),
-            contentDescription = null,
-            modifier = Modifier
-                .size(16.dp)
-                .padding(top = 2.dp),
-        )
+        if (network == SupportNetwork.MAIN) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_eth),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(16.dp)
+                    .padding(top = 2.dp),
+            )
+        } else {
+            Text(
+                text = network.initial,
+                modifier = Modifier
+                    .background(color = network.color, shape = CircleShape)
+                    .size(16.dp)
+                    .wrapContentHeight(),
+                color = Color.White,
+                fontSize = 10.sp,
+                textAlign = TextAlign.Center,
+            )
+        }
 
         Text(
-            text = stringResource(id = R.string.ethereum_main_network),
+            text = stringResource(id = network.networkName),
             modifier = Modifier.padding(horizontal = 16.dp),
             fontSize = 14.sp,
         )
@@ -95,7 +122,14 @@ fun BoxScope.NetworkBar() {
     }
 
     if (showDialog) {
-        NetworkChangeDialog { showDialog = false }
+        NetworkChangeDialog(
+            network = network,
+            selectNetwork = {
+                selectNetwork(it)
+                showDialog = false
+            },
+            onDismiss = { showDialog = false }
+        )
     }
 }
 
@@ -105,7 +139,10 @@ fun BoxScope.NetworkBar() {
 fun PreviewHomeTopBar() {
     BunnyWalletTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
-            HomeTopBar()
+            HomeTopBar(
+                network = SupportNetwork.MAIN,
+                uiEvent = {},
+            )
         }
     }
 }

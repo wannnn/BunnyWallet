@@ -1,11 +1,15 @@
 package com.cj.bunnywallet.utils
 
-import com.cj.bunnywallet.BuildConfig
+import com.cj.bunnywallet.helper.ApiHostHelper
 import com.cj.bunnywallet.helper.WalletHelper
 import com.cj.bunnywallet.helper.WalletHelperImpl
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.http.HttpService
@@ -15,18 +19,29 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class Web3jManager @Inject constructor(cryptoManager: CryptoManager) :
-    WalletHelper by WalletHelperImpl(cryptoManager) {
+class Web3jManager @Inject constructor(
+    cryptoManager: CryptoManager,
+    scope: CoroutineScope,
+    apiHostHelper: ApiHostHelper,
+) : WalletHelper by WalletHelperImpl(cryptoManager) {
 
-    fun initWeb3j() {
-        web3j = Web3j.build(HttpService(ALCHEMY_URL))
+    init {
+        apiHostHelper.apiHosts
+            .onEach { connectToEthereum(it.alchemyUrl) }
+            .launchIn(scope)
+    }
+
+    private fun connectToEthereum(url: String) {
+        runCatching { web3j.shutdown() }
+
+        web3j = Web3j.build(HttpService(url))
 
         runCatching { web3j.web3ClientVersion().send() }
             .onSuccess {
                 if (it.hasError()) {
                     Timber.d(message = "Connected to Ethereum Failed: ${it.error.message}")
                 } else {
-                    Timber.d(message = "Connected to Ethereum")
+                    Timber.d(message = "Connected to Ethereum: $url")
                 }
             }
             .onFailure {
@@ -34,9 +49,12 @@ class Web3jManager @Inject constructor(cryptoManager: CryptoManager) :
             }
     }
 
+    fun getVersion() = runCatching { web3j.netVersion().sendAsync().get() }.getOrNull()
+
     fun getEthBalance(address: String) = flow {
         val balanceWei = web3j.ethGetBalance(address, DefaultBlockParameterName.LATEST)
-            .send()
+            .sendAsync()
+            .get()
             .balance
         Timber.d(message = "Balance(Wei): $balanceWei")
 
@@ -46,11 +64,9 @@ class Web3jManager @Inject constructor(cryptoManager: CryptoManager) :
         emit(balanceEther)
     }
         .flowOn(Dispatchers.IO)
+        .catch { e -> Timber.d(message = "Get Balance Error: ${e.message}") }
 
     companion object {
         lateinit var web3j: Web3j
-
-        private const val ALCHEMY_URL =
-            "https://${BuildConfig.ETH_DOMAIN}.g.alchemy.com/v2/${BuildConfig.ETH_KEY}"
     }
 }

@@ -15,7 +15,8 @@ fun DialogContainer(
 ) {
     Dialog(onDismissRequest = onDismiss) {
         Surface(
-            modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(size = 10.dp)
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(size = 10.dp),
         ) {
             content()
         }
