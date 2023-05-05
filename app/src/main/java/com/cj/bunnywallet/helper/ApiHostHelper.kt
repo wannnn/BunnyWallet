@@ -2,34 +2,24 @@ package com.cj.bunnywallet.helper
 
 import com.cj.bunnywallet.BuildConfig
 import com.cj.bunnywallet.feature.home.type.SupportNetwork
-import com.cj.bunnywallet.model.network.ApiHosts
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ApiHostHelper @Inject constructor() {
 
-    private val delegate = StateFlowDelegate(ApiHosts())
+    private val delegate = StateFlowDelegate("")
     private var apiHostState by delegate
 
     val apiHosts = delegate.stateFlow
 
     fun updateUrl(network: SupportNetwork) {
-        when (network) {
-            SupportNetwork.MAIN -> apiHostState = apiHostState.copy(
-                alchemyBaseUrl = BASE_URL_MAIN,
-                alchemyUrl = BASE_URL_MAIN + BuildConfig.ETH_KEY_MAIN,
-            )
+        apiHostState = when (network) {
+            SupportNetwork.MAIN -> BASE_URL_MAIN + BuildConfig.ETH_KEY_MAIN
 
-            SupportNetwork.SEPOLIA -> apiHostState = apiHostState.copy(
-                alchemyBaseUrl = BASE_URL_SEPOLIA,
-                alchemyUrl = BASE_URL_SEPOLIA + BuildConfig.ETH_KEY_SEPOLIA,
-            )
+            SupportNetwork.SEPOLIA -> BASE_URL_SEPOLIA + BuildConfig.ETH_KEY_SEPOLIA
 
-            SupportNetwork.GOERLI -> apiHostState = apiHostState.copy(
-                alchemyBaseUrl = BASE_URL_GOERLI,
-                alchemyUrl = BASE_URL_GOERLI + BuildConfig.ETH_KEY_GOERLI,
-            )
+            SupportNetwork.GOERLI -> BASE_URL_GOERLI + BuildConfig.ETH_KEY_GOERLI
         }
     }
 

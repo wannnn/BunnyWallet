@@ -11,7 +11,6 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.accept
 import io.ktor.client.request.headers
-import io.ktor.client.request.request
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
@@ -32,13 +31,13 @@ class AlchemyClientManager @Inject constructor(
 
     init {
         apiHostHelper.apiHosts
-            .onEach { updateClient(it.alchemyBaseUrl) }
+            .onEach { updateClient(it) }
             .catch { Timber.d("Get API hosts failed: ${it.message}") }
             .launchIn(scope)
     }
 
     private var _client: HttpClient = HttpClient()
-    val client = _client
+    val client get() = _client
 
     private fun updateClient(baseUrl: String) {
         _client = HttpClient(CIO) {
