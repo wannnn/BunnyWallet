@@ -6,6 +6,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.cj.bunnywallet.feature.customcrypto.CustomCryptoScreen
+import com.cj.bunnywallet.feature.customcrypto.CustomCryptoViewModel
 import com.cj.bunnywallet.feature.walletsetup.WalletSetupScreen
 import com.cj.bunnywallet.feature.walletsetup.WalletSetupViewModel
 import com.cj.bunnywallet.feature.home.HomeScreen
@@ -68,6 +69,13 @@ fun NavGraphBuilder.manageCrypto() {
 fun NavGraphBuilder.customCrypto() {
     composable(MainRoute.CustomCrypto.route) {
 
-        CustomCryptoScreen()
+        val viewModel: CustomCryptoViewModel = hiltViewModel()
+        val uiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
+
+        CustomCryptoScreen(
+            uiState = uiState,
+            uiEvent = viewModel::handleEvent,
+            navEvent = viewModel::navigateTo
+        )
     }
 }

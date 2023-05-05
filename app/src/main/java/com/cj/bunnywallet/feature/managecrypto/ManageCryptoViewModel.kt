@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ManageCryptoViewModel @Inject constructor(
-    private val walletDS: WalletDataStore,
+    walletDS: WalletDataStore,
     private val navigator: AppNavigator,
 ) : ViewModel(), AppNavigator by navigator,
     Reducer<ManageCryptoState> by ReducerImp(ManageCryptoState()) {
@@ -23,6 +23,8 @@ class ManageCryptoViewModel @Inject constructor(
         walletDS.currentAccount.onEach {
             uiState = uiState.copy(added = it.cryptosList)
         }.launchIn(viewModelScope)
+
+        // popular token currently fake!!!!
         addFakeData()
     }
 
