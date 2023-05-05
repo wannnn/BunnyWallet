@@ -27,7 +27,7 @@ class Web3jManager @Inject constructor(
 
     init {
         apiHostHelper.apiHosts
-            .onEach { connectToEthereum(it.alchemyUrl) }
+            .onEach { connectToEthereum(it) }
             .launchIn(scope)
     }
 
