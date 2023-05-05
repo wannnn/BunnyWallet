@@ -31,7 +31,7 @@ private val DefaultSpacing = 4.dp
 @Composable
 fun BallPulseProgressIndicator(
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.onPrimary,
+    color: Color = MaterialTheme.colorScheme.primary,
     animationDuration: Int = DefaultAnimationDuration,
     animationDelay: Int = DefaultAnimationDelay,
     startDelay: Int = DefaultStartDelay,

@@ -2,6 +2,7 @@ package com.cj.bunnywallet.datasource.local
 
 import androidx.datastore.core.DataStore
 import com.cj.bunnywallet.proto.wallet.Account
+import com.cj.bunnywallet.proto.wallet.Crypto
 import com.cj.bunnywallet.proto.wallet.Wallet
 import com.cj.bunnywallet.proto.wallet.Wallets
 import com.cj.bunnywallet.proto.wallet.copy
@@ -118,6 +119,31 @@ class WalletDataStore @Inject constructor(private val dataStore: DataStore<Walle
             }
         } catch (e: IOException) {
             Timber.d(message = "Edit account name failed: ${e.message}")
+        }
+    }
+
+    suspend fun updateAddedCrypto(crypto: Crypto) {
+        try {
+            dataStore.updateData {
+                val walletId = it.currentWallet
+                val address = it.currentAccount
+                val w = it.walletsMap[walletId] ?: throw Throwable("wallet not found")
+                val acc = w.accountsMap[address] ?: throw Throwable("Account not found")
+
+                if (acc.cryptosList.none { it.symbol == crypto.symbol }) {
+                    it.copy {
+                        val newAccount = acc.copy {
+                            cryptos.add(crypto)
+                        }
+                        val newWallet = w.copy { accounts.put(address, newAccount) }
+                        wallets.put(walletId, newWallet)
+                    }
+                } else {
+                    it
+                }
+            }
+        } catch (e: IOException) {
+            Timber.d(message = "Failed to update added crypto: ${e.message}")
         }
     }
 }

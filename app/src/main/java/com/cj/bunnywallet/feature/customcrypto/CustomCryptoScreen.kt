@@ -22,15 +22,19 @@ import com.cj.bunnywallet.R
 import com.cj.bunnywallet.feature.common.AppTopBar
 import com.cj.bunnywallet.feature.common.CmnButton
 import com.cj.bunnywallet.feature.common.CommonTextField
-import com.cj.bunnywallet.feature.managecrypto.ManageCryptoScreen
+import com.cj.bunnywallet.navigation.NavEvent
 import com.cj.bunnywallet.ui.theme.BunnyWalletTheme
 
 @Composable
-fun CustomCryptoScreen() {
+fun CustomCryptoScreen(
+    uiState: CustomCryptoState,
+    uiEvent: (CustomCryptoEvent) -> Unit,
+    navEvent: (NavEvent) -> Unit
+) {
     Column(modifier = Modifier.fillMaxSize()) {
         AppTopBar(
             appbarTitle = R.string.custom_crypto,
-            onBackClicked = { /*TODO*/ }
+            onBackClicked = { navEvent(NavEvent.NavBack) }
         )
 
         Column(
@@ -45,8 +49,8 @@ fun CustomCryptoScreen() {
                 titleId = R.string.contract_address,
                 textField = {
                     CommonTextField(
-                        valueState = "",
-                        onValueUpdate = {},
+                        valueState = uiState.address,
+                        onValueUpdate = { uiEvent.invoke(CustomCryptoEvent.InputAddress(it)) },
                         hint = stringResource(id = R.string.contract_address_hint)
                     )
                 }
@@ -57,8 +61,8 @@ fun CustomCryptoScreen() {
                 titleId = R.string.symbol,
                 textField = {
                     CommonTextField(
-                        valueState = "",
-                        onValueUpdate = {},
+                        valueState = uiState.symbol,
+                        onValueUpdate = { uiEvent.invoke(CustomCryptoEvent.InputSymbol(it)) },
                         hint = stringResource(id = R.string.symbol_hint)
                     )
                 }
@@ -69,8 +73,8 @@ fun CustomCryptoScreen() {
                 titleId = R.string.decimal,
                 textField = {
                     CommonTextField(
-                        valueState = "",
-                        onValueUpdate = {},
+                        valueState = uiState.decimal,
+                        onValueUpdate = { uiEvent.invoke(CustomCryptoEvent.InputDecimal(it)) },
                         hint = stringResource(id = R.string.decimal_hint),
                         keyboardType = KeyboardType.Decimal,
                         imeAction = ImeAction.Done
@@ -80,8 +84,10 @@ fun CustomCryptoScreen() {
 
             CmnButton(
                 text = stringResource(id = R.string.confirm),
-                onClick = {  },
-                modifier = Modifier.fillMaxWidth()
+                onClick = { uiEvent.invoke(CustomCryptoEvent.Confirm) },
+                modifier = Modifier.fillMaxWidth(),
+                isLoading = uiState.isLoading,
+                enabled = uiState.btnEnable
             )
         }
     }
@@ -110,7 +116,11 @@ private fun TitleAndTextField(
 fun PreviewCustomCryptoScreen() {
     BunnyWalletTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
-            CustomCryptoScreen()
+            CustomCryptoScreen(
+                uiState = CustomCryptoState(),
+                uiEvent = {},
+                navEvent = {}
+            )
         }
     }
 }

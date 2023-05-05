@@ -45,7 +45,7 @@ fun CryptoItem(
             modifier = Modifier
                 .weight(weight = 1f)
                 .aspectRatio(ratio = 1f),
-            error = painterResource(id = R.drawable.ic_monetization_on)
+            error = painterResource(id = R.drawable.ic_crypto)
         )
 
         Column(
